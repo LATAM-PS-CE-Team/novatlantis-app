@@ -70,6 +70,68 @@ export function resolveInitialLanguage(): SupportedLanguage {
   return 'pt-BR';
 }
 
+export function resolvePortalUrls(): {
+  landingPortalUrl: string;
+  citizenPortalUrl: string;
+  govBackstageUrl: string;
+} {
+  if (typeof window === 'undefined') {
+    return {
+      landingPortalUrl: 'https://gov.novatlantis.cloud',
+      citizenPortalUrl: 'https://portal.gov.novatlantis.cloud',
+      govBackstageUrl: 'https://backstage.gov.novatlantis.cloud'
+    };
+  }
+  const { protocol, hostname, origin } = window.location;
+
+  // 1. Ambiente DEV no domínio customizado (dev.gov.novatlantis.cloud, *.dev.gov.novatlantis.cloud, dev.novatlantis.cloud)
+  if (
+    hostname === 'dev.gov.novatlantis.cloud' ||
+    hostname.endsWith('.dev.gov.novatlantis.cloud') ||
+    hostname === 'dev.novatlantis.cloud'
+  ) {
+    return {
+      landingPortalUrl: `${protocol}//dev.gov.novatlantis.cloud`,
+      citizenPortalUrl: `${protocol}//portal.dev.gov.novatlantis.cloud`,
+      govBackstageUrl: `${protocol}//backstage.dev.gov.novatlantis.cloud`
+    };
+  }
+
+  // 2. Ambiente PROD no domínio customizado (gov.novatlantis.cloud, *.gov.novatlantis.cloud, novatlantis.cloud)
+  if (
+    hostname === 'gov.novatlantis.cloud' ||
+    hostname.endsWith('.gov.novatlantis.cloud') ||
+    hostname === 'novatlantis.cloud' ||
+    hostname === 'www.novatlantis.cloud'
+  ) {
+    return {
+      landingPortalUrl: `${protocol}//gov.novatlantis.cloud`,
+      citizenPortalUrl: `${protocol}//portal.gov.novatlantis.cloud`,
+      govBackstageUrl: `${protocol}//backstage.gov.novatlantis.cloud`
+    };
+  }
+
+  // 3. Acesso direto via URL nativa do Cloud Run (*.run.app) em dev ou prod
+  if (hostname.endsWith('.run.app')) {
+    const replaceService = (targetService: string) =>
+      origin.replace(/\/\/(novatlantis-(?:dev|prod)-|novatlantis-)?(landing-portal|citizen-portal|gov-backstage)/, `//$1${targetService}`);
+    return {
+      landingPortalUrl: replaceService('landing-portal'),
+      citizenPortalUrl: replaceService('citizen-portal'),
+      govBackstageUrl: replaceService('gov-backstage')
+    };
+  }
+
+  // 4. Fallback padrão para Produção (gov.novatlantis.cloud)
+  return {
+    landingPortalUrl: 'https://gov.novatlantis.cloud',
+    citizenPortalUrl: 'https://portal.gov.novatlantis.cloud',
+    govBackstageUrl: 'https://backstage.gov.novatlantis.cloud'
+  };
+}
+
+export const DYNAMIC_PORTAL_URLS = resolvePortalUrls();
+
 export interface AuthUserProfile {
   nid: string;
   name: string;
@@ -325,8 +387,8 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
   onUserLoggedOut,
   openLoginTrigger = 0,
   loginReasonMessage = null,
-  citizenPortalUrl = 'https://novatlantis-citizen-portal-wpahcxvhuq-uc.a.run.app',
-  govBackstageUrl = 'https://novatlantis-gov-backstage-wpahcxvhuq-uc.a.run.app',
+  citizenPortalUrl = DYNAMIC_PORTAL_URLS.citizenPortalUrl,
+  govBackstageUrl = DYNAMIC_PORTAL_URLS.govBackstageUrl,
   lang: propLang,
   onLanguageChange
 }) => {

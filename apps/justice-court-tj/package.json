@@ -1,0 +1,11 @@
+{
+  "name": "@novatlantis/justice-court-tj",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Módulo Plugável CE — Tribunal de Justiça Digital & Juizado Especial IA",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'Build justice-court-tj OK'",
+    "test": "node -e \"const fs=require('fs'); const m=JSON.parse(fs.readFileSync('novatlantis.app.json','utf8')); if(!m.appId) process.exit(1); console.log('Manifest validation OK:', m.appId);\""
+  }
+}
