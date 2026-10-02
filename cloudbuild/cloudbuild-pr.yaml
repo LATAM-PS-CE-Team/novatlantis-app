@@ -1,0 +1,90 @@
+# ==============================================================================
+# REPÚBLICA DIGITAL DE NOVATLANTIS — ESTEIRA DE VALIDAÇÃO DE PULL REQUEST (CI)
+# Repositório: LATAM-PS-CE-Team/novatlantis-app
+# Acionamento: Pull Request contra 'dev' (ambiente dev) ou 'main' (ambiente prod)
+# Objetivo: Validar build TypeScript/Vite, Dockerfile e testes unitários/ADK.
+#           Na branch 'dev' (ambiente dev), o merge é livre sem aprovação humana.
+#           Na branch 'main' (ambiente prod), exige aprovação de @pedrocalixto.
+# ==============================================================================
+
+substitutions:
+  _BASE_BRANCH_NAME: 'dev'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+
+steps:
+  # 1. Busca histórico da branch alvo para calcular o git diff com precisão
+  - id: 'fetch-git-history'
+    name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        git fetch origin "${_BASE_BRANCH_NAME}" --depth=50 || git fetch --unshallow || true
+        chmod +x ./cloudbuild/scripts/detect-changed-services.sh
+        _BASE_BRANCH="origin/${_BASE_BRANCH_NAME}" ./cloudbuild/scripts/detect-changed-services.sh . /workspace/changed_services.txt /workspace/changed_agent.txt
+
+  # 2. Valida compilação TypeScript/React (Vite) e integridade dos microsserviços alterados
+  - id: 'validate-microservices-build'
+    name: 'node:22-alpine'
+    entrypoint: 'sh'
+    waitFor: ['fetch-git-history']
+    args:
+      - '-c'
+      - |
+        set -e
+        if [ ! -s /workspace/changed_services.txt ]; then
+          echo "[PR-CHECK] Nenhum microsserviço em apps/* foi alterado neste PR. Pulando validação Node.js."
+          exit 0
+        fi
+        for SVC in $(cat /workspace/changed_services.txt); do
+          echo "=================================================================="
+          echo "[PR-CHECK] Validando dependências e compilação de apps/$${SVC}..."
+          echo "=================================================================="
+          cd "/workspace/apps/$${SVC}"
+          npm install --no-audit --no-fund
+          if grep -q '"build"' package.json; then
+            npm run build
+          fi
+          if grep -q '"test"' package.json; then
+            npm test --if-present
+          fi
+        done
+
+  # 3. Valida construção da imagem Docker (sem fazer push para o Artifact Registry)
+  - id: 'validate-dockerfiles'
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    waitFor: ['validate-microservices-build']
+    args:
+      - '-c'
+      - |
+        set -euo pipefail
+        if [ ! -s /workspace/changed_services.txt ]; then
+          exit 0
+        fi
+        for SVC in $(cat /workspace/changed_services.txt); do
+          echo "[PR-CHECK] Testando Dockerfile de apps/$${SVC}..."
+          docker build -t "pr-check-$${SVC}:${SHORT_SHA}" -f "apps/$${SVC}/Dockerfile" "apps/$${SVC}"
+        done
+
+  # 4. Valida testes unitários do First-Responder Agent (ADK)
+  - id: 'validate-first-responder-agent'
+    name: 'python:3.12-slim'
+    entrypoint: 'bash'
+    waitFor: ['fetch-git-history']
+    args:
+      - '-c'
+      - |
+        set -euo pipefail
+        if [ "$(cat /workspace/changed_agent.txt)" != "true" ]; then
+          echo "[PR-CHECK] first-responder-agent não foi alterado neste PR. Pulando validação ADK."
+          exit 0
+        fi
+        echo "[PR-CHECK] Executando suíte de testes unitários do First-Responder Agent..."
+        pip install --quiet uv
+        cd /workspace/first-responder-agent
+        uv sync --frozen || uv sync
+        uv run pytest tests/unit

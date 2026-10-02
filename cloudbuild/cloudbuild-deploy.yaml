@@ -1,0 +1,124 @@
+# ==============================================================================
+# REPÚBLICA DIGITAL DE NOVATLANTIS — ESTEIRA DE BUILD E DEPLOY AUTOMÁTICO (CD)
+# Repositório: LATAM-PS-CE-Team/novatlantis-app
+# Acionamento:
+#   - Merge na branch 'main' -> Ambiente DEV  (_ENV=dev,  _SERVICE_PREFIX=novatlantis-dev)
+#   - Merge na branch 'prod' -> Ambiente PROD (_ENV=prod, _SERVICE_PREFIX=novatlantis-prod)
+# Objetivo: Construir imagens container no Artifact Registry com tag imutável SHA
+#           e atualizar apenas os serviços Cloud Run / Agent Engine modificados.
+# ==============================================================================
+
+substitutions:
+  _ENV: 'dev'
+  _REGION: 'us-central1'
+  _AR_REPO: 'novatlantis-gov-repo'
+  _SERVICE_PREFIX: 'novatlantis-dev'
+  _WORKLOAD_SA: 'novatlantis-workload-sa'
+  _DEPLOY_AGENT_ENGINE: 'true'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+
+steps:
+  # 1. Detecta quais microsserviços ou agentes mudaram no commit recém-mesclado
+  - id: 'detect-changes'
+    name: 'gcr.io/cloud-builders/git'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        git fetch --depth=2 origin "${BRANCH_NAME}" || true
+        chmod +x ./cloudbuild/scripts/detect-changed-services.sh
+        ./cloudbuild/scripts/detect-changed-services.sh . /workspace/changed_services.txt /workspace/changed_agent.txt
+
+  # 2. Constrói as imagens Docker e publica no Artifact Registry com tag SHA e tag de ambiente (dev ou prod)
+  - id: 'build-and-push-artifacts'
+    name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    waitFor: ['detect-changes']
+    args:
+      - '-c'
+      - |
+        set -euo pipefail
+        if [ ! -s /workspace/changed_services.txt ]; then
+          echo "[DEPLOY-${_ENV}] Nenhum microsserviço em apps/* alterado. Pulando etapa de Docker build."
+          exit 0
+        fi
+        for SVC in $(cat /workspace/changed_services.txt); do
+          IMAGE_BASE="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/$${SVC}"
+          TAG_SHA="${_ENV}-${SHORT_SHA}"
+          TAG_LATEST="${_ENV}-latest"
+
+          echo "[DEPLOY-${_ENV}] Construindo artefato imutável: $${IMAGE_BASE}:$${TAG_SHA}"
+          docker build \
+            -t "$${IMAGE_BASE}:$${TAG_SHA}" \
+            -t "$${IMAGE_BASE}:$${TAG_LATEST}" \
+            -f "apps/$${SVC}/Dockerfile" \
+            "apps/$${SVC}"
+
+          docker push "$${IMAGE_BASE}:$${TAG_SHA}"
+          docker push "$${IMAGE_BASE}:$${TAG_LATEST}"
+        done
+
+  # 3. Realiza o deploy no Google Cloud Run para cada microsserviço alterado
+  - id: 'deploy-cloud-run-services'
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    entrypoint: 'bash'
+    waitFor: ['build-and-push-artifacts']
+    args:
+      - '-c'
+      - |
+        set -euo pipefail
+        if [ ! -s /workspace/changed_services.txt ]; then
+          echo "[DEPLOY-${_ENV}] Nenhum microsserviço para implantar no Cloud Run."
+          exit 0
+        fi
+        SA_EMAIL="${_WORKLOAD_SA}@${PROJECT_ID}.iam.gserviceaccount.com"
+
+        for SVC in $(cat /workspace/changed_services.txt); do
+          CLOUD_RUN_SVC="${_SERVICE_PREFIX}-$${SVC}"
+          IMAGE_URI="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/$${SVC}:${_ENV}-${SHORT_SHA}"
+
+          echo "[DEPLOY-${_ENV}] Implantando revisão $${SHORT_SHA} no serviço Cloud Run [$${CLOUD_RUN_SVC}]..."
+          gcloud run deploy "$${CLOUD_RUN_SVC}" \
+            --image="$${IMAGE_URI}" \
+            --region="${_REGION}" \
+            --project="${PROJECT_ID}" \
+            --platform=managed \
+            --service-account="$${SA_EMAIL}" \
+            --ingress=all \
+            --min-instances=0 \
+            --max-instances=20 \
+            --cpu=1 \
+            --memory=1Gi \
+            --revision-suffix="${_ENV}-${SHORT_SHA}" \
+            --set-env-vars="NODE_ENV=${_ENV},NOVATLANTIS_ENV=${_ENV},NOVATLANTIS_SERVICE=$${SVC},GCP_PROJECT_ID=${PROJECT_ID},SUPPORTED_LOCALES=pt-BR|es-419|en-US" \
+            --set-secrets="NOVATLANTIS_JWT_SECRET=novatlantis-internal-jwt-authority:latest" \
+            --quiet
+
+          SVC_URL=$(gcloud run services describe "$${CLOUD_RUN_SVC}" --region="${_REGION}" --project="${PROJECT_ID}" --format="value(status.url)")
+          echo "[OK] $${CLOUD_RUN_SVC} (${_ENV}) publicado em: $${SVC_URL}"
+        done
+
+  # 4. Atualiza o Agente ADK (first-responder-agent) no Vertex AI Agent Engine se modificado
+  - id: 'deploy-first-responder-agent'
+    name: 'python:3.12-slim'
+    entrypoint: 'bash'
+    waitFor: ['detect-changes']
+    args:
+      - '-c'
+      - |
+        set -euo pipefail
+        if [ "$(cat /workspace/changed_agent.txt)" != "true" ] || [ "${_DEPLOY_AGENT_ENGINE}" != "true" ]; then
+          echo "[DEPLOY-${_ENV}] Agente ADK sem modificações ou deploy desabilitado."
+          exit 0
+        fi
+        echo "[DEPLOY-${_ENV}] Validando e implantando First-Responder Agent (${_ENV}) no Vertex AI Agent Engine..."
+        pip install --quiet uv
+        cd /workspace/first-responder-agent
+        uv sync --frozen || uv sync
+        uv run pytest tests/unit
+        uv tool install google-agents-cli || true
+        export PATH="/root/.local/bin:$PATH"
+        agents-cli deploy --project "${PROJECT_ID}" --region "${_REGION}" || echo "[WARN] Verifique permissões do Vertex AI Reasoning Engine para deploy automatizado."

@@ -1,0 +1,10 @@
+# ==============================================================================
+# REPÚBLICA DIGITAL DE NOVATLANTIS — PROPRIETÁRIO E APROVADOR DE PROD (CODEOWNERS)
+# Organização: https://github.com/LATAM-PS-CE-Team
+#
+# Regra de Governança:
+# - Branch 'dev'  (Ambiente DEV):  Merge livre sem entraves (0 aprovações exigidas).
+# - Branch 'main' (Ambiente PROD): Merge bloqueado até aprovação explícita de @pedrocalixto.
+# ==============================================================================
+
+*                               @pedrocalixto
