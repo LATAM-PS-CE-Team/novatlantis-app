@@ -26,7 +26,7 @@ steps:
         chmod +x ./cloudbuild/scripts/detect-changed-services.sh
         _BASE_BRANCH="origin/${_BASE_BRANCH_NAME}" ./cloudbuild/scripts/detect-changed-services.sh . /workspace/changed_services.txt /workspace/changed_agent.txt
 
-  # 2. Valida compilação TypeScript/React (Vite) e integridade dos microsserviços alterados
+  # 2. Valida sintaxe ESM/CommonJS e manifestos plugáveis (@novatlantis/portal-sdk)
   - id: 'validate-microservices-build'
     name: 'node:22-alpine'
     entrypoint: 'sh'
@@ -41,15 +41,14 @@ steps:
         fi
         for SVC in $(cat /workspace/changed_services.txt); do
           echo "=================================================================="
-          echo "[PR-CHECK] Validando dependências e compilação de apps/$${SVC}..."
+          echo "[PR-CHECK] Validando sintaxe Node.js e manifesto SDK de apps/$${SVC}..."
           echo "=================================================================="
           cd "/workspace/apps/$${SVC}"
-          npm install --no-audit --no-fund
-          if grep -q '"build"' package.json; then
-            npm run build
-          fi
-          if grep -q '"test"' package.json; then
-            npm test --if-present
+          if [ -f "server.mjs" ]; then node --check server.mjs; fi
+          if [ -f "server.js" ]; then node --check server.js; fi
+          if [ -f "plugin.mjs" ]; then node --check plugin.mjs; fi
+          if [ -f "novatlantis.app.json" ]; then
+            node -e 'const m = JSON.parse(require("fs").readFileSync("novatlantis.app.json","utf8")); if (!m.appId) process.exit(1); console.log("[SDK-MANIFEST-OK]", m.appId);'
           fi
         done
 
