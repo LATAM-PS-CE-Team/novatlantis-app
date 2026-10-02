@@ -5,6 +5,12 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
 import { handleCentralAuthAndProfileRoutes } from './authModule.mjs';
+import {
+  ensureBaseGdfTablesAndSeed,
+  initializePluggableAppsDatabase,
+  handleRegistryAndAppGatewayRoutes,
+  matchAndExecutePluggableAgent
+} from './portalSdk.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,6 +18,7 @@ const __dirname = path.dirname(__filename);
 const PORT = Number(process.env.PORT || 8080);
 const DB_PATH = process.env.GDF_DB_PATH || path.join(__dirname, 'gdf_sovereign.db');
 const DIST_DIR = path.join(__dirname, 'dist');
+const APPS_ROOT_DIR = process.env.NOVATLANTIS_APPS_DIR || path.resolve(__dirname, '..');
 
 const CITIZEN_PORTAL_URL =
   process.env.CITIZEN_PORTAL_URL || 'https://novatlantis-citizen-portal-wpahcxvhuq-uc.a.run.app';
@@ -28,6 +35,10 @@ console.log(`[Novatlantis National Portal & Orchestrator] Conectando ao banco GD
 const db = new DatabaseSync(DB_PATH);
 db.exec('PRAGMA journal_mode = WAL;');
 db.exec('PRAGMA synchronous = NORMAL;');
+ensureBaseGdfTablesAndSeed(db);
+initializePluggableAppsDatabase(APPS_ROOT_DIR, db).catch((err) =>
+  console.warn('[Portal SDK Init Warning]', err.message)
+);
 
 const ROLE_METADATA = {
   PRIME_MINISTER_ROOT: {
@@ -447,7 +458,7 @@ function detectQueryLanguage(text, fallbackLang = 'pt-BR') {
   return fallbackLang || 'pt-BR';
 }
 
-function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt-BR') {
+async function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt-BR') {
   const msg = String(userMessage || '').trim();
   const lower = msg.toLowerCase();
   const lang = detectQueryLanguage(msg, fallbackLang);
@@ -459,6 +470,16 @@ function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt-BR') 
   let reply = '';
   let citations = [];
   let serviceRequestAction = null;
+
+  const pluggableAgentMatch = await matchAndExecutePluggableAgent({
+    appsRootDir: APPS_ROOT_DIR,
+    profile,
+    message: msg,
+    lang,
+    db,
+    citizenPortalUrl: CITIZEN_PORTAL_URL,
+    govBackstageUrl: GOV_BACKSTAGE_URL
+  });
 
   const suggestedLinks = isAuthenticated
     ? [
@@ -843,6 +864,14 @@ function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt-BR') 
         : lang === 'es-419'
         ? 'De acuerdo con el **Artículo 45** de la Constitución de Novatlantis, los servidores públicos y delegados en misión oficial tienen derecho a viáticos estandarizados (**tope de 250 NVD/día** para hospedaje y alimentación) y pasajes en clase económica/ejecutiva según la duración del vuelo, con rendición de cuentas automatizada en el GDF mediante factura digital firmada, bloqueándose automáticamente gastos personales o de entretenimiento.'
         : 'De acordo com o **Artigo 45** da Constituição de Novatlantis, servidores públicos e delegados em missão oficial têm direito a diárias padronizadas (**teto de 250 NVD/dia** para hospedagem e alimentação) e passagens em classe econômica/executiva conforme duração do voo, com prestação de contas automatizada no GDF mediante nota fiscal digital assinada, sendo bloqueadas automaticamente despesas pessoais ou entretenimento.';
+  }
+  // 0.5. Delegação Dinâmica A2A para Módulos Plugáveis de CEs (@novatlantis/portal-sdk)
+  else if (pluggableAgentMatch) {
+    delegatedAgent = pluggableAgentMatch.delegatedAgent;
+    citations = pluggableAgentMatch.citations || [];
+    serviceRequestAction = pluggableAgentMatch.serviceRequestAction || null;
+    executedAction = pluggableAgentMatch.executedAction || null;
+    reply = pluggableAgentMatch.reply || '';
   }
   // 1. Intenção: Abertura de Empresa em 45s / UBI / Impostos / Economia
   else if (
@@ -2106,6 +2135,19 @@ const server = http.createServer(async (req, res) => {
     const pathname = url.pathname;
 
     if (pathname.startsWith('/api/v1/')) {
+      const handledBySdk = await handleRegistryAndAppGatewayRoutes({
+        req,
+        res,
+        db,
+        pathname,
+        url,
+        readBody,
+        sendJson,
+        appsRootDir: APPS_ROOT_DIR,
+        getFullCitizenProfile
+      });
+      if (handledBySdk) return;
+
       const handled = await handleCentralAuthAndProfileRoutes(req, res, db, pathname, url, readBody, sendJson);
       if (handled !== false) return;
     }
@@ -2119,7 +2161,7 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 200, {
         status: 'ok',
         service: 'novatlantis-landing-portal-orchestrator',
-        project_id: 'novatlantis',
+        project_id: process.env.GCP_PROJECT_ID || 'novatlantis-dev',
         database_engine: 'Google Cloud AlloyDB for PostgreSQL 15 (novatlantis-sovereign-cluster / novatlantis-primary-01)',
         government_data_platform: 'Google Cloud Government Data Platform (GDP) — Baseado em education-data-platform',
         citizens_total: totalCitizens,
@@ -2194,7 +2236,7 @@ const server = http.createServer(async (req, res) => {
       const body = await readBody(req);
       const targetNid = String(body.nid || body.citizen_id || '').trim();
       const profile = targetNid ? getFullCitizenProfile(targetNid) : null;
-      const result = runSovereignOrchestrator(profile, body.message || '', body.lang);
+      const result = await runSovereignOrchestrator(profile, body.message || '', body.lang);
       return sendJson(res, 200, result);
     }
 

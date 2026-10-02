@@ -65,9 +65,10 @@ steps:
         if [ ! -s /workspace/changed_services.txt ]; then
           exit 0
         fi
+        EFFECTIVE_SHA="${SHORT_SHA:-$(git rev-parse --short HEAD 2>/dev/null || echo 'prcheck')}"
         for SVC in $(cat /workspace/changed_services.txt); do
           echo "[PR-CHECK] Testando Dockerfile de apps/$${SVC}..."
-          docker build -t "pr-check-$${SVC}:${SHORT_SHA}" -f "apps/$${SVC}/Dockerfile" "apps/$${SVC}"
+          docker build -t "pr-check-$${SVC}:$${EFFECTIVE_SHA}" -f "apps/$${SVC}/Dockerfile" "apps/$${SVC}"
         done
 
   # 4. Valida testes unitários do First-Responder Agent (ADK)

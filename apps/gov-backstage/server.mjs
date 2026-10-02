@@ -4,6 +4,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
 import { handleCentralAuthAndProfileRoutes } from './authModule.mjs';
+import {
+  ensureBaseGdfTablesAndSeed,
+  initializePluggableAppsDatabase,
+  handleRegistryAndAppGatewayRoutes
+} from './portalSdk.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,8 +16,13 @@ const __dirname = path.dirname(__filename);
 const PORT = Number(process.env.PORT || 8080);
 const DIST_DIR = path.join(__dirname, 'dist');
 const DB_PATH = path.join(__dirname, 'gdf_sovereign.db');
+const APPS_DIR = fs.existsSync(path.resolve(__dirname, '..')) && fs.existsSync(path.resolve(__dirname, '../justice-court-tj'))
+  ? path.resolve(__dirname, '..')
+  : path.join(__dirname, 'pluggable-apps');
 
 const db = new DatabaseSync(DB_PATH);
+ensureBaseGdfTablesAndSeed(db);
+initializePluggableAppsDatabase(db, APPS_DIR);
 
 const IAM_ROLE_MATRIX = {
   PRIME_MINISTER_ROOT: {
@@ -294,8 +304,10 @@ const server = http.createServer(async (req, res) => {
   const pathname = parsedUrl.pathname;
 
   if (pathname.startsWith('/api/v1/')) {
-    const handled = await handleCentralAuthAndProfileRoutes(req, res, db, pathname, parsedUrl, readJsonBody, sendJson);
-    if (handled !== false) return;
+    const handledAuth = await handleCentralAuthAndProfileRoutes(req, res, db, pathname, parsedUrl, readJsonBody, sendJson);
+    if (handledAuth !== false) return;
+    const handledSdk = await handleRegistryAndAppGatewayRoutes(req, res, db, pathname, parsedUrl, readJsonBody, sendJson, APPS_DIR);
+    if (handledSdk !== false) return;
   }
 
   if (pathname === '/api/health' && req.method === 'GET') {

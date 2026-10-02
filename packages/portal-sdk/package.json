@@ -1,0 +1,11 @@
+{
+  "name": "@novatlantis/portal-sdk",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "SDK de Plugabilidade, Service Registry e API Gateway Federado do Portal Novatlantis para desenvolvimento colaborativo por CEs",
+  "main": "./src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  }
+}
