@@ -15,6 +15,8 @@ substitutions:
   _SERVICE_PREFIX: 'novatlantis-dev'
   _WORKLOAD_SA: 'novatlantis-workload-sa'
   _DEPLOY_AGENT_ENGINE: 'true'
+  _SHORT_SHA: 'latest'
+  _BRANCH_NAME: 'dev'
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -28,7 +30,7 @@ steps:
     args:
       - '-c'
       - |
-        git fetch --depth=2 origin "${BRANCH_NAME:-dev}" || true
+        git fetch --depth=2 origin "${_BRANCH_NAME}" || true
         chmod +x ./cloudbuild/scripts/detect-changed-services.sh
         ./cloudbuild/scripts/detect-changed-services.sh . /workspace/changed_services.txt /workspace/changed_agent.txt
 
@@ -45,7 +47,7 @@ steps:
           echo "[DEPLOY-${_ENV}] Nenhum microsserviço em apps/* alterado. Pulando etapa de Docker build."
           exit 0
         fi
-        EFFECTIVE_SHA="${SHORT_SHA:-$(git rev-parse --short HEAD 2>/dev/null || echo 'latest')}"
+        EFFECTIVE_SHA="${_SHORT_SHA}"
         echo "$${EFFECTIVE_SHA}" > /workspace/effective_sha.txt
         for SVC in $(cat /workspace/changed_services.txt); do
           IMAGE_BASE="${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_AR_REPO}/$${SVC}"
