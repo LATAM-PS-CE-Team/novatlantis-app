@@ -1,7 +1,12 @@
 import crypto from 'node:crypto';
-import pg from 'pg';
 
-const { Pool } = pg;
+let Pool = null;
+try {
+  const pgMod = await import('pg');
+  Pool = pgMod.default?.Pool || pgMod.Pool || null;
+} catch {
+  Pool = null;
+}
 
 export const ALLOYDB_CLUSTER_METADATA = {
   engine: 'Google Cloud AlloyDB for PostgreSQL 15 (HTAP Columnar + AlloyDB AI)',
@@ -58,6 +63,7 @@ let alloyPool = null;
 let alloyDirectConnected = false;
 
 try {
+  if (!Pool) throw new Error('pg not installed');
   alloyPool = new Pool({
     host: ALLOYDB_CLUSTER_METADATA.host,
     port: ALLOYDB_CLUSTER_METADATA.port,
@@ -374,8 +380,37 @@ export function ensureAuthTablesExist(db) {
       SET full_name = 'Joao Thiago Poço (JT)', email = 'jt@novatlantis.gov.cloud'
       WHERE nid = 'NID-000-0000-0001-9'
     `).run();
+
+    // Popula automaticamente user_credentials e postal_initial_dispatch para todos os cidadãos de dim_citizens
+    const missingCitizens = db
+      .prepare(`
+        SELECT c.nid, c.email
+        FROM dim_citizens c
+        LEFT JOIN user_credentials u ON u.nid = c.nid
+        WHERE u.nid IS NULL
+      `)
+      .all();
+
+    if (missingCitizens.length > 0) {
+      const insCred = db.prepare(`
+        INSERT OR IGNORE INTO user_credentials (
+          nid, password_hash, status, must_change_password, email, email_verified, failed_login_attempts
+        ) VALUES (?, ?, 'FIRST_LOGIN_REQUIRED', 1, ?, 0, 0)
+      `);
+      const insPostal = db.prepare(`
+        INSERT OR IGNORE INTO postal_initial_dispatch (
+          nid, initial_temp_password, dispatched_channel
+        ) VALUES (?, ?, 'CANAL_POSTAL_OFICIAL_CIDADANIA')
+      `);
+      for (const c of missingCitizens) {
+        const tempPass = `Novatlantis@${c.nid.slice(-6)}`;
+        const passHash = hashPasswordArgon2idCompat(tempPass);
+        insCred.run(c.nid, passHash, c.email);
+        insPostal.run(c.nid, tempPass);
+      }
+    }
   } catch {
-    // ignore if dim_citizens not present
+    // ignore if dim_citizens not present yet
   }
 
   // Synchronize schema & initial rows to AlloyDB Primary Instance (AlloyDB Primary)
@@ -499,6 +534,29 @@ export function getReadOnlyFamilyGraph(db, nid) {
   return [...outgoing, ...incoming];
 }
 
+const CITIZEN_AUTH_ALIASES = {
+  jt: 'NID-000-0000-0001-9',
+  'jt@novatlantis.gov.cloud': 'NID-000-0000-0001-9',
+  'joao.poco@novatlantis.gov.cloud': 'NID-000-0000-0001-9',
+  'secretario.geral@novatlantis.gov.cloud': 'NID-000-0000-0002-7',
+  'pedrocalixto@novatlantis.gov.cloud': 'NID-000-0000-0002-7',
+  'gestor.identidade@novatlantis.gov.cloud': 'NID-000-0000-0003-5',
+  'helena.albuquerque@novatlantis.gov.cloud': 'NID-000-0000-0003-5',
+  'sofia.mendes@saude.novatlantis.gov.cloud': 'NID-000-0000-0004-3',
+  'dra.sofia.mendes@novatlantis.gov.cloud': 'NID-000-0000-0004-3',
+  'lucas.albuquerque@educacao.novatlantis.gov.cloud': 'NID-000-0000-0006-0',
+  'prof.lucas.silva@novatlantis.gov.cloud': 'NID-000-0000-0006-0',
+  'rafael.santos@operacoes.novatlantis.gov.cloud': 'NID-000-0000-0008-6',
+  'comandante.rafael@novatlantis.gov.cloud': 'NID-000-0000-0008-6',
+  'clara.sterling@justica.novatlantis.gov.cloud': 'NID-000-0000-0009-4',
+  'juiza.clara.sterling@novatlantis.gov.cloud': 'NID-000-0000-0009-4',
+  'pedro.albuquerque@cidadao.novatlantis.gov.cloud': 'NID-000-0000-0010-8',
+  'pedro.viana@cidadao.novatlantis.gov.cloud': 'NID-000-0000-0010-8',
+  'alice.viana@cidadao.novatlantis.gov.cloud': 'NID-000-0000-0011-6',
+  'nid-000-0000-0010-2': 'NID-000-0000-0010-8',
+  'nid-000-0000-0011-0': 'NID-000-0000-0011-6'
+};
+
 export async function handleCentralAuthAndProfileRoutes(req, res, db, pathname, parsedUrl, readBodyFn, sendJsonFn) {
   ensureAuthTablesExist(db);
   const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';
@@ -514,12 +572,7 @@ export async function handleCentralAuthAndProfileRoutes(req, res, db, pathname, 
     const rawIdentifier = String(parsedUrl.searchParams.get('nid') || 'NID-000-0000-0001-9').trim();
     const checkOnly = parsedUrl.searchParams.get('check_only') === '1';
     const normalizedId = rawIdentifier.toLowerCase();
-    const aliasNid =
-      normalizedId === 'jt' ||
-      normalizedId === 'jt@novatlantis.gov.cloud' ||
-      normalizedId === 'joao.poco@novatlantis.gov.cloud'
-        ? 'NID-000-0000-0001-9'
-        : null;
+    const aliasNid = CITIZEN_AUTH_ALIASES[normalizedId] || null;
     const citizen = aliasNid
       ? db.prepare('SELECT nid, full_name, email, iam_role FROM dim_citizens WHERE nid = ? LIMIT 1').get(aliasNid)
       : db
@@ -592,10 +645,10 @@ export async function handleCentralAuthAndProfileRoutes(req, res, db, pathname, 
     `).run(newHash, nid);
     db.prepare(`
       INSERT INTO postal_initial_dispatch (nid, initial_temp_password, dispatched_channel)
-      VALUES (?, ?, 'CANAL_POSTAL_OFICIAL_CIDADANIA')
+      VALUES (?, ?, 'FORCE_FIRST_LOGIN_CHALLENGE')
       ON CONFLICT(nid) DO UPDATE SET
         initial_temp_password = excluded.initial_temp_password,
-        dispatched_channel = 'CANAL_POSTAL_OFICIAL_CIDADANIA'
+        dispatched_channel = 'FORCE_FIRST_LOGIN_CHALLENGE'
     `).run(nid, tempPass);
     return sendJsonFn(res, 200, {
       reset: true,
@@ -623,14 +676,9 @@ export async function handleCentralAuthAndProfileRoutes(req, res, db, pathname, 
       return sendJsonFn(res, 400, { error: 'Informe o NID (ex: NID-000-0000-0001-9) ou e-mail e a senha.' });
     }
 
-    // Resolve NID por NID, e-mail ou sigla oficial JT
+    // Resolve NID por NID, e-mail ou alias oficial
     const normalizedId = rawIdentifier.toLowerCase();
-    const aliasNid =
-      normalizedId === 'jt' ||
-      normalizedId === 'jt@novatlantis.gov.cloud' ||
-      normalizedId === 'joao.poco@novatlantis.gov.cloud'
-        ? 'NID-000-0000-0001-9'
-        : null;
+    const aliasNid = CITIZEN_AUTH_ALIASES[normalizedId] || null;
     const citizenRow = aliasNid
       ? db.prepare('SELECT nid, email FROM dim_citizens WHERE nid = ? LIMIT 1').get(aliasNid)
       : db
@@ -638,7 +686,22 @@ export async function handleCentralAuthAndProfileRoutes(req, res, db, pathname, 
           .get(rawIdentifier.toUpperCase(), rawIdentifier.toLowerCase());
     const nid = citizenRow ? citizenRow.nid : rawIdentifier.toUpperCase();
 
-    const cred = db.prepare('SELECT * FROM user_credentials WHERE nid = ?').get(nid);
+    let cred = db.prepare('SELECT * FROM user_credentials WHERE nid = ?').get(nid);
+    if (!cred && citizenRow) {
+      const tempPass = `Novatlantis@${nid.slice(-6)}`;
+      const passHash = hashPasswordArgon2idCompat(tempPass);
+      db.prepare(`
+        INSERT OR IGNORE INTO user_credentials (
+          nid, password_hash, status, must_change_password, email, email_verified, failed_login_attempts
+        ) VALUES (?, ?, 'FIRST_LOGIN_REQUIRED', 1, ?, 0, 0)
+      `).run(nid, passHash, citizenRow.email);
+      db.prepare(`
+        INSERT OR IGNORE INTO postal_initial_dispatch (
+          nid, initial_temp_password, dispatched_channel
+        ) VALUES (?, ?, 'CANAL_POSTAL_OFICIAL_CIDADANIA')
+      `).run(nid, tempPass);
+      cred = db.prepare('SELECT * FROM user_credentials WHERE nid = ?').get(nid);
+    }
     if (!cred) {
       return sendJsonFn(res, 401, { error: 'Credenciais inválidas ou NID inexistente na base de 100.000 cidadãos.' });
     }
@@ -704,9 +767,12 @@ export async function handleCentralAuthAndProfileRoutes(req, res, db, pathname, 
       WHERE nid = ?
     `).run(nid);
 
-    // Se pediu force_first_login ou (não é conta de demonstração rápida e está pendente de 1º login)
-    const forceFirstLogin = Boolean(body.force_first_login);
-    const isExecutiveQuickAccount = nid.startsWith('NID-000-0000-000') && !forceFirstLogin && !firstPasswordCreated;
+    // Se pediu force_first_login ou clicou em "Redefinir 1º acesso"
+    const forceFirstLogin = Boolean(body.force_first_login) || postal?.dispatched_channel === 'FORCE_FIRST_LOGIN_CHALLENGE';
+    const isExecutiveQuickAccount =
+      (nid.startsWith('NID-000-0000-000') || nid.startsWith('NID-000-0000-001')) &&
+      !forceFirstLogin &&
+      !firstPasswordCreated;
     if (
       !isExecutiveQuickAccount &&
       !firstPasswordCreated &&
