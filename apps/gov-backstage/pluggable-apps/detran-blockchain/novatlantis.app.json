@@ -1,0 +1,94 @@
+{
+  "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
+  "appId": "detran-blockchain",
+  "version": "1.0.0",
+  "owner": "@ernani (Argolis Blockchain)",
+  "sector": "TRANSIT_LEGISLATION_BLOCKCHAIN",
+  "deploymentMode": "EXTERNAL_FEDERATED_CE",
+  "federatedSubdomain": "detran",
+  "externalTargetUrl": "https://material.136.81.200.203.nip.io/pn44detran",
+  "landingCatalog": {
+    "enabled": true,
+    "icon": "VerifiedUser",
+    "badge": "DETRAN • LEGISLAÇÃO BLOCKCHAIN (FEDERADO @ERNANI)",
+    "title": {
+      "pt-BR": "Normas.gov & PN44 DETRAN — Legislação Validada em Blockchain",
+      "es-419": "Normas.gov & PN44 DETRAN — Legislación Validada en Blockchain",
+      "en-US": "Normas.gov & PN44 DETRAN — Blockchain-Verified Legislation"
+    },
+    "agency": {
+      "pt-BR": "Departamento Nacional de Trânsito (DETRAN) & Imprensa Oficial Blockchain",
+      "es-419": "Departamento Nacional de Tránsito (DETRAN) e Imprenta Oficial Blockchain",
+      "en-US": "National Department of Transit (DETRAN) & Official Blockchain Gazette"
+    },
+    "description": {
+      "pt-BR": "Toda a legislação, portarias e resoluções normativas (PN44 DETRAN) auditadas por IA, versionadas e registradas de forma imutável em rede Blockchain soberana.",
+      "es-419": "Toda la legislación, portarías y resoluciones normativas (PN44 DETRAN) auditadas por IA y registradas de forma inmutable en Blockchain.",
+      "en-US": "All transit legislation, decrees, and regulatory resolutions (PN44 DETRAN) audited by AI and immutably notarized on a sovereign Blockchain."
+    },
+    "questionPrompt": {
+      "pt-BR": "Como consultar a legislação e portarias do DETRAN validadas e registradas em Blockchain?",
+      "es-419": "¿Cómo consultar la legislación y resoluciones del DETRAN validadas y registradas en Blockchain?",
+      "en-US": "How can I verify DETRAN legislation and regulatory decrees notarized on the Blockchain?"
+    },
+    "servicePrompt": {
+      "pt-BR": "Acessar o portal Normas.gov / PN44 DETRAN com validação de legislação em Blockchain",
+      "es-419": "Acceder al portal Normas.gov / PN44 DETRAN con validación de legislación en Blockchain",
+      "en-US": "Open the Normas.gov / PN44 DETRAN Blockchain Legislation Portal"
+    }
+  },
+  "agentIntegration": {
+    "agentId": "agent-detran-blockchain-v1 (Normas.gov & PN44 DETRAN Blockchain)",
+    "triggerKeywords": [
+      "detran",
+      "pn44",
+      "blockchain",
+      "legislação",
+      "legislacao",
+      "portaria",
+      "normas",
+      "trânsito",
+      "transito",
+      "cnh",
+      "contran"
+    ],
+    "executeEndpoint": "/api/v1/agent/execute",
+    "requiresAuthForTransaction": false
+  },
+  "citizenPortalTab": {
+    "enabled": true,
+    "tabId": "detran_blockchain",
+    "title": {
+      "pt-BR": "12. PN44 DETRAN — Legislação Auditada em Blockchain",
+      "es-419": "12. PN44 DETRAN — Legislación Auditada en Blockchain",
+      "en-US": "12. PN44 DETRAN — Blockchain-Audited Legislation"
+    },
+    "subtitle": {
+      "pt-BR": "Nó Federado Argolis (@ernani) — Rastreabilidade criptográfica e imutabilidade de normas públicas",
+      "es-419": "Nodo Federado Argolis (@ernani) — Trazabilidad criptográfica de normas públicas",
+      "en-US": "Federated Argolis Node (@ernani) — Cryptographic traceability of public norms"
+    },
+    "uiEntryPath": "/embed/citizen",
+    "apiBasePath": "/api/v1/apps/detran-blockchain"
+  },
+  "backstageModule": {
+    "enabled": true,
+    "moduleId": "detran_blockchain_backstage",
+    "allowedRoles": [
+      "PRIME_MINISTER_ROOT",
+      "SECRETARY_GENERAL",
+      "JUSTICE_AND_TREASURY_MANAGER"
+    ],
+    "title": {
+      "pt-BR": "Imprensa Oficial & Normas DETRAN em Blockchain (@ernani)",
+      "es-419": "Imprenta Oficial y Normas DETRAN en Blockchain (@ernani)",
+      "en-US": "Official Gazette & DETRAN Blockchain Legislation (@ernani)"
+    },
+    "subtitle": {
+      "pt-BR": "Validação e registro imutável de legislação em Blockchain hospedado na conta Argolis do @ernani",
+      "es-419": "Validación y registro inmutable de legislación en Blockchain alojado en la cuenta de @ernani",
+      "en-US": "Immutable blockchain notarization of legislation hosted on @ernani's Argolis account"
+    },
+    "uiEntryPath": "/embed/backstage"
+  }
+}

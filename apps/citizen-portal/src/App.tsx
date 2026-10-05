@@ -1502,7 +1502,7 @@ export default function App() {
               </div>
             )}
 
-            {/* PLUGGABLE SECTORAL MODULE TAB (e.g. Tribunal de Justiça Digital - TJ) */}
+            {/* PLUGGABLE SECTORAL MODULE TAB (e.g. Tribunal de Justiça Digital - TJ or Federated External CE Demos) */}
             {activePluggableTab && (
               <div className="space-y-6">
                 <div className="bg-white rounded-md p-6 border border-[#002046]/15 shadow-sm">
@@ -1522,10 +1522,16 @@ export default function App() {
                       {(pluggableViewData?.actions || []).map((act: any) => (
                         <button
                           key={act.action_id}
-                          onClick={() => handlePluggableAction(activePluggableTab.appId, act.action_id)}
-                          className="bg-[#002046] text-white px-3.5 py-2 rounded text-xs font-bold hover:bg-[#00356e] transition"
+                          onClick={() => {
+                            if (act.externalUrl) {
+                              window.open(act.externalUrl, '_blank', 'noopener,noreferrer');
+                            }
+                            handlePluggableAction(activePluggableTab.appId, act.action_id);
+                          }}
+                          className="bg-[#002046] text-white px-3.5 py-2 rounded text-xs font-bold hover:bg-[#00356e] transition flex items-center gap-1.5"
                         >
                           {act.label?.[lang] || act.label?.pt || act.action_id}
+                          {act.externalUrl && <ExternalLink className="w-3.5 h-3.5" />}
                         </button>
                       ))}
                     </div>
@@ -1546,7 +1552,7 @@ export default function App() {
 
                   <div className="space-y-3">
                     <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#002046]">
-                      Processos Eletrônicos, Certidões e Audiências Soberanas ({citizen?.full_name})
+                      Processos Eletrônicos, Certidões e Sistemas Federados ({citizen?.full_name})
                     </h4>
                     {(pluggableViewData?.records || []).map((rec: any, idx: number) => (
                       <div key={idx} className="p-4 rounded bg-[#fcfbf9] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -1566,12 +1572,24 @@ export default function App() {
                             {rec.court_branch || `Hash de Autenticidade: ${rec.authenticity_hash}`} • {rec.ai_conciliation_summary || `Emitido em ${rec.issued_at}`}
                           </div>
                         </div>
-                        {rec.claim_amount_nva !== undefined && (
-                          <div className="text-right">
-                            <div className="text-xs text-slate-500">Valor da Causa</div>
-                            <div className="text-sm font-extrabold text-[#002046]">NVA$ {rec.claim_amount_nva}</div>
-                          </div>
-                        )}
+                        <div className="flex items-center gap-3">
+                          {rec.claim_amount_nva !== undefined && (
+                            <div className="text-right">
+                              <div className="text-xs text-slate-500">Valor da Causa</div>
+                              <div className="text-sm font-extrabold text-[#002046]">NVA$ {rec.claim_amount_nva}</div>
+                            </div>
+                          )}
+                          {rec.external_url && (
+                            <a
+                              href={rec.external_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-3 py-1.5 rounded bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 flex items-center gap-1"
+                            >
+                              Abrir Demo <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>

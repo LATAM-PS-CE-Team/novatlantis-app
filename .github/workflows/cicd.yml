@@ -22,25 +22,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Resolve Environment & WIF Parameters
+      - name: Resolve Environment & WIF Parameters (Project novatlantis)
         id: env_cfg
         run: |
           SHORT_SHA=$(git rev-parse --short HEAD)
           echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          echo "project_id=novatlantis" >> "$GITHUB_OUTPUT"
+          echo "wif_provider=projects/1054221034062/locations/global/workloadIdentityPools/github-latam-ps-ce-pool/providers/github-oidc-provider" >> "$GITHUB_OUTPUT"
+          echo "service_account=novatlantis-cicd-deployer@novatlantis.iam.gserviceaccount.com" >> "$GITHUB_OUTPUT"
           if [ "${IS_PROD}" = "true" ]; then
-            echo "project_id=novatlantis-prd" >> "$GITHUB_OUTPUT"
             echo "app_env=prod" >> "$GITHUB_OUTPUT"
             echo "service_prefix=novatlantis-prod" >> "$GITHUB_OUTPUT"
+            echo "ar_repo=novatlantis-prod-gov-repo" >> "$GITHUB_OUTPUT"
+            echo "workload_sa=novatlantis-workload-sa" >> "$GITHUB_OUTPUT"
+            echo "jwt_secret=novatlantis-prod-jwt-authority" >> "$GITHUB_OUTPUT"
             echo "branch_name=main" >> "$GITHUB_OUTPUT"
-            echo "wif_provider=projects/364434027894/locations/global/workloadIdentityPools/github-latam-ps-ce-pool/providers/github-oidc-provider" >> "$GITHUB_OUTPUT"
-            echo "service_account=novatlantis-cicd-deployer@novatlantis-prd.iam.gserviceaccount.com" >> "$GITHUB_OUTPUT"
           else
-            echo "project_id=novatlantis-dev" >> "$GITHUB_OUTPUT"
             echo "app_env=dev" >> "$GITHUB_OUTPUT"
             echo "service_prefix=novatlantis-dev" >> "$GITHUB_OUTPUT"
+            echo "ar_repo=novatlantis-dev-gov-repo" >> "$GITHUB_OUTPUT"
+            echo "workload_sa=novatlantis-workload-sa" >> "$GITHUB_OUTPUT"
+            echo "jwt_secret=novatlantis-dev-jwt-authority" >> "$GITHUB_OUTPUT"
             echo "branch_name=dev" >> "$GITHUB_OUTPUT"
-            echo "wif_provider=projects/927013504695/locations/global/workloadIdentityPools/github-latam-ps-ce-pool/providers/github-oidc-provider" >> "$GITHUB_OUTPUT"
-            echo "service_account=novatlantis-cicd-deployer@novatlantis-dev.iam.gserviceaccount.com" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Authenticate to Google Cloud via Keyless WIF
@@ -65,5 +68,5 @@ jobs:
         run: |
           gcloud builds submit . \
             --config=cloudbuild/cloudbuild-deploy.yaml \
-            --substitutions=_ENV=${{ steps.env_cfg.outputs.app_env }},_REGION=us-central1,_AR_REPO=novatlantis-gov-repo,_SERVICE_PREFIX=${{ steps.env_cfg.outputs.service_prefix }},_WORKLOAD_SA=novatlantis-workload-sa,_DEPLOY_AGENT_ENGINE=false,_SHORT_SHA=${{ steps.env_cfg.outputs.short_sha }},_BRANCH_NAME=${{ steps.env_cfg.outputs.branch_name }} \
+            --substitutions=_ENV=${{ steps.env_cfg.outputs.app_env }},_REGION=us-central1,_AR_REPO=${{ steps.env_cfg.outputs.ar_repo }},_SERVICE_PREFIX=${{ steps.env_cfg.outputs.service_prefix }},_WORKLOAD_SA=${{ steps.env_cfg.outputs.workload_sa }},_JWT_SECRET=${{ steps.env_cfg.outputs.jwt_secret }},_DEPLOY_AGENT_ENGINE=false,_SHORT_SHA=${{ steps.env_cfg.outputs.short_sha }},_BRANCH_NAME=${{ steps.env_cfg.outputs.branch_name }} \
             --project=${{ steps.env_cfg.outputs.project_id }}
