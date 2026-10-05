@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Governo da República Digital de Novatlantis — Portal Oficial de Serviços e Estado Soberano</title>
+    <title>Governo de Novatlantis — Portal de Serviços Públicos</title>
     <meta
       name="description"
-      content="Portal Oficial da República Digital de Novatlantis (Libertas in Digitali) — Infraestrutura Pública Digital, Identidade Soberana 360 (GDF 100k), Serviços ao Cidadão e Backstage Governamental."
+      content="Portal de serviços públicos digitais de Novatlantis: Identidade NID, Saúde, Educação, Justiça, Tesouro e Atendimento Urbano."
     />
     <link rel="icon" type="image/jpeg" href="/assets/coat-of-arms-novatlantis.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Roboto+Mono:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -26,39 +26,35 @@
         theme: {
           extend: {
             colors: {
-              'surface': '#f7f9fc',
-              'surface-dim': '#d8dadd',
-              'surface-bright': '#f7f9fc',
+              'surface': '#f8f9fa',
+              'surface-dim': '#e8eaed',
+              'surface-bright': '#ffffff',
               'surface-container-lowest': '#ffffff',
-              'surface-container-low': '#f2f4f7',
-              'surface-container': '#eceef1',
-              'surface-container-high': '#e6e8eb',
-              'surface-container-highest': '#e0e3e6',
-              'on-surface': '#191c1e',
-              'on-surface-variant': '#45464d',
-              'primary': '#000000',
-              'primary-container': '#141a32',
+              'surface-container-low': '#f1f3f4',
+              'surface-container': '#e8eaed',
+              'surface-container-high': '#dadce0',
+              'surface-container-highest': '#bdc1c6',
+              'on-surface': '#202124',
+              'on-surface-variant': '#5f6368',
+              'primary': '#1a73e8',
+              'primary-container': '#e8f0fe',
               'on-primary': '#ffffff',
-              'on-primary-container': '#7c83a0',
-              'secondary': '#0061a5',
-              'secondary-container': '#0095f8',
+              'on-primary-container': '#174ea6',
+              'secondary': '#1e8e3e',
+              'secondary-container': '#e6f4ea',
               'on-secondary': '#ffffff',
-              'tertiary': '#006b5b',
-              'tertiary-container': '#00957f',
-              'tertiary-fixed': '#57fbdb',
-              'error': '#ba1a1a',
-              'error-container': '#ffdad6',
-              'outline': '#76777e',
-              'outline-variant': '#c6c6ce',
-              'sovereign-navy': '#0A1128',
-              'civic-border': '#DCE3EC'
+              'tertiary': '#f9ab00',
+              'error': '#d93025',
+              'error-container': '#fce8e6',
+              'outline': '#dadce0',
+              'outline-variant': '#e8eaed'
             },
             fontFamily: {
-              headline: ['Public Sans', 'sans-serif'],
-              body: ['Inter', 'sans-serif'],
-              label: ['Public Sans', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-              sans: ['Inter', 'system-ui', 'sans-serif']
+              headline: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+              body: ['Inter', 'Roboto', 'sans-serif'],
+              label: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+              mono: ['"Roboto Mono"', 'monospace'],
+              sans: ['Inter', 'Roboto', 'system-ui', 'sans-serif']
             }
           }
         }
@@ -70,19 +66,19 @@
         vertical-align: middle;
       }
       body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f7f9fc;
-        color: #191c1e;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        background-color: #f8f9fa;
+        color: #202124;
       }
-      h1, h2, h3, h4, .font-headline {
-        font-family: 'Public Sans', sans-serif;
+      h1, h2, h3, h4, .font-headline, .font-serif-authority {
+        font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
       }
       .tabular-nums {
         font-variant-numeric: tabular-nums;
       }
     </style>
   </head>
-  <body class="bg-[#f7f9fc] text-[#191c1e] antialiased selection:bg-[#0061a5] selection:text-white">
+  <body class="bg-[#f8f9fa] text-[#202124] antialiased selection:bg-[#1a73e8] selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

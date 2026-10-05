@@ -2,7 +2,7 @@
   "name": "@novatlantis/justice-court-tj",
   "version": "1.0.0",
   "private": true,
-  "description": "Módulo Plugável CE — Tribunal de Justiça Digital & Juizado Especial IA",
+  "description": "Módulo Setorial — Tribunal de Justiça & Juizado Especial",
   "scripts": {
     "start": "node server.js",
     "build": "echo 'Build justice-court-tj OK'",

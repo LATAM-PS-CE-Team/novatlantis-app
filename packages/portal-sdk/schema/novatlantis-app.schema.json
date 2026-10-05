@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://novatlantis.gov.cloud/schemas/novatlantis-app.schema.json",
   "title": "Novatlantis Pluggable App Manifest",
-  "description": "Contrato declarativo para acoplar novos casos de uso setoriais (apps/*) ao Portal Nacional, Concierge IA, Portal do Cidadão e Government Backstage.",
+  "description": "Contrato declarativo para acoplar novos módulos setoriais (apps/*) ao Portal de Serviços, Atendimento Digital, Portal do Cidadão e Backstage.",
   "type": "object",
   "required": [
     "appId",
@@ -16,14 +16,14 @@
     "appId": {
       "type": "string",
       "pattern": "^[a-z0-9-]+$",
-      "description": "Identificador único (slug) do aplicativo em apps/<appId>"
+      "description": "Identificador único (slug) do módulo em apps/<appId>"
     },
     "version": {
       "type": "string"
     },
     "owner": {
       "type": "string",
-      "description": "GitHub handle ou e-mail do Customer Engineer (CE) responsável"
+      "description": "Órgão público ou equipe responsável pelo módulo"
     },
     "sector": {
       "type": "string",

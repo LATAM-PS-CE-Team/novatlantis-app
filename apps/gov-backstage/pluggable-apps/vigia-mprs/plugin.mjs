@@ -3,7 +3,7 @@ const FEDERATED_SUBDOMAIN = 'vigia';
 
 export async function initDatabase() {}
 
-export async function getCitizenView(_db, { nid, lang = 'pt-BR' }) {
+export async function getCitizenView(_db, { lang = 'pt-BR' }) {
   return {
     appId: 'vigia-mprs',
     mode: 'citizen',
@@ -11,25 +11,24 @@ export async function getCitizenView(_db, { nid, lang = 'pt-BR' }) {
     externalTargetUrl: EXTERNAL_URL,
     federatedSubdomain: FEDERATED_SUBDOMAIN,
     kpis: [
-      { label: 'Nó Federado Argolis', value: 'mprs-cpsi (@jopoco)', status: 'ONLINE' },
-      { label: 'Desafio CPSI 01/2026', value: 'Desafio 41 • Jurimetria', status: 'ACTIVE' },
-      { label: 'Domínio Soberano', value: 'vigia.gov.novatlantis.cloud', status: 'VERIFIED' },
-      { label: 'Custo de Computação', value: 'Descentralizado (CE Argolis)', status: 'OPTIMIZED' }
+      { label: 'Órgão', value: 'MPRS', status: 'ONLINE' },
+      { label: 'Escopo', value: 'Tutela Coletiva', status: 'ACTIVE' },
+      { label: 'Subdomínio', value: 'vigia.gov.novatlantis.cloud', status: 'VERIFIED' }
     ],
     sections: [
       {
         id: 'federated_launch',
-        title: 'Vigia.ia — Inteligência de Tutela Coletiva · MPRS (MVP Demo)',
-        description: `Plataforma de jurimetria extrajudicial construída por João Thiago Poço (@jopoco) no projeto Argolis mprs-cpsi e acoplada ao Portal Novatlantis.`,
+        title: 'Vigia.ia — Tutela Coletiva e Jurimetria (MPRS)',
+        description: 'Painel de jurimetria extrajudicial e acompanhamento de inquéritos civis.',
         type: 'cards',
         items: [
           {
-            id: 'CARD-VIGIA-1',
-            title: 'Abrir Plataforma Vigia.ia (Visão Geral & Jurimetria)',
-            subtitle: 'Hospedado em southamerica-east1 (mprs-cpsi) • Faturamento isolado na conta do CE',
-            badge: 'ACESSO DIRETO • CLOUD RUN FEDERADO',
+            id: 'VIGIA-APP',
+            title: 'Acessar Vigia.ia',
+            subtitle: 'Ministério Público Estadual (MPRS)',
+            badge: 'ONLINE',
             status: 'ONLINE',
-            meta: EXTERNAL_URL,
+            meta: 'https://vigia.gov.novatlantis.cloud',
             externalUrl: EXTERNAL_URL,
             federatedUrl: 'https://vigia.gov.novatlantis.cloud'
           }
@@ -40,32 +39,25 @@ export async function getCitizenView(_db, { nid, lang = 'pt-BR' }) {
 }
 
 export async function getBackstageView(db, { lang = 'pt-BR' }) {
-  return getCitizenView(db, { nid: 'BACKSTAGE', lang });
+  return getCitizenView(db, { lang });
 }
 
-export async function handleAgentIntent(_db, { nid, citizenName }) {
+export async function handleAgentIntent() {
   const protocol = `MPRS-VIGIA-${Date.now().toString().slice(-6)}`;
   return {
     intent: 'MPRS_VIGIA_FEDERATED_LAUNCH',
-    delegated_agent: 'agent-vigia-mprs-v1 (Vigia.ia — Inteligência de Tutela Coletiva MPRS)',
+    delegated_agent: 'agent-vigia-mprs',
     source_document: EXTERNAL_URL,
     executed_action: {
       type: 'FEDERATED_REDIRECT_READY',
       protocol,
-      summary: 'Acesso Federado ao Observatório Vigia.ia (MPRS) liberado',
+      summary: 'Acesso ao Vigia.ia (MPRS)',
       external_url: EXTERNAL_URL,
-      federated_domain: 'https://vigia.gov.novatlantis.cloud',
-      details: {
-        owner_ce: '@jopoco (João Thiago Poço)',
-        gcp_project: 'mprs-cpsi (633153854135)',
-        region: 'southamerica-east1',
-        citizen: citizenName || nid || 'Cidadão / Promotor'
-      }
+      federated_domain: 'https://vigia.gov.novatlantis.cloud'
     },
     response:
-      `Localizei o módulo federado **Vigia.ia — Inteligência de Tutela Coletiva & Jurimetria Extrajudicial (MPRS)** (Protocolo \`${protocol}\`), mantido por **@jopoco** no projeto Argolis \`mprs-cpsi\`:\n\n` +
-      `• **Objetivo:** Jurimetria extrajudicial do Desafio 41 do CPSI 01/2026 com Google Cloud.\n` +
-      `• **Acesso pelo Domínio Novatlantis:** https://vigia.gov.novatlantis.cloud\n` +
-      `• **Link Direto Cloud Run (Origem CE):** ${EXTERNAL_URL}`
+      `**Vigia.ia — Tutela Coletiva e Jurimetria (MPRS):**\n` +
+      `Painel de análise de inquéritos civis e detecção de demandas coletivas.\n\n` +
+      `• **Acesso:** https://vigia.gov.novatlantis.cloud`
   };
 }

@@ -3,7 +3,7 @@
  * Motor de Auto-Discovery, Service Registry, Seed Resiliente GDF e API Gateway Federado
  * da República Digital de Novatlantis.
  *
- * Permite que qualquer Customer Engineer (CE) crie um novo módulo em `apps/<app-id>/`
+ * Permite que equipes técnicas criem um novo módulo em `apps/<app-id>/`
  * contendo `novatlantis.app.json` + `plugin.mjs` e acople automaticamente o caso de uso nas 4 frentes:
  *   1. Vitrine da Home Page (`landing-portal`)
  *   2. Concierge IA Nacional (`POST /api/orchestrator/chat`)
@@ -570,12 +570,12 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
       const fallbackActions = rawView.externalTargetUrl
         ? [
             {
-              action_id: 'OPEN_FEDERATED_CE_DEMO',
+              action_id: 'OPEN_FEDERATED_MODULE',
               label: {
-                'pt-BR': 'Abrir Aplicação Federada (Nova Aba)',
-                'es-419': 'Abrir Aplicación Federada (Nueva Pestaña)',
-                'en-US': 'Open Federated App (New Tab)',
-                pt: 'Abrir Aplicação Federada (Nova Aba)'
+                'pt-BR': 'Acessar sistema',
+                'es-419': 'Acceder al sistema',
+                'en-US': 'Open system',
+                pt: 'Acessar sistema'
               },
               externalUrl: rawView.externalTargetUrl
             }
