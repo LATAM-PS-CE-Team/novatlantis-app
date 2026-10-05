@@ -105,8 +105,7 @@ export function ensureBaseGdfTablesAndSeed(db) {
     );
   `);
 
-  const count = db.prepare('SELECT COUNT(*) AS cnt FROM dim_citizens').get().cnt;
-  if (count === 0) {
+  {
     const insCitizen = db.prepare(`
       INSERT OR IGNORE INTO dim_citizens VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
@@ -180,6 +179,23 @@ export function ensureBaseGdfTablesAndSeed(db) {
         'REGULAR_ACTIVE'
       ],
       [
+        'NID-000-0000-0005-1',
+        'Dr. Mateo Vargas Ríos',
+        'mateo.vargas@saude.novatlantis.gov.cloud',
+        '1981-06-15',
+        45,
+        'M',
+        'MARRIED',
+        'es-419',
+        'NATIVE_SOVEREIGN',
+        'CRM-NV-10890',
+        'Médico Clínico de Telemedicina & Cardiologia Preventiva',
+        'DOCTOR_TELEMED',
+        'ADDR-NV-0005',
+        'Porto Solar',
+        'REGULAR_ACTIVE'
+      ],
+      [
         'NID-000-0000-0006-0',
         'Prof. Lucas Albuquerque Silva',
         'prof.lucas.silva@novatlantis.gov.cloud',
@@ -194,6 +210,23 @@ export function ensureBaseGdfTablesAndSeed(db) {
         'TEACHER_AND_EDU_MANAGER',
         'ADDR-NV-0006',
         'Colina da Justiça',
+        'REGULAR_ACTIVE'
+      ],
+      [
+        'NID-000-0000-0007-8',
+        'Profa. Valeria Ríos Hernández',
+        'valeria.rios@educacao.novatlantis.gov.cloud',
+        '1987-03-22',
+        39,
+        'F',
+        'SINGLE',
+        'es-419',
+        'NATIVE_SOVEREIGN',
+        'EDU-LIC-7740',
+        'Diretora Escolar & Professora da Rede Pública Nacional',
+        'TEACHER_EDUCATOR',
+        'ADDR-NV-0007',
+        'Distrito Tecnológico',
         'REGULAR_ACTIVE'
       ],
       [
@@ -572,10 +605,10 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
             {
               action_id: 'OPEN_FEDERATED_MODULE',
               label: {
-                'pt-BR': 'Abrir Aplicação Federada (Nova Aba)',
-                'es-419': 'Abrir Aplicación Federada (Nueva Pestaña)',
-                'en-US': 'Open Federated App (New Tab)',
-                pt: 'Abrir Aplicação Federada (Nova Aba)'
+                'pt-BR': 'Acessar sistema',
+                'es-419': 'Acceder al sistema',
+                'en-US': 'Open system',
+                pt: 'Acessar sistema'
               },
               externalUrl: rawView.externalTargetUrl
             }
