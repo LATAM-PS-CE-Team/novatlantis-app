@@ -4,5 +4,6 @@ dist/
 *.db
 *.db-wal
 *.db-shm
-data-generator/output/citizens_100k.ndjson
-data-generator/output/citizens_100k.parquet
+.adk/
+__pycache__/
+.pytest_cache/

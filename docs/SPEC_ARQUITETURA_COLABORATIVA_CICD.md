@@ -1,46 +1,30 @@
 # Especificação de Implementação — Arquitetura Colaborativa, GitOps e CI/CD (`LATAM-PS-CE-Team`)
 
-**Sistema:** República Digital de Novatlantis (`novatlantis.gov.cloud`)  
+**Sistema:** República Digital de Novatlantis (`gov.novatlantis.cloud` e `dev.gov.novatlantis.cloud`)  
 **Organização GitHub:** [`https://github.com/LATAM-PS-CE-Team`](https://github.com/LATAM-PS-CE-Team)  
+**Projeto GCP Unificado:** `novatlantis` (`1054221034062`)  
 **Administrador & Code Owner de Produção (`main`):** Pedro Calixto (`@pedrocalixto`)  
-**Ambientes Oficiais:** `dev` (branch `dev`) e `prod` (branch `main`)
+**Ambientes Oficiais:** `dev` (branch `dev` $\rightarrow$ `*.dev.gov.novatlantis.cloud`) e `prod` (branch `main` $\rightarrow$ `*.gov.novatlantis.cloud`)
 
 ---
 
 ## 1. Resumo Executivo
 
-Para permitir que todos os Customer Engineers (CEs) do time de Setor Público colaborem simultaneamente usando o Git como **Fonte Única de Verdade (*Single Source of Truth — SSOT*)**, o projeto Novatlantis foi dividido em **3 repositórios especializados** dentro da organização [`LATAM-PS-CE-Team`](https://github.com/LATAM-PS-CE-Team):
+Para permitir que todos os Customer Engineers (CEs) do time de Setor Público colaborem simultaneamente usando o Git como **Fonte Única de Verdade (*Single Source of Truth — SSOT*)**, o ecossistema Novatlantis é composto por **3 repositórios especializados** dentro da organização [`LATAM-PS-CE-Team`](https://github.com/LATAM-PS-CE-Team):
 
-1. **[`LATAM-PS-CE-Team/novatlantis-app`](https://github.com/LATAM-PS-CE-Team/novatlantis-app)**: Código-fonte dos 8 microsserviços Cloud Run (`apps/*`), pacotes compartilhados (`packages/*`) e o agente ADK (`first-responder-agent/*`).
-2. **[`LATAM-PS-CE-Team/novatlantis-iac`](https://github.com/LATAM-PS-CE-Team/novatlantis-iac)**: Infraestrutura como Código (*IaC*) em Terraform declarativo para VPC, AlloyDB, Cloud Armor WAF, Load Balancer, Artifact Registry, IAM e Cloud Build Triggers.
-3. **[`LATAM-PS-CE-Team/novatlantis-data-platform`](https://github.com/LATAM-PS-CE-Team/novatlantis-data-platform)**: Plataforma de Dados Governamental (GDP/EDP), gerador de 100.000 cidadãos e *schemas* SQL/BigQuery.
-
----
-
-## 2. Governança de Branches e Ambientes (`dev` e `prod`)
-
-Cada repositório possui apenas **duas branches permanentes** (`dev` e `main`):
-
-| Branch no GitHub | Ambiente no GCP | Regra de Merge e Aprovação |
-| :--- | :--- | :--- |
-| **`dev`** | **Ambiente `dev`** (`novatlantis-dev-*`, `environments/dev`) | **Merge Livre (0 aprovações exigidas):** Qualquer pessoa abre PR da sua branch local (`feat/...`) contra a branch `dev` e faz o merge sem precisar de aprovação humana. |
-| **`main`** | **Ambiente `prod`** (`novatlantis-prod-*`, `environments/prod`) | **Aprovação Obrigatória de `@pedrocalixto`:** Qualquer pessoa pode abrir PR promovendo de `dev` $\rightarrow$ `main`, mas o merge na `main` exige aprovação explícita de `@pedrocalixto` (`CODEOWNERS`). |
+1. **[`LATAM-PS-CE-Team/novatlantis-app`](https://github.com/LATAM-PS-CE-Team/novatlantis-app)**: Código-fonte dos 9 microsserviços Cloud Run (`apps/*`), das 4 demos externas federadas dos CEs (`EXTERNAL_FEDERATED_CE`), pacotes compartilhados (`packages/*`) e o agente ADK (`first-responder-agent/*`).
+2. **[`LATAM-PS-CE-Team/novatlantis-iac`](https://github.com/LATAM-PS-CE-Team/novatlantis-iac)**: Infraestrutura como Código (*IaC*) em Terraform declarativo para VPCs isoladas (`dev` e `prod`), AlloyDB, Cloud Armor WAF, Global Load Balancers (`136.81.9.16` e `136.81.6.22`), Certificados SSL Gerenciados, Artifact Registry e Secret Manager.
+3. **[`LATAM-PS-CE-Team/novatlantis-data-platform`](https://github.com/LATAM-PS-CE-Team/novatlantis-data-platform)**: Plataforma de Dados Governamental (GDP/EDP), arquitetura Medallion no BigQuery e gerador sintético de 100.000 cidadãos.
 
 ---
 
-## 3. Como Executar a Atualização / Provisionamento
+## 2. Governança de Branches, Isolamento no Projeto `novatlantis` e Keyless WIF
 
-### Passo 1: Separar e Inicializar os 3 Repositórios Localmente
-```bash
-bash cicd-architecture/scripts/split-repositories.sh /tmp/novatlantis-split
-```
+Todos os 3 repositórios autenticam sem chaves estáticas (*Keyless OIDC*) no projeto `novatlantis` (`1054221034062`) via:
+- **Workload Identity Provider:** `projects/1054221034062/locations/global/workloadIdentityPools/github-latam-ps-ce-pool/providers/github-oidc-provider`
+- **Service Account de CI/CD:** `novatlantis-cicd-deployer@novatlantis.iam.gserviceaccount.com`
 
-### Passo 2: Atualizar os 3 Repositórios na Org `LATAM-PS-CE-Team` e Aplicar Proteção nas Branches `dev` e `main`
-```bash
-bash cicd-architecture/scripts/setup-github-org-and-repos.sh /tmp/novatlantis-split
-```
-
-### Passo 3: Inicializar o Bucket de Estado Terraform e a Service Account no GCP (Day-0 Bootstrap)
-```bash
-bash cicd-architecture/novatlantis-iac/bootstrap/bootstrap-cicd-foundation.sh
-```
+| Branch no GitHub | Ambiente no Projeto `novatlantis` | Domínio & Load Balancer | Regra de Merge e Aprovação |
+| :--- | :--- | :--- | :--- |
+| **`dev`** | **Ambiente `dev`** (`novatlantis-dev-*`, `gs://novatlantis-tfstate/iac/dev`) | `dev.gov.novatlantis.cloud` (`136.81.6.22`) | **Merge Livre (0 aprovações exigidas):** Qualquer colaborador abre PR da sua branch local contra `dev` e faz o merge após o check verde. |
+| **`main`** | **Ambiente `prod`** (`novatlantis-prod-*`, `gs://novatlantis-tfstate/iac/prod`) | `gov.novatlantis.cloud` (`136.81.9.16`) | **Aprovação Obrigatória de `@pedrocalixto`:** Promoção `dev` $\rightarrow$ `main` revisada por `@pedrocalixto` (`CODEOWNERS`). |
