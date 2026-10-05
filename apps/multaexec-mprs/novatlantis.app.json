@@ -1,0 +1,93 @@
+{
+  "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
+  "appId": "multaexec-mprs",
+  "version": "1.0.0",
+  "owner": "@jopoco (mprs-cpsi)",
+  "sector": "PUBLIC_PROSECUTION_MPRS",
+  "deploymentMode": "EXTERNAL_FEDERATED_CE",
+  "federatedSubdomain": "multaexec",
+  "externalTargetUrl": "https://multaexec-ia-demo-633153854135.southamerica-east1.run.app/#/dashboard",
+  "landingCatalog": {
+    "enabled": true,
+    "icon": "Gavel",
+    "badge": "MINISTÉRIO PÚBLICO • MPRS (FEDERADO @JOPOCO)",
+    "title": {
+      "pt-BR": "MultaExec.IA — Execução de Pena de Multa (MPRS)",
+      "es-419": "MultaExec.IA — Ejecución de Pena de Multa (MPRS)",
+      "en-US": "MultaExec.IA — Criminal Fine Enforcement AI (MPRS)"
+    },
+    "agency": {
+      "pt-BR": "Ministério Público Estadual (MPRS • Desafio CPSI × Google Cloud)",
+      "es-419": "Ministerio Público Estatal (MPRS • Desafío CPSI × Google Cloud)",
+      "en-US": "State Public Prosecutor's Office (MPRS • CPSI × Google Cloud)"
+    },
+    "description": {
+      "pt-BR": "Automação inteligente da execução de penas de multa criminal, cálculo atualizado, localização patrimonial e geração de certidões e petições executivas com IA.",
+      "es-419": "Automatización inteligente de la ejecución de multas penales, cálculo actualizado y generación de peticiones ejecutivas con IA.",
+      "en-US": "AI-driven automation of criminal fine enforcement, asset lookup, updated calculation, and automated legal filing."
+    },
+    "questionPrompt": {
+      "pt-BR": "Como funciona o MultaExec.IA do Ministério Público para execução de pena de multa?",
+      "es-419": "¿Cómo funciona MultaExec.IA del Ministerio Público para la ejecución de multas?",
+      "en-US": "How does the Public Prosecutor's MultaExec.IA platform handle criminal fine enforcement?"
+    },
+    "servicePrompt": {
+      "pt-BR": "Acessar o painel MultaExec.IA de Execução de Pena de Multa (MPRS)",
+      "es-419": "Acceder al panel MultaExec.IA de Ejecución de Multas (MPRS)",
+      "en-US": "Open the MultaExec.IA Fine Enforcement Dashboard (MPRS)"
+    }
+  },
+  "agentIntegration": {
+    "agentId": "agent-multaexec-mprs-v1 (MultaExec.IA — Ministério Público MPRS)",
+    "triggerKeywords": [
+      "multaexec",
+      "pena de multa",
+      "execução de multa",
+      "execucao de multa",
+      "mprs",
+      "ministério público",
+      "ministerio publico",
+      "promotoria",
+      "promotor",
+      "cobrança de multa criminal"
+    ],
+    "executeEndpoint": "/api/v1/agent/execute",
+    "requiresAuthForTransaction": false
+  },
+  "citizenPortalTab": {
+    "enabled": true,
+    "tabId": "multaexec_mprs",
+    "title": {
+      "pt-BR": "9. MultaExec.IA — Execução de Pena de Multa (MPRS)",
+      "es-419": "9. MultaExec.IA — Ejecución de Pena de Multa (MPRS)",
+      "en-US": "9. MultaExec.IA — Fine Enforcement (MPRS)"
+    },
+    "subtitle": {
+      "pt-BR": "Nó Federado Argolis (@jopoco • mprs-cpsi) — Consulta e regularização de pena de multa",
+      "es-419": "Nodo Federado Argolis (@jopoco • mprs-cpsi) — Consulta y regularización de multas",
+      "en-US": "Federated Argolis Node (@jopoco • mprs-cpsi) — Fine lookup and settlement"
+    },
+    "uiEntryPath": "/embed/citizen",
+    "apiBasePath": "/api/v1/apps/multaexec-mprs"
+  },
+  "backstageModule": {
+    "enabled": true,
+    "moduleId": "multaexec_mprs_backstage",
+    "allowedRoles": [
+      "PRIME_MINISTER_ROOT",
+      "SECRETARY_GENERAL",
+      "JUSTICE_AND_TREASURY_MANAGER"
+    ],
+    "title": {
+      "pt-BR": "Promotoria de Execução Criminal — MultaExec.IA (MPRS • @jopoco)",
+      "es-419": "Fiscalía de Ejecución Penal — MultaExec.IA (MPRS • @jopoco)",
+      "en-US": "Criminal Enforcement Prosecution — MultaExec.IA (MPRS • @jopoco)"
+    },
+    "subtitle": {
+      "pt-BR": "Acesso Federado à plataforma MultaExec.IA hospedada no projeto Argolis mprs-cpsi",
+      "es-419": "Acceso Federado a la plataforma MultaExec.IA alojada en el proyecto Argolis mprs-cpsi",
+      "en-US": "Federated access to the MultaExec.IA platform hosted on Argolis project mprs-cpsi"
+    },
+    "uiEntryPath": "/embed/backstage"
+  }
+}

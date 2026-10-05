@@ -176,6 +176,10 @@ interface ServiceEntry {
   servicePrompt: Record<SupportedLanguage, string>;
   tab: string;
   icon: React.ReactNode;
+  externalTargetUrl?: string;
+  federatedSubdomain?: string;
+  ownerCe?: string;
+  badge?: string;
 }
 
 const POPULAR_SERVICES: ServiceEntry[] = [
@@ -641,6 +645,10 @@ export function App() {
             questionPrompt: a.landingCatalog.questionPrompt,
             servicePrompt: a.landingCatalog.servicePrompt,
             tab: a.citizenPortalTab?.tabId || a.appId,
+            externalTargetUrl: a.externalTargetUrl,
+            federatedSubdomain: a.federatedSubdomain,
+            ownerCe: a.owner,
+            badge: a.landingCatalog.badge,
             icon: <AccountBalanceIcon sx={{ color: '#0a2240' }} />
           }));
         setPluggableServices(dynamicEntries);
@@ -1336,10 +1344,18 @@ export function App() {
                               variant="contained"
                               color="success"
                               endIcon={<LaunchIcon fontSize="small" />}
-                              onClick={() => handleNavigateToPortal('citizen', msg.service_request_action?.target_tab)}
+                              onClick={() => {
+                                if (msg.action_card?.target_portal === 'external-ce-demo' && msg.action_card.target_url) {
+                                  window.open(msg.action_card.target_url, '_blank', 'noopener,noreferrer');
+                                } else {
+                                  handleNavigateToPortal('citizen', msg.service_request_action?.target_tab);
+                                }
+                              }}
                               sx={{ textTransform: 'none', fontWeight: 700, fontSize: '0.78rem' }}
                             >
-                              {t.trackInCitizenPortal}
+                              {msg.action_card.target_portal === 'external-ce-demo'
+                                ? 'Abrir Plataforma Federada (Cloud Run CE) ↗'
+                                : t.trackInCitizenPortal}
                             </Button>
                           </Alert>
                         )}
@@ -1848,12 +1864,44 @@ export function App() {
                     {srv.title[lang]}
                   </Typography>
 
+                  {srv.externalTargetUrl && (
+                    <Box sx={{ mb: 1.25, display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+                      <Chip
+                        size="small"
+                        label={srv.badge || `NÓ FEDERADO CE • ${srv.ownerCe || 'ARGOLIS'}`}
+                        sx={{
+                          bgcolor: '#eff6ff',
+                          color: '#1e3a8a',
+                          border: '1px solid #bfdbfe',
+                          fontWeight: 800,
+                          fontSize: '0.66rem',
+                          height: 22
+                        }}
+                      />
+                      {srv.federatedSubdomain && (
+                        <Chip
+                          size="small"
+                          label={`${srv.federatedSubdomain}.gov.novatlantis.cloud`}
+                          sx={{
+                            bgcolor: '#f8fafc',
+                            color: '#334155',
+                            border: '1px solid #cbd5e1',
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            fontSize: '0.66rem',
+                            height: 22
+                          }}
+                        />
+                      )}
+                    </Box>
+                  )}
+
                   <Typography variant="body2" sx={{ color: '#4b5563', lineHeight: 1.55, mb: 2.5 }}>
                     {srv.description[lang]}
                   </Typography>
                 </Box>
 
-                <Box sx={{ display: 'flex', gap: 1, pt: 1.5, borderTop: '1px solid #f3f4f6' }}>
+                <Box sx={{ display: 'flex', gap: 1, pt: 1.5, borderTop: '1px solid #f3f4f6', flexWrap: 'wrap' }}>
                   <Button
                     size="small"
                     variant="text"
@@ -1862,22 +1910,43 @@ export function App() {
                   >
                     {t.askQuestionBtn}
                   </Button>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    endIcon={<ArrowForwardIcon fontSize="small" />}
-                    onClick={() => handleRequestService(srv.servicePrompt[lang], srv.title[lang])}
-                    sx={{
-                      ml: 'auto',
-                      bgcolor: '#0a2240',
-                      textTransform: 'none',
-                      fontWeight: 700,
-                      borderRadius: 2,
-                      '&:hover': { bgcolor: '#163a66' }
-                    }}
-                  >
-                    {t.requestServiceBtn}
-                  </Button>
+                  {srv.externalTargetUrl ? (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      endIcon={<ArrowForwardIcon fontSize="small" />}
+                      href={srv.externalTargetUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        ml: 'auto',
+                        bgcolor: '#0f766e',
+                        textTransform: 'none',
+                        fontWeight: 700,
+                        borderRadius: 2,
+                        '&:hover': { bgcolor: '#115e59' }
+                      }}
+                    >
+                      {lang === 'en-US' ? 'Open Federated Demo ↗' : lang === 'es-419' ? 'Abrir Demo Federada ↗' : 'Abrir Demo Federada ↗'}
+                    </Button>
+                  ) : (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      endIcon={<ArrowForwardIcon fontSize="small" />}
+                      onClick={() => handleRequestService(srv.servicePrompt[lang], srv.title[lang])}
+                      sx={{
+                        ml: 'auto',
+                        bgcolor: '#0a2240',
+                        textTransform: 'none',
+                        fontWeight: 700,
+                        borderRadius: 2,
+                        '&:hover': { bgcolor: '#163a66' }
+                      }}
+                    >
+                      {t.requestServiceBtn}
+                    </Button>
+                  )}
                 </Box>
               </Paper>
             </Grid>

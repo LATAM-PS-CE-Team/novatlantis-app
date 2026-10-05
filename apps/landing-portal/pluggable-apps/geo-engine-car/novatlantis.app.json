@@ -1,0 +1,93 @@
+{
+  "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
+  "appId": "geo-engine-car",
+  "version": "1.0.0",
+  "owner": "@vidotto (Argolis Geo)",
+  "sector": "ENVIRONMENT_RURAL_REGISTRY",
+  "deploymentMode": "EXTERNAL_FEDERATED_CE",
+  "federatedSubdomain": "geo",
+  "externalTargetUrl": "https://geo-engine-app-345748407347.us-central1.run.app/",
+  "landingCatalog": {
+    "enabled": true,
+    "icon": "Public",
+    "badge": "MEIO AMBIENTE • CAR (FEDERADO @VIDOTTO)",
+    "title": {
+      "pt-BR": "GeoEngine CAR — Inteligência Geoespacial & Cadastro Ambiental Rural",
+      "es-419": "GeoEngine CAR — Inteligencia Geoespacial y Catastro Ambiental Rural",
+      "en-US": "GeoEngine CAR — Geospatial Intelligence & Rural Environmental Registry"
+    },
+    "agency": {
+      "pt-BR": "Ministério do Meio Ambiente & Serviço Florestal Nacional",
+      "es-419": "Ministerio de Medio Ambiente y Servicio Forestal Nacional",
+      "en-US": "Ministry of Environment & National Forestry Service"
+    },
+    "description": {
+      "pt-BR": "Análise automatizada de Cadastro Ambiental Rural (CAR), validação de reserva legal, cobertura vegetal por satélite e conformidade socioambiental em tempo real.",
+      "es-419": "Análisis automatizado de Catastro Ambiental Rural (CAR), cobertura vegetal por satélite y conformidad socioambiental en tiempo real.",
+      "en-US": "Automated Rural Environmental Registry (CAR) validation, satellite land-cover analysis, and real-time environmental compliance."
+    },
+    "questionPrompt": {
+      "pt-BR": "Como validar um Cadastro Ambiental Rural (CAR) e analisar imagens de satélite no GeoEngine CAR?",
+      "es-419": "¿Cómo validar un Catastro Ambiental Rural (CAR) y analizar imágenes satelitales en GeoEngine CAR?",
+      "en-US": "How do I validate a Rural Environmental Registry (CAR) using satellite imagery in GeoEngine CAR?"
+    },
+    "servicePrompt": {
+      "pt-BR": "Acessar o GeoEngine CAR para análise de Cadastro Ambiental Rural por satélite",
+      "es-419": "Acceder a GeoEngine CAR para análisis de Catastro Ambiental Rural por satélite",
+      "en-US": "Open GeoEngine CAR for satellite Rural Environmental Registry analysis"
+    }
+  },
+  "agentIntegration": {
+    "agentId": "agent-geo-engine-car-v1 (GeoEngine CAR — Inteligência Geoespacial)",
+    "triggerKeywords": [
+      "geoengine",
+      "cadastro ambiental rural",
+      "car",
+      "geoprocessamento",
+      "satélite",
+      "satelite",
+      "desmatamento",
+      "reserva legal",
+      "ambiental",
+      "earth engine"
+    ],
+    "executeEndpoint": "/api/v1/agent/execute",
+    "requiresAuthForTransaction": false
+  },
+  "citizenPortalTab": {
+    "enabled": true,
+    "tabId": "geo_engine_car",
+    "title": {
+      "pt-BR": "11. GeoEngine CAR — Cadastro Ambiental Rural & Satélite",
+      "es-419": "11. GeoEngine CAR — Catastro Ambiental Rural y Satélite",
+      "en-US": "11. GeoEngine CAR — Rural Environmental Registry"
+    },
+    "subtitle": {
+      "pt-BR": "Nó Federado Argolis (@vidotto) — Validação geoespacial automatizada de propriedades rurais",
+      "es-419": "Nodo Federado Argolis (@vidotto) — Validación geoespacial automatizada",
+      "en-US": "Federated Argolis Node (@vidotto) — Automated geospatial property validation"
+    },
+    "uiEntryPath": "/embed/citizen",
+    "apiBasePath": "/api/v1/apps/geo-engine-car"
+  },
+  "backstageModule": {
+    "enabled": true,
+    "moduleId": "geo_engine_car_backstage",
+    "allowedRoles": [
+      "PRIME_MINISTER_ROOT",
+      "SECRETARY_GENERAL",
+      "OPERATIONS_311_911_DISPATCHER"
+    ],
+    "title": {
+      "pt-BR": "Centro de Monitoramento Geoespacial — GeoEngine CAR (@vidotto)",
+      "es-419": "Centro de Monitoreo Geoespacial — GeoEngine CAR (@vidotto)",
+      "en-US": "Geospatial Monitoring Center — GeoEngine CAR (@vidotto)"
+    },
+    "subtitle": {
+      "pt-BR": "Análise automatizada de Cadastro Ambiental Rural (CAR) hospedada na conta Argolis do @vidotto",
+      "es-419": "Análisis automatizado de Catastro Ambiental Rural alojado en la cuenta Argolis de @vidotto",
+      "en-US": "Automated Rural Environmental Registry analysis hosted on @vidotto's Argolis account"
+    },
+    "uiEntryPath": "/embed/backstage"
+  }
+}

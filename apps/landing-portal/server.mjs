@@ -2040,15 +2040,16 @@ async function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt
         type: executedAction.type,
         title: executedAction.summary,
         reference_id: executedAction.protocol,
-        status: 'EXECUTADO NO ALLOYDB',
-        target_portal: 'citizen-portal',
+        status: executedAction.external_url ? 'NÓ FEDERADO CE ATIVO' : 'EXECUTADO NO ALLOYDB',
+        target_portal: executedAction.external_url ? 'external-ce-demo' : 'citizen-portal',
         target_url:
+          executedAction.external_url ||
           suggestedLinks[0]?.url ||
-          `${CITIZEN_PORTAL_URL}?nid=${encodeURIComponent(profile.citizen_id)}&tab=${serviceRequestAction?.target_tab || 'identity'}`,
+          `${CITIZEN_PORTAL_URL}?nid=${encodeURIComponent(profile?.citizen_id || 'NID-000-0000-0001-9')}&tab=${serviceRequestAction?.target_tab || 'identity'}`,
         details: {
-          Titular: `${profile.full_name} (${profile.citizen_id})`,
+          Titular: isAuthenticated && profile ? `${profile.full_name} (${profile.citizen_id})` : 'Acesso Público / Federado',
           Agente: delegatedAgent,
-          Distrito: profile.residence?.district || 'Distrito Tecnológico',
+          Distrito: profile?.residence?.district || executedAction.details?.gcp_project || 'Nó Federado Argolis',
           Protocolo: executedAction.protocol
         }
       }
@@ -2125,10 +2126,24 @@ const MIME_TYPES = {
   '.ico': 'image/x-icon'
 };
 
+const FEDERATED_SUBDOMAIN_TARGETS = {
+  multaexec: 'https://multaexec-ia-demo-633153854135.southamerica-east1.run.app/#/dashboard',
+  vigia: 'https://vigia-ia-demo-633153854135.southamerica-east1.run.app/#/visao-geral',
+  geo: 'https://geo-engine-app-345748407347.us-central1.run.app/',
+  detran: 'https://material.136.81.200.203.nip.io/pn44detran'
+};
+
 const server = http.createServer(async (req, res) => {
   try {
     if (req.method === 'OPTIONS') {
       return sendJson(res, 200, { ok: true });
+    }
+
+    const hostHeader = String(req.headers.host || '').toLowerCase().split(':')[0];
+    const firstSubdomain = hostHeader.split('.')[0];
+    if (FEDERATED_SUBDOMAIN_TARGETS[firstSubdomain]) {
+      res.writeHead(302, { Location: FEDERATED_SUBDOMAIN_TARGETS[firstSubdomain] });
+      return res.end();
     }
 
     const url = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);

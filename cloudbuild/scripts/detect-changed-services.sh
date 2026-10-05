@@ -81,6 +81,13 @@ else
       fi
     fi
   done
+  for APP_DIR in apps/*/; do
+    APP_ID="$(basename "${APP_DIR}")"
+    if [ -f "apps/${APP_ID}/novatlantis.app.json" ] && echo "${CHANGED_FILES}" | grep -qE "^apps/${APP_ID}/"; then
+      echo "[SMART-DIFF] Módulo plugável/federado modificado: ${APP_ID}"
+      PLUGGABLE_CHANGED=true
+    fi
+  done
   if [ "${PLUGGABLE_CHANGED}" = "true" ]; then
     echo "[SMART-DIFF] Módulo plugável alterado; incluindo portais hospedeiros (landing-portal, citizen-portal, gov-backstage) para sincronizar o catálogo."
     for PORTAL_SVC in landing-portal citizen-portal gov-backstage; do

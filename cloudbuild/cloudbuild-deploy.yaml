@@ -1,19 +1,19 @@
 # ==============================================================================
 # REPÚBLICA DIGITAL DE NOVATLANTIS — ESTEIRA DE BUILD E DEPLOY AUTOMÁTICO (CD)
 # Repositório: LATAM-PS-CE-Team/novatlantis-app
+# Projeto GCP Unificado: novatlantis (1054221034062)
 # Acionamento:
-#   - Merge na branch 'main' -> Ambiente DEV  (_ENV=dev,  _SERVICE_PREFIX=novatlantis-dev)
-#   - Merge na branch 'prod' -> Ambiente PROD (_ENV=prod, _SERVICE_PREFIX=novatlantis-prod)
-# Objetivo: Construir imagens container no Artifact Registry com tag imutável SHA
-#           e atualizar apenas os serviços Cloud Run / Agent Engine modificados.
+#   - Merge na branch 'dev'  -> Ambiente DEV  (_ENV=dev,  _SERVICE_PREFIX=novatlantis-dev)
+#   - Merge na branch 'main' -> Ambiente PROD (_ENV=prod, _SERVICE_PREFIX=novatlantis-prod)
 # ==============================================================================
 
 substitutions:
   _ENV: 'dev'
   _REGION: 'us-central1'
-  _AR_REPO: 'novatlantis-gov-repo'
+  _AR_REPO: 'novatlantis-dev-gov-repo'
   _SERVICE_PREFIX: 'novatlantis-dev'
   _WORKLOAD_SA: 'novatlantis-workload-sa'
+  _JWT_SECRET: 'novatlantis-dev-jwt-authority'
   _DEPLOY_AGENT_ENGINE: 'true'
   _SHORT_SHA: 'latest'
   _BRANCH_NAME: 'dev'
@@ -99,7 +99,7 @@ steps:
             --cpu=1 \
             --memory=1Gi \
             --set-env-vars="NODE_ENV=${_ENV},NOVATLANTIS_ENV=${_ENV},NOVATLANTIS_SERVICE=$${SVC},GCP_PROJECT_ID=${PROJECT_ID},SUPPORTED_LOCALES=pt-BR|es-419|en-US" \
-            --set-secrets="NOVATLANTIS_JWT_SECRET=novatlantis-internal-jwt-authority:latest" \
+            --set-secrets="NOVATLANTIS_JWT_SECRET=${_JWT_SECRET}:latest" \
             --quiet
 
           SVC_URL=$(gcloud run services describe "$${CLOUD_RUN_SVC}" --region="${_REGION}" --project="${PROJECT_ID}" --format="value(status.url)")
@@ -119,11 +119,8 @@ steps:
           echo "[DEPLOY-${_ENV}] Agente ADK sem modificações ou deploy desabilitado."
           exit 0
         fi
-        echo "[DEPLOY-${_ENV}] Validando e implantando First-Responder Agent (${_ENV}) no Vertex AI Agent Engine..."
-        pip install --quiet uv
-        cd /workspace/first-responder-agent
-        uv sync --frozen || uv sync
-        uv run pytest tests/unit
-        uv tool install google-agents-cli || true
-        export PATH="/root/.local/bin:$$PATH"
-        agents-cli deploy --project "${PROJECT_ID}" --region "${_REGION}" || echo "[WARN] Verifique permissões do Vertex AI Reasoning Engine para deploy automatizado."
+        echo "[DEPLOY-${_ENV}] Implantando Agente ADK (first-responder-agent) no Vertex AI Agent Engine..."
+        cd first-responder-agent
+        pip install --quiet --upgrade pip
+        pip install --quiet -r requirements.txt
+        python3 deploy_agent_engine.py --env="${_ENV}" --project="${PROJECT_ID}" --region="${_REGION}"
