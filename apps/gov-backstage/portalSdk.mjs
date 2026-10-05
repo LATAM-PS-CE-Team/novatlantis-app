@@ -463,7 +463,7 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
 
   const { req, res, db, pathname, url, readBody, sendJson, appsRootDir, getFullCitizenProfile } = opts;
 
-  if (pathname === '/api/v1/registry/apps' && req.method === 'GET') {
+  if ((pathname === '/api/v1/registry/apps' || pathname === '/api/v1/apps/registry') && req.method === 'GET') {
     const apps = await discoverNovatlantisApps(appsRootDir);
     const sanitized = apps.map(({ plugin, appDir, ...rest }) => ({
       ...rest,
@@ -535,29 +535,77 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
         ? db.prepare('SELECT * FROM dim_citizens WHERE nid = ? LIMIT 1').get(nid)
         : null;
 
-    if (targetApp.plugin && typeof targetApp.plugin.getViewData === 'function') {
+    const hasViewHandler =
+      targetApp.plugin &&
+      (typeof targetApp.plugin.getViewData === 'function' ||
+        typeof targetApp.plugin.getCitizenView === 'function' ||
+        typeof targetApp.plugin.getBackstageView === 'function');
+
+    if (hasViewHandler) {
       await targetApp.plugin.initDatabase?.(db);
-      const rawView = await targetApp.plugin.getViewData({
-        mode,
-        lang,
-        citizen,
-        db,
-        query: Object.fromEntries(url.searchParams.entries())
-      });
+      let rawView;
+      if (typeof targetApp.plugin.getViewData === 'function') {
+        rawView = await targetApp.plugin.getViewData({
+          mode,
+          lang,
+          citizen,
+          db,
+          query: Object.fromEntries(url.searchParams.entries())
+        });
+      } else if (mode === 'backstage' && typeof targetApp.plugin.getBackstageView === 'function') {
+        rawView = await targetApp.plugin.getBackstageView(db, { nid, lang, citizen });
+      } else {
+        rawView = await targetApp.plugin.getCitizenView(db, { nid, lang, citizen });
+      }
+
+      const sectionItems = (rawView.sections || []).flatMap((s) => s.items || []);
+      const fallbackRecords = sectionItems.map((it) => ({
+        case_number: it.id,
+        status: it.status || 'ONLINE',
+        subject: it.title,
+        court_branch: it.subtitle,
+        ai_conciliation_summary: it.federatedUrl ? `Subdomínio Oficial: ${it.federatedUrl}` : it.meta,
+        external_url: it.externalUrl || rawView.externalTargetUrl
+      }));
+      const fallbackActions = rawView.externalTargetUrl
+        ? [
+            {
+              action_id: 'OPEN_FEDERATED_CE_DEMO',
+              label: {
+                'pt-BR': 'Abrir Aplicação Federada (Nova Aba)',
+                'es-419': 'Abrir Aplicación Federada (Nueva Pestaña)',
+                'en-US': 'Open Federated App (New Tab)',
+                pt: 'Abrir Aplicação Federada (Nova Aba)'
+              },
+              externalUrl: rawView.externalTargetUrl
+            }
+          ]
+        : [];
+
       const enrichedView = {
         ...rawView,
-        headline: rawView.headline || { 'pt-BR': rawView.title, 'es-419': rawView.title, 'en-US': rawView.title, pt: rawView.title },
-        summary: rawView.summary || { 'pt-BR': rawView.subtitle, 'es-419': rawView.subtitle, 'en-US': rawView.subtitle, pt: rawView.subtitle },
+        headline: rawView.headline || {
+          'pt-BR': rawView.title || rawView.sections?.[0]?.title,
+          'es-419': rawView.title || rawView.sections?.[0]?.title,
+          'en-US': rawView.title || rawView.sections?.[0]?.title,
+          pt: rawView.title || rawView.sections?.[0]?.title
+        },
+        summary: rawView.summary || {
+          'pt-BR': rawView.subtitle || rawView.sections?.[0]?.description,
+          'es-419': rawView.subtitle || rawView.sections?.[0]?.description,
+          'en-US': rawView.subtitle || rawView.sections?.[0]?.description,
+          pt: rawView.subtitle || rawView.sections?.[0]?.description
+        },
         kpis: (rawView.kpis || []).map((k) => ({
           ...k,
           label: typeof k.label === 'string' ? { 'pt-BR': k.label, 'es-419': k.label, 'en-US': k.label, pt: k.label } : k.label
         })),
-        actions: (rawView.actions || []).map((a) => ({
+        actions: ((rawView.actions && rawView.actions.length > 0 ? rawView.actions : fallbackActions) || []).map((a) => ({
           ...a,
           action_id: a.action_id || a.actionId,
           label: typeof a.label === 'string' ? { 'pt-BR': a.label, 'es-419': a.label, 'en-US': a.label, pt: a.label } : a.label
         })),
-        records: (rawView.records || []).map((r) => ({
+        records: ((rawView.records && rawView.records.length > 0 ? rawView.records : fallbackRecords) || []).map((r) => ({
           ...r,
           case_number: r.case_number || r.id,
           subject: r.subject || r.primary,
@@ -626,6 +674,18 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
       return true;
     }
 
+    if (targetApp.externalTargetUrl) {
+      sendJson(res, 200, {
+        appId: targetApp.appId,
+        status: 'EXECUTED',
+        result: {
+          message_pt: `Redirecionando para o módulo federado: ${targetApp.externalTargetUrl}`,
+          external_url: targetApp.externalTargetUrl
+        }
+      });
+      return true;
+    }
+
     sendJson(res, 400, { error: `Módulo '${appId}' não implementa executeAction.` });
     return true;
   }
@@ -641,14 +701,25 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
         ? db.prepare('SELECT * FROM dim_citizens WHERE nid = ? LIMIT 1').get(nid)
         : null;
 
-    if (targetApp.plugin && typeof targetApp.plugin.handleAgentTurn === 'function') {
+    if (
+      targetApp.plugin &&
+      (typeof targetApp.plugin.handleAgentTurn === 'function' || typeof targetApp.plugin.handleAgentIntent === 'function')
+    ) {
       await targetApp.plugin.initDatabase?.(db);
-      const agentResponse = await targetApp.plugin.handleAgentTurn({
-        profile: citizen,
-        message: body.message || '',
-        lang,
-        db
-      });
+      const agentResponse =
+        typeof targetApp.plugin.handleAgentTurn === 'function'
+          ? await targetApp.plugin.handleAgentTurn({
+              profile: citizen,
+              message: body.message || '',
+              lang,
+              db
+            })
+          : await targetApp.plugin.handleAgentIntent(db, {
+              message: body.message || '',
+              nid: citizen?.citizen_id || citizen?.nid || nid,
+              citizenName: citizen?.full_name,
+              lang
+            });
       sendJson(res, 200, agentResponse);
       return true;
     }
@@ -680,7 +751,7 @@ export async function matchAndExecutePluggableAgent(arg1, arg2, arg3, arg4) {
 
   const apps = await discoverNovatlantisApps(appsRootDir);
   for (const app of apps) {
-    const keywords = app.agentIntegration?.triggerKeywords || [];
+    const keywords = app.agentIntegration?.triggerKeywords || app.agentIntegration?.intentKeywords || [];
     const matched = keywords.some((kw) => lower.includes(String(kw).toLowerCase()));
     if (!matched) continue;
 
@@ -695,6 +766,31 @@ export async function matchAndExecutePluggableAgent(arg1, arg2, arg3, arg4) {
         govBackstageUrl,
         manifest: app
       });
+    }
+
+    if (app.plugin && typeof app.plugin.handleAgentIntent === 'function') {
+      await app.plugin.initDatabase?.(db);
+      const res = await app.plugin.handleAgentIntent(db, {
+        message,
+        nid: profile?.citizen_id || profile?.nid,
+        citizenName: profile?.full_name,
+        lang
+      });
+      const extUrl = res.executed_action?.external_url || app.externalTargetUrl;
+      return {
+        delegatedAgent: res.delegatedAgent || res.delegated_agent || app.agentIntegration?.agentId,
+        executedAction: res.executedAction || res.executed_action || null,
+        reply: res.reply || res.response || '',
+        citations: res.citations || [
+          {
+            id: 1,
+            agency: app.landingCatalog?.agency?.[lang] || app.landingCatalog?.agency?.['pt-BR'] || app.appId,
+            title: app.landingCatalog?.title?.[lang] || app.landingCatalog?.title?.['pt-BR'] || app.appId,
+            url: extUrl || citizenPortalUrl
+          }
+        ],
+        serviceRequestAction: res.serviceRequestAction || null
+      };
     }
   }
 

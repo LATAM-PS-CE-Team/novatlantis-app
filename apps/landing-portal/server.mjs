@@ -2042,6 +2042,8 @@ async function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt
         reference_id: executedAction.protocol,
         status: executedAction.external_url ? 'NÓ FEDERADO CE ATIVO' : 'EXECUTADO NO ALLOYDB',
         target_portal: executedAction.external_url ? 'external-ce-demo' : 'citizen-portal',
+        external_url: executedAction.external_url || null,
+        federated_domain: executedAction.federated_domain || null,
         target_url:
           executedAction.external_url ||
           suggestedLinks[0]?.url ||
