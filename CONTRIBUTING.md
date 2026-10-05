@@ -21,5 +21,3 @@ O script [`cloudbuild/scripts/detect-changed-services.sh`](./cloudbuild/scripts/
    - Para **demos externas** hospedadas em outro projeto GCP, defina `"federatedSubdomain": "<subdominio>"` e `"externalTargetUrl": "https://..."`.
    - Para **serviços locais** em Cloud Run, inclua o `Dockerfile` na pasta do serviço.
 3. Copie o manifesto e o plugin para a pasta `pluggable-apps/` dos três portais (`landing-portal`, `citizen-portal` e `gov-backstage`) e abra um Pull Request para `dev`.
-
-Para o passo a passo completo (incluindo exemplos de manifesto, roteamento de subdomínio e fluxo do pipeline), consulte [`docs/ONBOARDING.md`](./docs/ONBOARDING.md).

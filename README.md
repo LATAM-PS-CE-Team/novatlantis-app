@@ -48,4 +48,4 @@ npm install
 npm run dev --workspace=apps/landing-portal
 ```
 
-Para conectar uma nova demo ou módulo, veja o guia passo a passo em [`docs/ONBOARDING.md`](./docs/ONBOARDING.md), [`CONTRIBUTING.md`](./CONTRIBUTING.md) e [`docs/DOCUMENTACAO_COMPLETA_NOVATLANTIS.md`](./docs/DOCUMENTACAO_COMPLETA_NOVATLANTIS.md).
+Para detalhes de arquitetura e CI/CD, consulte [`CONTRIBUTING.md`](./CONTRIBUTING.md) e [`docs/DOCUMENTACAO_COMPLETA_NOVATLANTIS.md`](./docs/DOCUMENTACAO_COMPLETA_NOVATLANTIS.md).
