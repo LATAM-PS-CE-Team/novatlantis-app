@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   ThemeProvider,
   createTheme,
@@ -53,11 +53,12 @@ import {
 import {
   TopNavUserWidget,
   SupportedLanguage,
-  resolveInitialLanguage
+  resolveInitialLanguage,
+  DYNAMIC_PORTAL_URLS
 } from './components/TopNavUserWidget';
 
-const CITIZEN_PORTAL_URL = 'https://novatlantis-citizen-portal-wpahcxvhuq-uc.a.run.app';
-const GOV_BACKSTAGE_URL = 'https://novatlantis-gov-backstage-wpahcxvhuq-uc.a.run.app';
+const CITIZEN_PORTAL_URL = DYNAMIC_PORTAL_URLS.citizenPortalUrl;
+const GOV_BACKSTAGE_URL = DYNAMIC_PORTAL_URLS.govBackstageUrl;
 
 interface CitizenProfile {
   nid: string;
@@ -621,8 +622,36 @@ export function App() {
   const [chatSidebarOpen, setChatSidebarOpen] = useState(false);
   const [chatLoading, setChatLoading] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [pluggableServices, setPluggableServices] = useState<ServiceEntry[]>([]);
   const chatSectionRef = useRef<HTMLDivElement | null>(null);
   const chatBottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    fetch('/api/v1/registry/apps')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data || !Array.isArray(data.apps)) return;
+        const dynamicEntries: ServiceEntry[] = data.apps
+          .filter((a: any) => a?.landingCatalog?.enabled)
+          .map((a: any) => ({
+            id: a.appId,
+            title: a.landingCatalog.title,
+            agency: a.landingCatalog.agency,
+            description: a.landingCatalog.description,
+            questionPrompt: a.landingCatalog.questionPrompt,
+            servicePrompt: a.landingCatalog.servicePrompt,
+            tab: a.citizenPortalTab?.tabId || a.appId,
+            icon: <AccountBalanceIcon sx={{ color: '#0a2240' }} />
+          }));
+        setPluggableServices(dynamicEntries);
+      })
+      .catch(() => {});
+  }, []);
+
+  const allCatalogServices = [
+    ...POPULAR_SERVICES,
+    ...pluggableServices.filter((ps) => !POPULAR_SERVICES.some((cs) => cs.id === ps.id))
+  ];
 
   const handleLanguageChange = (newLang: SupportedLanguage) => {
     setLang(newLang);
@@ -1778,7 +1807,7 @@ export function App() {
         </Box>
 
         <Grid container spacing={3}>
-          {POPULAR_SERVICES.map((srv) => (
+          {allCatalogServices.map((srv) => (
             <Grid item xs={12} md={4} key={srv.id}>
               <Paper
                 elevation={0}

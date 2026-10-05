@@ -1,0 +1,69 @@
+name: Novatlantis App CI/CD (Keyless WIF + Cloud Build)
+
+on:
+  pull_request:
+    branches: [dev, main]
+  push:
+    branches: [dev, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  app-cicd:
+    runs-on: ubuntu-latest
+    env:
+      IS_PROD: ${{ (github.event_name == 'pull_request' && github.base_ref == 'main') || (github.event_name != 'pull_request' && github.ref_name == 'main') }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve Environment & WIF Parameters
+        id: env_cfg
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          if [ "${IS_PROD}" = "true" ]; then
+            echo "project_id=novatlantis-prd" >> "$GITHUB_OUTPUT"
+            echo "app_env=prod" >> "$GITHUB_OUTPUT"
+            echo "service_prefix=novatlantis-prod" >> "$GITHUB_OUTPUT"
+            echo "branch_name=main" >> "$GITHUB_OUTPUT"
+            echo "wif_provider=projects/364434027894/locations/global/workloadIdentityPools/github-latam-ps-ce-pool/providers/github-oidc-provider" >> "$GITHUB_OUTPUT"
+            echo "service_account=novatlantis-cicd-deployer@novatlantis-prd.iam.gserviceaccount.com" >> "$GITHUB_OUTPUT"
+          else
+            echo "project_id=novatlantis-dev" >> "$GITHUB_OUTPUT"
+            echo "app_env=dev" >> "$GITHUB_OUTPUT"
+            echo "service_prefix=novatlantis-dev" >> "$GITHUB_OUTPUT"
+            echo "branch_name=dev" >> "$GITHUB_OUTPUT"
+            echo "wif_provider=projects/927013504695/locations/global/workloadIdentityPools/github-latam-ps-ce-pool/providers/github-oidc-provider" >> "$GITHUB_OUTPUT"
+            echo "service_account=novatlantis-cicd-deployer@novatlantis-dev.iam.gserviceaccount.com" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Authenticate to Google Cloud via Keyless WIF
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ steps.env_cfg.outputs.wif_provider }}
+          service_account: ${{ steps.env_cfg.outputs.service_account }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Run CI Validation on Pull Request (Cloud Build)
+        if: github.event_name == 'pull_request'
+        run: |
+          gcloud builds submit . \
+            --config=cloudbuild/cloudbuild-pr.yaml \
+            --substitutions=_BASE_BRANCH=origin/${{ github.base_ref }} \
+            --project=${{ steps.env_cfg.outputs.project_id }}
+
+      - name: Run CD Build & Cloud Run Deploy on Merge/Push (Cloud Build)
+        if: github.event_name != 'pull_request'
+        run: |
+          gcloud builds submit . \
+            --config=cloudbuild/cloudbuild-deploy.yaml \
+            --substitutions=_ENV=${{ steps.env_cfg.outputs.app_env }},_REGION=us-central1,_AR_REPO=novatlantis-gov-repo,_SERVICE_PREFIX=${{ steps.env_cfg.outputs.service_prefix }},_WORKLOAD_SA=novatlantis-workload-sa,_DEPLOY_AGENT_ENGINE=false,_SHORT_SHA=${{ steps.env_cfg.outputs.short_sha }},_BRANCH_NAME=${{ steps.env_cfg.outputs.branch_name }} \
+            --project=${{ steps.env_cfg.outputs.project_id }}

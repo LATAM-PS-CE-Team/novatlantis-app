@@ -1,0 +1,103 @@
+{
+  "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
+  "appId": "justice-court-tj",
+  "version": "1.0.0",
+  "owner": "@pedrocalixto",
+  "sector": "JUDICIARY_STATE_COURT",
+  "serviceUrlEnvVar": "JUSTICE_COURT_TJ_URL",
+  "defaultPort": 8089,
+  "landingCatalog": {
+    "enabled": true,
+    "icon": "Gavel",
+    "badge": "PODER JUDICIÁRIO • TJ DIGITAL",
+    "title": {
+      "pt-BR": "Tribunal de Justiça Digital & Juizado Especial IA",
+      "es-419": "Tribunal de Justicia Digital y Juzgado Especial IA",
+      "en-US": "Digital Court of Justice & AI Small Claims"
+    },
+    "agency": {
+      "pt-BR": "Tribunal de Justiça Estadual & Conselho da Magistratura",
+      "es-419": "Tribunal de Justicia Estatal y Consejo de la Magistratura",
+      "en-US": "State Court of Justice & Judicial Council"
+    },
+    "description": {
+      "pt-BR": "Consulta processual unificada, emissão de Certidão Negativa Judicial com assinatura Ed25519, peticionamento assistido por IA e conciliação em 60 segundos.",
+      "es-419": "Consulta procesal unificada, emisión de Certificado Judicial con firma Ed25519, petición asistida por IA y conciliación en 60 segundos.",
+      "en-US": "Unified case lookup, Ed25519 judicial clearance certificate, AI-assisted e-filing, and 60-second digital conciliation."
+    },
+    "questionPrompt": {
+      "pt-BR": "Como consultar meus processos judiciais ou abrir uma ação no Juizado Especial do Tribunal de Justiça?",
+      "es-419": "¿Cómo consultar mis procesos judiciales o presentar una demanda en el Juzgado Especial del Tribunal de Justicia?",
+      "en-US": "How do I check my court cases or file a claim in the Digital Small Claims Court?"
+    },
+    "servicePrompt": {
+      "pt-BR": "Consultar processos, emitir Certidão Judicial ou peticionar no Tribunal de Justiça agora",
+      "es-419": "Consultar procesos, emitir Certificado Judicial o peticionar en el Tribunal de Justicia ahora",
+      "en-US": "Check court cases, issue Judicial Certificate, or file a claim at the Court of Justice now"
+    }
+  },
+  "agentIntegration": {
+    "agentId": "agent-justice-court-tj-v1 (Tribunal de Justiça Digital & Juizado Especial IA)",
+    "triggerKeywords": [
+      "tribunal",
+      "justiça",
+      "justica",
+      "processo",
+      "processos",
+      "juiz",
+      "juizado",
+      "processual",
+      "sentença",
+      "sentenca",
+      "certidão judicial",
+      "certidao judicial",
+      "nada consta",
+      "petição",
+      "peticao",
+      "conciliação",
+      "conciliacao",
+      "tj",
+      "court",
+      "lawsuit",
+      "juzgado"
+    ],
+    "executeEndpoint": "/api/v1/agent/execute",
+    "requiresAuthForTransaction": true
+  },
+  "citizenPortalTab": {
+    "enabled": true,
+    "tabId": "justice_court_tj",
+    "title": {
+      "pt-BR": "8. Tribunal de Justiça Digital (Processos & Juizado IA)",
+      "es-419": "8. Tribunal de Justicia Digital (Procesos y Juzgado IA)",
+      "en-US": "8. Digital Court of Justice (Cases & AI Small Claims)"
+    },
+    "subtitle": {
+      "pt-BR": "Consulta processual CNJ, certidão judicial Ed25519 e petição IA",
+      "es-419": "Consulta procesal, certificado judicial Ed25519 y petición IA",
+      "en-US": "Case lookup, Ed25519 judicial certificate, and AI e-filing"
+    },
+    "uiEntryPath": "/embed/citizen",
+    "apiBasePath": "/api/v1/apps/justice-court-tj"
+  },
+  "backstageModule": {
+    "enabled": true,
+    "moduleId": "justice_court_tj_backstage",
+    "allowedRoles": [
+      "PRIME_MINISTER_ROOT",
+      "SECRETARY_GENERAL",
+      "JUSTICE_AND_TREASURY_MANAGER"
+    ],
+    "title": {
+      "pt-BR": "Gabinete do Magistrado (Fila Processual & Minutas de Sentença IA — TJ)",
+      "es-419": "Gabinete del Magistrado (Cola Procesal y Minutas de Sentencia IA — TJ)",
+      "en-US": "Chambers of the Magistrate (Case Queue & AI Sentence Drafts — Court)"
+    },
+    "subtitle": {
+      "pt-BR": "Triagem processual agêntica, admissibilidade e homologação de sentenças com assinatura Ed25519",
+      "es-419": "Triaje procesal agéntico, admisibilidad y homologación de sentencias con firma Ed25519",
+      "en-US": "Agentic case triage, admissibility, and Ed25519 sentence approval"
+    },
+    "uiEntryPath": "/embed/backstage"
+  }
+}

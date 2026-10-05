@@ -47,17 +47,18 @@ import {
   Shield as ShieldIcon,
   ArrowBack as ArrowBackIcon
 } from '@mui/icons-material';
-import { TopNavUserWidget, SupportedLanguage, resolveInitialLanguage } from './components/TopNavUserWidget';
+import { TopNavUserWidget, SupportedLanguage, resolveInitialLanguage, DYNAMIC_PORTAL_URLS } from './components/TopNavUserWidget';
 import { novatlantisTheme } from './theme';
 
 type Language = SupportedLanguage;
-type CitizenTab = 'identity' | 'family_address' | 'health' | 'education' | 'urban_311' | 'emergency_911' | 'treasury';
+type CitizenTab = 'identity' | 'family_address' | 'health' | 'education' | 'urban_311' | 'emergency_911' | 'treasury' | string;
 
-const LANDING_PORTAL_URL = 'https://novatlantis-landing-portal-wpahcxvhuq-uc.a.run.app';
-const GOV_BACKSTAGE_URL = 'https://novatlantis-gov-backstage-wpahcxvhuq-uc.a.run.app';
+const LANDING_PORTAL_URL = DYNAMIC_PORTAL_URLS.landingPortalUrl;
+const GOV_BACKSTAGE_URL = DYNAMIC_PORTAL_URLS.govBackstageUrl;
 
 const CITIZEN_MENU_ITEMS: {
   id: CitizenTab;
+  appId?: string;
   title: Record<Language, string>;
   subtitle: Record<Language, string>;
 }[] = [
@@ -248,6 +249,8 @@ export default function App() {
   const [dossier, setDossier] = useState<any>(null);
   const [dashboard, setDashboard] = useState<any>(null);
   const [statusBanner, setStatusBanner] = useState<string | null>(null);
+  const [pluggableTabs, setPluggableTabs] = useState<typeof CITIZEN_MENU_ITEMS>([]);
+  const [pluggableViewData, setPluggableViewData] = useState<any>(null);
 
   const handleLanguageChange = (newLang: Language) => {
     setLang(newLang);
@@ -308,13 +311,25 @@ export default function App() {
     const params = new URLSearchParams(window.location.search);
     const rawTab = params.get('tab');
     const mappedTab = rawTab === 'urban' ? 'urban_311' : rawTab;
-    if (
-      mappedTab &&
-      ['identity', 'family_address', 'health', 'education', 'urban_311', 'emergency_911', 'treasury'].includes(mappedTab)
-    ) {
+    if (mappedTab) {
       setActiveTab(mappedTab as CitizenTab);
     }
-    // IMPORTANTE: Nenhum usuário é carregado sem sessão autenticada no TopNavUserWidget
+
+    fetch('/api/v1/registry/apps')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data || !Array.isArray(data.apps)) return;
+        const dynamicTabs = data.apps
+          .filter((a: any) => a?.citizenPortalTab?.enabled)
+          .map((a: any) => ({
+            id: a.citizenPortalTab.tabId,
+            appId: a.appId,
+            title: a.citizenPortalTab.title,
+            subtitle: a.citizenPortalTab.subtitle
+          }));
+        setPluggableTabs(dynamicTabs);
+      })
+      .catch(() => {});
   }, []);
 
   const handleUpdateAddress = async (e: React.FormEvent) => {
@@ -430,8 +445,45 @@ export default function App() {
     }
   };
 
+  const allMenuItems = [...CITIZEN_MENU_ITEMS, ...pluggableTabs];
+  const activePluggableTab = pluggableTabs.find((p) => p.id === activeTab);
+
+  useEffect(() => {
+    if (activePluggableTab && dossier?.citizen?.nid) {
+      fetch(`/api/v1/apps/${encodeURIComponent(activePluggableTab.appId)}/view?nid=${encodeURIComponent(dossier.citizen.nid)}&mode=citizen`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data?.view) setPluggableViewData(data.view);
+        })
+        .catch(() => {});
+    }
+  }, [activeTab, activePluggableTab?.appId, dossier?.citizen?.nid]);
+
+  const handlePluggableAction = async (appId: string, actionId: string) => {
+    if (!dossier?.citizen?.nid) return;
+    const res = await fetch(`/api/v1/apps/${encodeURIComponent(appId)}/action`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        actionId,
+        nid: dossier.citizen.nid,
+        payload: {
+          subject: 'Ação de Conciliação Digital Expressa / Relação de Consumo Soberana',
+          claim_amount_nva: 4850.00
+        }
+      })
+    });
+    const data = await res.json();
+    if (data?.result?.message_pt) {
+      setStatusBanner(data.result.message_pt);
+      const viewRes = await fetch(`/api/v1/apps/${encodeURIComponent(appId)}/view?nid=${encodeURIComponent(dossier.citizen.nid)}&mode=citizen`);
+      const viewJson = await viewRes.json();
+      if (viewJson?.view) setPluggableViewData(viewJson.view);
+    }
+  };
+
   const citizen = dossier?.citizen;
-  const activeMenuObj = CITIZEN_MENU_ITEMS.find((m) => m.id === activeTab) || CITIZEN_MENU_ITEMS[0];
+  const activeMenuObj = allMenuItems.find((m) => m.id === activeTab) || allMenuItems[0];
 
   return (
     <ThemeProvider theme={novatlantisTheme}>
@@ -627,7 +679,7 @@ export default function App() {
                   </Typography>
                 </Box>
 
-                {CITIZEN_MENU_ITEMS.map((item) => (
+                {allMenuItems.map((item) => (
                   <ListItemButton
                     key={item.id}
                     selected={activeTab === item.id}
@@ -1446,6 +1498,83 @@ export default function App() {
                       Clique em <strong>Emitir / Revalidar Passaporte ICAO</strong> acima para gerar imediatamente seu documento internacional no padrão ICAO Doc 9303.
                     </p>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* PLUGGABLE SECTORAL MODULE TAB (e.g. Tribunal de Justiça Digital - TJ) */}
+            {activePluggableTab && (
+              <div className="space-y-6">
+                <div className="bg-white rounded-md p-6 border border-[#002046]/15 shadow-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4 mb-5">
+                    <div>
+                      <span className="inline-block px-2.5 py-0.5 rounded bg-[#002046] text-white text-[10px] font-bold uppercase tracking-wider mb-1.5">
+                        Módulo Setorial Plugável • @novatlantis/portal-sdk ({activePluggableTab.appId})
+                      </span>
+                      <h3 className="text-lg font-extrabold text-[#002046]">
+                        {pluggableViewData?.headline?.[lang] || activePluggableTab.title[lang]}
+                      </h3>
+                      <p className="text-xs text-slate-600 mt-0.5">
+                        {pluggableViewData?.summary?.[lang] || activePluggableTab.subtitle[lang]}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {(pluggableViewData?.actions || []).map((act: any) => (
+                        <button
+                          key={act.action_id}
+                          onClick={() => handlePluggableAction(activePluggableTab.appId, act.action_id)}
+                          className="bg-[#002046] text-white px-3.5 py-2 rounded text-xs font-bold hover:bg-[#00356e] transition"
+                        >
+                          {act.label?.[lang] || act.label?.pt || act.action_id}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {pluggableViewData?.kpis && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                      {pluggableViewData.kpis.map((kpi: any, idx: number) => (
+                        <div key={idx} className="p-4 rounded bg-[#f4f3ef] border border-[#002046]/10">
+                          <div className="text-[11px] font-bold uppercase text-slate-500">
+                            {kpi.label?.[lang] || kpi.label?.pt}
+                          </div>
+                          <div className="text-xl font-black text-[#002046] mt-1">{kpi.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="space-y-3">
+                    <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#002046]">
+                      Processos Eletrônicos, Certidões e Audiências Soberanas ({citizen?.full_name})
+                    </h4>
+                    {(pluggableViewData?.records || []).map((rec: any, idx: number) => (
+                      <div key={idx} className="p-4 rounded bg-[#fcfbf9] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-xs font-bold text-[#002046]">
+                              {rec.case_number || rec.cert_id}
+                            </span>
+                            <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 text-[10px] font-bold">
+                              {rec.status}
+                            </span>
+                          </div>
+                          <div className="text-sm font-bold text-slate-900 mt-1">
+                            {rec.subject || rec.cert_type}
+                          </div>
+                          <div className="text-xs text-slate-600 mt-0.5">
+                            {rec.court_branch || `Hash de Autenticidade: ${rec.authenticity_hash}`} • {rec.ai_conciliation_summary || `Emitido em ${rec.issued_at}`}
+                          </div>
+                        </div>
+                        {rec.claim_amount_nva !== undefined && (
+                          <div className="text-right">
+                            <div className="text-xs text-slate-500">Valor da Causa</div>
+                            <div className="text-sm font-extrabold text-[#002046]">NVA$ {rec.claim_amount_nva}</div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}

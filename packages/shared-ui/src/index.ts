@@ -4,6 +4,79 @@
  * Lema Constitucional: "NOVATLANTIS • LIBERTAS IN DIGITALI"
  */
 
+export type SupportedLocale = 'pt-BR' | 'es-419' | 'en-US';
+
+export interface PluggableAppKpi {
+  label: string;
+  value: string;
+  helper?: string;
+}
+
+export interface PluggableAppAction {
+  actionId: string;
+  label: string;
+  description: string;
+}
+
+export interface PluggableAppRecordItem {
+  id: string;
+  primary: string;
+  secondary: string;
+  detail?: string;
+  status: string;
+  badgeColor?: 'success' | 'warning' | 'info' | 'error' | 'default';
+}
+
+export interface PluggableAppViewPayload {
+  appId: string;
+  mode: 'citizen' | 'backstage';
+  title: string;
+  subtitle: string;
+  kpis: PluggableAppKpi[];
+  actions: PluggableAppAction[];
+  records: PluggableAppRecordItem[];
+}
+
+export interface PluggableAppManifest {
+  appId: string;
+  version: string;
+  owner: string;
+  sector: string;
+  serviceUrl?: string | null;
+  landingCatalog: {
+    enabled: boolean;
+    icon?: string;
+    badge?: string;
+    title: Record<SupportedLocale, string>;
+    agency: Record<SupportedLocale, string>;
+    description: Record<SupportedLocale, string>;
+    questionPrompt: Record<SupportedLocale, string>;
+    servicePrompt: Record<SupportedLocale, string>;
+  };
+  agentIntegration: {
+    agentId: string;
+    triggerKeywords: string[];
+    executeEndpoint?: string;
+    requiresAuthForTransaction?: boolean;
+  };
+  citizenPortalTab?: {
+    enabled: boolean;
+    tabId: string;
+    title: Record<SupportedLocale, string>;
+    subtitle: Record<SupportedLocale, string>;
+    uiEntryPath?: string;
+    apiBasePath?: string;
+  };
+  backstageModule?: {
+    enabled: boolean;
+    moduleId: string;
+    allowedRoles: string[];
+    title: Record<SupportedLocale, string>;
+    subtitle?: Record<SupportedLocale, string>;
+    uiEntryPath?: string;
+  };
+}
+
 export const NOVATLANTIS_HERALDRY = {
   motto: 'NOVATLANTIS • LIBERTAS IN DIGITALI',
   mottoTranslations: {

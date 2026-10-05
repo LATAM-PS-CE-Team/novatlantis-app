@@ -48,7 +48,7 @@ import {
   UserCheck
 } from 'lucide-react';
 import { novatlantisTheme } from './theme';
-import { TopNavUserWidget, SupportedLanguage, resolveInitialLanguage } from './components/TopNavUserWidget';
+import { TopNavUserWidget, SupportedLanguage, resolveInitialLanguage, DYNAMIC_PORTAL_URLS } from './components/TopNavUserWidget';
 
 type Language = SupportedLanguage;
 type BackstageTab =
@@ -58,10 +58,11 @@ type BackstageTab =
   | 'edu_mgmt'
   | 'ops_311'
   | 'ops_911'
-  | 'justice_datalake';
+  | 'justice_datalake'
+  | string;
 
-const LANDING_PORTAL_URL = 'https://novatlantis-landing-portal-wpahcxvhuq-uc.a.run.app';
-const CITIZEN_PORTAL_URL = 'https://novatlantis-citizen-portal-wpahcxvhuq-uc.a.run.app';
+const LANDING_PORTAL_URL = DYNAMIC_PORTAL_URLS.landingPortalUrl;
+const CITIZEN_PORTAL_URL = DYNAMIC_PORTAL_URLS.citizenPortalUrl;
 
 const BACKSTAGE_MENU_ITEMS: { id: BackstageTab; title: Record<Language, string>; subtitle: Record<Language, string> }[] = [
   {
@@ -272,6 +273,8 @@ export default function App() {
   const [justiceBackstage, setJusticeBackstage] = useState<any>(null);
   const [datalakeExplorerResults, setDatalakeExplorerResults] = useState<any[]>([]);
   const [datalakeFilter, setDatalakeFilter] = useState('NID-000');
+  const [pluggableQueues, setPluggableQueues] = useState<{ id: string; appId: string; title: Record<Language, string>; subtitle: Record<Language, string> }[]>([]);
+  const [pluggableQueueView, setPluggableQueueView] = useState<any>(null);
 
   // Forms
   const [iamTargetNid, setIamTargetNid] = useState('NID-000-0000-0005-1');
@@ -328,6 +331,30 @@ export default function App() {
   useEffect(() => {
     // IMPORTANTE: Nenhum usuário inicia logado sem cookie/token válido no TopNavUserWidget
     loadAllBackstageData();
+    fetch('/api/v1/registry/apps')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data?.apps)) {
+          const dynamicQueues = data.apps
+            .filter((app: any) => app.surfaces?.backstageQueue?.enabled)
+            .map((app: any, idx: number) => ({
+              id: app.surfaces.backstageQueue.tabId || app.appId,
+              appId: app.appId,
+              title: {
+                'pt-BR': `${8 + idx}. ${app.surfaces.backstageQueue.title?.pt || app.title?.pt}`,
+                'es-419': `${8 + idx}. ${app.surfaces.backstageQueue.title?.es || app.title?.es}`,
+                'en-US': `${8 + idx}. ${app.surfaces.backstageQueue.title?.en || app.title?.en}`
+              },
+              subtitle: {
+                'pt-BR': app.surfaces.backstageQueue.subtitle?.pt || app.summary?.pt,
+                'es-419': app.surfaces.backstageQueue.subtitle?.es || app.summary?.es,
+                'en-US': app.surfaces.backstageQueue.subtitle?.en || app.summary?.en
+              }
+            }));
+          setPluggableQueues(dynamicQueues);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleCitizenSearch = async (q: string) => {
@@ -460,7 +487,38 @@ export default function App() {
     setDatalakeExplorerResults(data.results || []);
   };
 
-  const activeMenuObj = BACKSTAGE_MENU_ITEMS.find((m) => m.id === backstageTab) || BACKSTAGE_MENU_ITEMS[0];
+  const allBackstageMenuItems = [...BACKSTAGE_MENU_ITEMS, ...pluggableQueues];
+  const activePluggableQueue = pluggableQueues.find((q) => q.id === backstageTab);
+
+  useEffect(() => {
+    if (activePluggableQueue) {
+      const nid = currentUser?.nid || 'NID-000-0000-0001-9';
+      fetch(`/api/v1/apps/${encodeURIComponent(activePluggableQueue.appId)}/view?nid=${encodeURIComponent(nid)}&mode=backstage`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data?.view) setPluggableQueueView(data.view);
+        })
+        .catch(() => {});
+    }
+  }, [backstageTab, activePluggableQueue?.appId, currentUser?.nid]);
+
+  const handlePluggableBackstageAction = async (appId: string, actionId: string) => {
+    const nid = currentUser?.nid || 'NID-000-0000-0001-9';
+    const res = await fetch(`/api/v1/apps/${encodeURIComponent(appId)}/action`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ actionId, nid, payload: {} })
+    });
+    const data = await res.json();
+    if (data?.result?.message_pt) {
+      setStatusMessage(data.result.message_pt);
+      const viewRes = await fetch(`/api/v1/apps/${encodeURIComponent(appId)}/view?nid=${encodeURIComponent(nid)}&mode=backstage`);
+      const viewJson = await viewRes.json();
+      if (viewJson?.view) setPluggableQueueView(viewJson.view);
+    }
+  };
+
+  const activeMenuObj = allBackstageMenuItems.find((m) => m.id === backstageTab) || allBackstageMenuItems[0];
 
   return (
     <ThemeProvider theme={novatlantisTheme}>
@@ -650,7 +708,7 @@ export default function App() {
                   </Typography>
                 </Box>
 
-                {BACKSTAGE_MENU_ITEMS.map((item) => (
+                {allBackstageMenuItems.map((item) => (
                   <ListItemButton
                     key={item.id}
                     selected={backstageTab === item.id}
@@ -1386,6 +1444,83 @@ export default function App() {
                           ))}
                         </tbody>
                       </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* PLUGGABLE BACKSTAGE OPERATIONAL QUEUE (e.g. Cartório & Conciliação IA — TJ) */}
+              {activePluggableQueue && (
+                <div className="space-y-6">
+                  <div className="bg-white rounded-md p-6 border border-[#002046]/15 shadow-sm">
+                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4 mb-5">
+                      <div>
+                        <span className="inline-block px-2.5 py-0.5 rounded bg-[#002046] text-white text-[10px] font-bold uppercase tracking-wider mb-1.5">
+                          Fila Operacional Plugável • @novatlantis/portal-sdk ({activePluggableQueue.appId})
+                        </span>
+                        <h3 className="text-lg font-extrabold text-[#002046]">
+                          {pluggableQueueView?.headline?.[lang] || activePluggableQueue.title[lang]}
+                        </h3>
+                        <p className="text-xs text-slate-600 mt-0.5">
+                          {pluggableQueueView?.summary?.[lang] || activePluggableQueue.subtitle[lang]}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {(pluggableQueueView?.actions || []).map((act: any) => (
+                          <button
+                            key={act.action_id}
+                            onClick={() => handlePluggableBackstageAction(activePluggableQueue.appId, act.action_id)}
+                            className="bg-[#002046] text-white px-3.5 py-2 rounded text-xs font-bold hover:bg-[#00356e] transition"
+                          >
+                            {act.label?.[lang] || act.label?.pt || act.action_id}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {pluggableQueueView?.kpis && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        {pluggableQueueView.kpis.map((kpi: any, idx: number) => (
+                          <div key={idx} className="p-4 rounded bg-[#f4f3ef] border border-[#002046]/10">
+                            <div className="text-[11px] font-bold uppercase text-slate-500">
+                              {kpi.label?.[lang] || kpi.label?.pt}
+                            </div>
+                            <div className="text-xl font-black text-[#002046] mt-1">{kpi.value}</div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="space-y-3">
+                      <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#002046]">
+                        Pauta de Conciliação & Homologação Judicial Assistida por IA
+                      </h4>
+                      {(pluggableQueueView?.records || []).map((rec: any, idx: number) => (
+                        <div key={idx} className="p-4 rounded bg-[#fcfbf9] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-mono text-xs font-bold text-[#002046]">
+                                {rec.case_number || rec.cert_id}
+                              </span>
+                              <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 text-[10px] font-bold">
+                                {rec.status}
+                              </span>
+                            </div>
+                            <div className="text-sm font-bold text-slate-900 mt-1">
+                              {rec.subject || rec.cert_type}
+                            </div>
+                            <div className="text-xs text-slate-600 mt-0.5">
+                              {rec.court_branch || `Hash: ${rec.authenticity_hash}`} • {rec.ai_conciliation_summary || rec.issued_at}
+                            </div>
+                          </div>
+                          {rec.claim_amount_nva !== undefined && (
+                            <div className="text-right">
+                              <div className="text-xs text-slate-500">Valor da Causa</div>
+                              <div className="text-sm font-extrabold text-[#002046]">NVA$ {rec.claim_amount_nva}</div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

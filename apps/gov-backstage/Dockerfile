@@ -15,7 +15,7 @@ ENV GDF_DB_PATH=/app/gdf_sovereign.db
 COPY package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
-COPY server.mjs authModule.mjs ./
-COPY gdf_sovereign.db ./gdf_sovereign.db
+COPY server.mjs authModule.mjs portalSdk.mjs ./
+COPY pluggable-apps ./pluggable-apps
 EXPOSE 8080
 CMD ["node", "server.mjs"]

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://novatlantis.gov.cloud/schemas/novatlantis-app.schema.json",
+  "title": "Novatlantis Pluggable App Manifest",
+  "description": "Contrato declarativo para acoplar novos casos de uso setoriais (apps/*) ao Portal Nacional, Concierge IA, Portal do Cidadão e Government Backstage.",
+  "type": "object",
+  "required": [
+    "appId",
+    "version",
+    "owner",
+    "sector",
+    "landingCatalog",
+    "agentIntegration"
+  ],
+  "properties": {
+    "appId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Identificador único (slug) do aplicativo em apps/<appId>"
+    },
+    "version": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "string",
+      "description": "GitHub handle ou e-mail do Customer Engineer (CE) responsável"
+    },
+    "sector": {
+      "type": "string",
+      "description": "Setor governamental (ex.: JUDICIARY_STATE_COURT, TAX_ADMINISTRATION, URBAN_MOBILITY)"
+    },
+    "serviceUrlEnvVar": {
+      "type": "string"
+    },
+    "defaultPort": {
+      "type": "integer"
+    },
+    "landingCatalog": {
+      "type": "object",
+      "required": ["enabled", "title", "agency", "description", "questionPrompt", "servicePrompt"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "icon": { "type": "string" },
+        "badge": { "type": "string" },
+        "title": { "$ref": "#/$defs/localizedString" },
+        "agency": { "$ref": "#/$defs/localizedString" },
+        "description": { "$ref": "#/$defs/localizedString" },
+        "questionPrompt": { "$ref": "#/$defs/localizedString" },
+        "servicePrompt": { "$ref": "#/$defs/localizedString" }
+      }
+    },
+    "agentIntegration": {
+      "type": "object",
+      "required": ["agentId", "triggerKeywords"],
+      "properties": {
+        "agentId": { "type": "string" },
+        "triggerKeywords": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "executeEndpoint": { "type": "string" },
+        "requiresAuthForTransaction": { "type": "boolean" }
+      }
+    },
+    "citizenPortalTab": {
+      "type": "object",
+      "required": ["enabled", "tabId", "title", "subtitle"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "tabId": { "type": "string" },
+        "title": { "$ref": "#/$defs/localizedString" },
+        "subtitle": { "$ref": "#/$defs/localizedString" },
+        "uiEntryPath": { "type": "string" },
+        "apiBasePath": { "type": "string" }
+      }
+    },
+    "backstageModule": {
+      "type": "object",
+      "required": ["enabled", "moduleId", "allowedRoles", "title"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "moduleId": { "type": "string" },
+        "allowedRoles": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "title": { "$ref": "#/$defs/localizedString" },
+        "subtitle": { "$ref": "#/$defs/localizedString" },
+        "uiEntryPath": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "localizedString": {
+      "type": "object",
+      "required": ["pt-BR", "es-419", "en-US"],
+      "properties": {
+        "pt-BR": { "type": "string" },
+        "es-419": { "type": "string" },
+        "en-US": { "type": "string" }
+      }
+    }
+  }
+}
