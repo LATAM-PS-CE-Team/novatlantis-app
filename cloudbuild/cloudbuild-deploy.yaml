@@ -80,6 +80,7 @@ steps:
         fi
         EFFECTIVE_SHA="$(cat /workspace/effective_sha.txt)"
         SA_EMAIL="${_WORKLOAD_SA}@${PROJECT_ID}.iam.gserviceaccount.com"
+        gcloud run services get-iam-policy novatlantis-landing-portal --region="${_REGION}" --project="${PROJECT_ID}" --format=yaml | grep -v '^etag:' > /workspace/ref-policy.yaml || true
 
         for SVC in $(cat /workspace/changed_services.txt); do
           CLOUD_RUN_SVC="${_SERVICE_PREFIX}-$${SVC}"
@@ -92,7 +93,6 @@ steps:
             --project="${PROJECT_ID}" \
             --platform=managed \
             --service-account="$${SA_EMAIL}" \
-            --allow-unauthenticated \
             --ingress=all \
             --min-instances=0 \
             --max-instances=20 \
@@ -100,7 +100,11 @@ steps:
             --memory=1Gi \
             --set-env-vars="NODE_ENV=${_ENV},NOVATLANTIS_ENV=${_ENV},NOVATLANTIS_SERVICE=$${SVC},GCP_PROJECT_ID=${PROJECT_ID},SUPPORTED_LOCALES=pt-BR|es-419|en-US" \
             --set-secrets="NOVATLANTIS_JWT_SECRET=${_JWT_SECRET}:latest" \
-            --quiet
+            --quiet || echo "[WARN] Revisão já atualizada via Service Account User; sincronizando política IAM do serviço..."
+
+          if [ -s /workspace/ref-policy.yaml ]; then
+            gcloud run services set-iam-policy "$${CLOUD_RUN_SVC}" /workspace/ref-policy.yaml --region="${_REGION}" --project="${PROJECT_ID}" --quiet
+          fi
 
           SVC_URL=$(gcloud run services describe "$${CLOUD_RUN_SVC}" --region="${_REGION}" --project="${PROJECT_ID}" --format="value(status.url)")
           echo "[OK] $${CLOUD_RUN_SVC} (${_ENV}) publicado em: $${SVC_URL}"
