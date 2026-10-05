@@ -1,93 +1,107 @@
-# Guia de Onboarding — Como Integrar Módulos e Demos ao Portal Novatlantis
+# novatlantis onboarding
 
-Este guia apresenta o passo a passo completo para conectar uma aplicação ou demonstração existente ao ecossistema **Novatlantis**, entender a estrutura dos repositórios e publicar alterações através do pipeline de CI/CD.
+Step-by-step guide to request repository access, connect a federated demo to **Novatlantis** (`gov.novatlantis.cloud`), and ship changes through the CI/CD pipeline.
 
----
+## github access
 
-## 1. Estrutura dos Repositórios e Ambientes
+If you do not have a GitHub account or write access to the organization yet:
 
-O projeto está dividido em 3 repositórios na organização `LATAM-PS-CE-Team`:
+1. **create a github account:** sign up at [`https://github.com/signup`](https://github.com/signup) and enable Two-Factor Authentication (2FA).
+2. **join the organization:** send your GitHub username to the project maintainers (`@pedrocalixto` or `@billebr`) to be invited to [`LATAM-PS-CE-Team`](https://github.com/LATAM-PS-CE-Team), then accept the invite at [`https://github.com/orgs/LATAM-PS-CE-Team/invitation`](https://github.com/orgs/LATAM-PS-CE-Team/invitation).
+3. **authenticate git locally:** run the GitHub CLI authentication flow so your terminal can push branches:
+   ```bash
+   gh auth login
+   # Select: GitHub.com -> HTTPS -> Yes (authenticate Git with credentials) -> Login with a web browser
+   ```
+   *(Alternatively, configure an SSH key or a Personal Access Token with `repo` permissions).*
+4. **set your git identity:**
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your-email@example.com"
+   ```
 
-| Repositório | Função Principal |Quando alterar? |
+## repositories
+
+The platform is split across 3 repositories in [`LATAM-PS-CE-Team`](https://github.com/LATAM-PS-CE-Team):
+
+| Repository | Scope | When to touch |
 | :--- | :--- | :--- |
-| **[`novatlantis-app`](https://github.com/LATAM-PS-CE-Team/novatlantis-app)** | Portais (`landing-portal`, `citizen-portal`, `gov-backstage`), agente (`first-responder-agent`) e módulos setoriais (`apps/*`). | **Sempre que for adicionar ou atualizar uma demo/módulo.** |
-| **[`novatlantis-iac`](https://github.com/LATAM-PS-CE-Team/novatlantis-iac)** | Infraestrutura Terraform (VPC, Load Balancer HTTPS global, certificados SSL, Cloud DNS, Cloud Run, AlloyDB e IAM). | Apenas quando precisar registrar um novo subdomínio público (`*.gov.novatlantis.cloud`) no DNS/certificado SSL. |
-| **[`novatlantis-data-platform`](https://github.com/LATAM-PS-CE-Team/novatlantis-data-platform)** | Data Lakehouse no BigQuery, buckets Cloud Storage e gerador da base sintética de 100.000 cidadãos (`NID`). | Quando precisar adicionar novas tabelas analíticas ou datasets no BigQuery. |
+| **[`novatlantis-app`](https://github.com/LATAM-PS-CE-Team/novatlantis-app)** | Web portals (`landing-portal`, `citizen-portal`, `gov-backstage`), `first-responder-agent`, and pluggable modules (`apps/*`). | **Whenever you add or update a demo or module.** |
+| **[`novatlantis-iac`](https://github.com/LATAM-PS-CE-Team/novatlantis-iac)** | Terraform infrastructure (VPC, global HTTPS Load Balancer, SSL certificates, Cloud DNS, Cloud Run, AlloyDB, IAM). | Only when registering a new public subdomain (`*.gov.novatlantis.cloud`) in DNS/SSL. |
+| **[`novatlantis-data-platform`](https://github.com/LATAM-PS-CE-Team/novatlantis-data-platform)** | BigQuery datasets, Cloud Storage buckets, and the 100,000 synthetic citizen generator (`NID`). | When adding shared BigQuery tables or analytical views. |
 
-### Ambientes Publicados
+### environments
 
-- **Produção (branch `main`):**
-  - Portal Principal: [`https://gov.novatlantis.cloud`](https://gov.novatlantis.cloud)
-  - Portal do Cidadão: [`https://portal.gov.novatlantis.cloud`](https://portal.gov.novatlantis.cloud)
-  - Backstage Governamental: [`https://backstage.gov.novatlantis.cloud`](https://backstage.gov.novatlantis.cloud)
-- **Desenvolvimento (branch `dev`):**
-  - Portal Principal: [`https://dev.gov.novatlantis.cloud`](https://dev.gov.novatlantis.cloud)
-  - Portal do Cidadão: [`https://portal.dev.gov.novatlantis.cloud`](https://portal.dev.gov.novatlantis.cloud)
-  - Backstage Governamental: [`https://backstage.dev.gov.novatlantis.cloud`](https://backstage.dev.gov.novatlantis.cloud)
+- **production (`main`):**
+  - main portal: [`https://gov.novatlantis.cloud`](https://gov.novatlantis.cloud)
+  - citizen portal: [`https://portal.gov.novatlantis.cloud`](https://portal.gov.novatlantis.cloud)
+  - government backstage: [`https://backstage.gov.novatlantis.cloud`](https://backstage.gov.novatlantis.cloud)
+- **development (`dev`):**
+  - main portal: [`https://dev.gov.novatlantis.cloud`](https://dev.gov.novatlantis.cloud)
+  - citizen portal: [`https://portal.dev.gov.novatlantis.cloud`](https://portal.dev.gov.novatlantis.cloud)
+  - government backstage: [`https://backstage.dev.gov.novatlantis.cloud`](https://backstage.dev.gov.novatlantis.cloud)
 
----
+## how integration works
 
-## 2. Como Funciona a Integração de Módulos (`@novatlantis/portal-sdk`)
+Every folder inside `apps/<app-id>/` containing `novatlantis.app.json` and `plugin.mjs` is automatically discovered by `@novatlantis/portal-sdk` and wired into **4 surfaces**:
 
-Qualquer módulo adicionado em `apps/<id-do-modulo>/` contendo dois arquivos (`novatlantis.app.json` e `plugin.mjs`) é descoberto automaticamente pelo SDK do portal e integrado em **4 pontos simultâneos**:
+1. **home catalog (`landing-portal`):** displays your card with title, agency, subdomain tag, and launch buttons.
+2. **digital assistant (`POST /api/orchestrator/chat`):** matches any keyword in `triggerKeywords`, runs your `plugin.mjs`, and returns a contextual reply with a direct link to your app.
+3. **citizen portal (`citizen-portal`):** adds a dedicated tab in the side navigation with KPIs, records, and actions.
+4. **government backstage (`gov-backstage`):** adds an operational queue for authenticated public servants.
 
-1. **Catálogo da Página Inicial (`landing-portal`):** exibe o card do seu sistema com título, órgão responsável, tag de subdomínio e botões de acesso.
-2. **Atendimento Digital / Chat (`POST /api/orchestrator/chat`):** quando o usuário digita qualquer palavra-chave definida em `triggerKeywords`, o chat aciona o seu `plugin.mjs` e retorna a resposta contextualizada com link direto para a sua aplicação.
-3. **Portal do Cidadão (`citizen-portal`):** cria uma aba própria no menu lateral com indicadores (KPIs), registros e botões de ação.
-4. **Backstage Governamental (`gov-backstage`):** cria uma fila operacional no painel administrativo para servidores públicos autenticados.
+You can integrate in two modes:
+- **federated demo (recommended for existing demos):** your application stays hosted in your own Google Cloud project (Cloud Run, GKE, etc.), and Novatlantis acts as the unified catalog, chat router, and subdomain redirect (`<your-demo>.gov.novatlantis.cloud`).
+- **native module:** your module runs inside the portal's stack and persists tables in the local SQLite / AlloyDB database (like `apps/justice-court-tj`).
 
-Você pode integrar seu caso de uso de duas formas:
-- **Modo 1 — Demo Federada (Recomendado para demos já prontas):** sua aplicação continua rodando no seu próprio projeto Google Cloud (Cloud Run, GKE, etc.), e o Portal Novatlantis funciona como vitrine unificada, roteador de chat e redirecionador de subdomínio (`<sua-demo>.gov.novatlantis.cloud`).
-- **Modo 2 — Módulo Nativo com Banco de Dados Local/AlloyDB:** além do manifesto e plugin, seu módulo persiste tabelas transacionais no banco do portal (como em `apps/justice-court-tj`).
+## quickstart
 
----
+### 1. clone and branch
 
-## 3. Passo a Passo: Dando o Primeiro Passo (Em 10 Minutos)
-
-### Passo 1 — Clonar o repositório e criar sua branch a partir de `dev`
+Always branch off `dev`:
 
 ```bash
 git clone https://github.com/LATAM-PS-CE-Team/novatlantis-app.git
 cd novatlantis-app
 git checkout dev
 git pull origin dev
-git checkout -b feature/minha-demo
+git checkout -b feature/my-demo
 ```
 
-### Passo 2 — Gerar o esqueleto do módulo automaticamente
+### 2. generate the module
 
-Execute o gerador de módulos passando o identificador (`--id`), título (`--title`), órgão (`--agency`) e sigla (`--owner`):
+Run the scaffolding script with your module ID, title, agency, and owner acronym:
 
 ```bash
 npm run create:app -- \
-  --id=sefaz-tributos \
-  --title="SEFAZ Digital — Gestão Tributária" \
-  --agency="Secretaria da Fazenda" \
+  --id=sefaz-tax \
+  --title="Digital Tax Administration" \
+  --agency="Department of Revenue" \
   --owner="SEFAZ" \
   --sector="TAX_ADMINISTRATION"
 ```
 
-Isso criará a pasta `apps/sefaz-tributos/` com:
-- `novatlantis.app.json` (manifesto declarativo em Português, Espanhol e Inglês)
-- `plugin.mjs` (lógica de resposta do chat, indicadores e visão do cidadão/backstage)
-- `package.json`, `server.js` e `Dockerfile`
+This creates `apps/sefaz-tax/` with:
+- `novatlantis.app.json` (manifest in Portuguese, Spanish, and English)
+- `plugin.mjs` (chat handler, KPIs, and citizen/backstage views)
+- `package.json`, `server.js`, and `Dockerfile`
 
-### Passo 3 — Conectar sua Demo Federada no `novatlantis.app.json`
+### 3. link your demo
 
-Abra `apps/<seu-id>/novatlantis.app.json` e adicione os campos `externalTargetUrl` (URL pública da sua demo no Cloud Run/GKE) e `federatedSubdomain` (subdomínio desejado), além de ajustar as palavras-chave (`triggerKeywords`) que ativam sua demo no chat:
+Open `apps/<your-id>/novatlantis.app.json` and set `externalTargetUrl` (your public Cloud Run/GKE URL), `federatedSubdomain`, and `triggerKeywords`:
 
 ```json
 {
-  "appId": "sefaz-tributos",
+  "appId": "sefaz-tax",
   "version": "1.0.0",
   "owner": "SEFAZ",
   "sector": "TAX_ADMINISTRATION",
-  "externalTargetUrl": "https://minha-demo-sefaz-123456.southamerica-east1.run.app",
+  "externalTargetUrl": "https://my-tax-demo-123456.southamerica-east1.run.app",
   "federatedSubdomain": "sefaz",
   "landingCatalog": {
     "enabled": true,
     "icon": "AccountBalance",
-    "badge": "SEFAZ • TRIBUTOS",
+    "badge": "SEFAZ • TAX",
     "title": {
       "pt-BR": "SEFAZ Digital — Gestão Tributária",
       "es-419": "SEFAZ Digital — Gestión Tributaria",
@@ -115,77 +129,75 @@ Abra `apps/<seu-id>/novatlantis.app.json` e adicione os campos `externalTargetUr
     }
   },
   "agentIntegration": {
-    "agentId": "agent-sefaz-tributos-v1 (SEFAZ)",
-    "triggerKeywords": ["sefaz", "icms", "nota fiscal", "auditoria fiscal"],
-    "executeEndpoint": "/api/v1/apps/sefaz-tributos/agent",
+    "agentId": "agent-sefaz-tax-v1 (SEFAZ)",
+    "triggerKeywords": ["sefaz", "tax", "icms", "invoice", "audit"],
+    "executeEndpoint": "/api/v1/apps/sefaz-tax/agent",
     "requiresAuthForTransaction": false
   }
 }
 ```
 
-> **Exemplos prontos no repositório para consulta:**
-> - Demos federadas externas: `apps/multaexec-mprs/`, `apps/vigia-mprs/`, `apps/geo-engine-car/`, `apps/detran-blockchain/`
-> - Módulo nativo completo com banco de dados: `apps/justice-court-tj/`
+> **Note:** Reference implementations in the repository:
+> - Federated demos: `apps/multaexec-mprs/`, `apps/vigia-mprs/`, `apps/geo-engine-car/`, `apps/detran-blockchain/`
+> - Native module with database: `apps/justice-court-tj/`
 
-### Passo 4 — Sincronizar com os Portais e Testar Localmente
+### 4. sync and test
 
-Para que os containers Docker do `landing-portal`, `citizen-portal` e `gov-backstage` empacotem o novo manifesto em produção, copie a pasta do seu módulo para o diretório `pluggable-apps` de cada portal:
+Copy your manifest and plugin into the `pluggable-apps/` folder of the three portals so their Docker images bundle your module:
 
 ```bash
 for portal in landing-portal citizen-portal gov-backstage; do
-  mkdir -p apps/$portal/pluggable-apps/sefaz-tributos
-  cp apps/sefaz-tributos/novatlantis.app.json apps/sefaz-tributos/plugin.mjs apps/$portal/pluggable-apps/sefaz-tributos/
+  mkdir -p apps/$portal/pluggable-apps/sefaz-tax
+  cp apps/sefaz-tax/novatlantis.app.json apps/sefaz-tax/plugin.mjs apps/$portal/pluggable-apps/sefaz-tax/
 done
 ```
 
-Para validar o manifesto e testar localmente:
+Validate the manifest and test locally:
 
 ```bash
-npm --prefix apps/sefaz-tributos test
+npm --prefix apps/sefaz-tax test
 npm --prefix apps/landing-portal run build
 PORT=8080 node apps/landing-portal/server.mjs
 ```
 
-Acesse `http://localhost:8080/api/v1/registry/apps` para confirmar que seu módulo aparece registrado no JSON.
+Open `http://localhost:8080/api/v1/registry/apps` to verify your module is registered.
 
-### Passo 5 (Opcional) — Ativar Redirecionamento por Subdomínio (`<subdominio>.gov.novatlantis.cloud`)
+### 5. custom subdomain (optional)
 
-Se quiser que `https://sefaz.gov.novatlantis.cloud` redirecione automaticamente para a URL da sua demo:
-1. Em `novatlantis-app/apps/landing-portal/server.mjs`, adicione a chave no objeto `FEDERATED_SUBDOMAIN_TARGETS`:
+If you want `https://sefaz.gov.novatlantis.cloud` to redirect to your demo URL:
+1. Add your subdomain key to `FEDERATED_SUBDOMAIN_TARGETS` in `apps/landing-portal/server.mjs`:
    ```javascript
    const FEDERATED_SUBDOMAIN_TARGETS = {
      multaexec: 'https://multaexec-ia-demo-633153854135.southamerica-east1.run.app/#/dashboard',
      vigia: 'https://vigia-ia-demo-633153854135.southamerica-east1.run.app/#/visao-geral',
      geo: 'https://geo-engine-app-345748407347.us-central1.run.app/',
      detran: 'https://material.136.81.200.203.nip.io/pn44detran',
-     sefaz: 'https://minha-demo-sefaz-123456.southamerica-east1.run.app'
+     sefaz: 'https://my-tax-demo-123456.southamerica-east1.run.app'
    };
    ```
-2. Caso precise do certificado SSL e DNS para o novo subdomínio no Load Balancer global, adicione o subdomínio na lista de domínios em `novatlantis-iac/main.tf`.
+2. Add the subdomain to the managed SSL certificate and DNS records in `novatlantis-iac/main.tf`.
 
----
+## ci/cd pipeline
 
-## 4. Fluxo do Pipeline CI/CD e Governança de Branches
-
-As branches `dev` e `main` são protegidas e utilizam **autenticação sem chaves (Workload Identity Federation + Cloud Build)**:
+Both `dev` and `main` branches use keyless authentication (**Workload Identity Federation + Cloud Build**):
 
 ```mermaid
 flowchart LR
-  A["Branch feature/*"] -->|"1. Pull Request"| B["Branch dev"]
-  B -->|"2. Cloud Build (Automático)"| C["Ambiente DEV (*.dev.gov.novatlantis.cloud)"]
-  C -->|"3. Pull Request"| D["Branch main"]
-  D -->|"4. Cloud Build (Automático)"| E["Ambiente PROD (*.gov.novatlantis.cloud)"]
+  A["feature/*"] -->|"1. pull request"| B["dev"]
+  B -->|"2. cloud build"| C["dev (*.dev.gov.novatlantis.cloud)"]
+  C -->|"3. pull request"| D["main"]
+  D -->|"4. cloud build"| E["prod (*.gov.novatlantis.cloud)"]
 ```
 
-1. **Abra um Pull Request da sua branch `feature/*` para `dev`:**
+1. **push your branch and open a pull request to `dev`:**
    ```bash
    git add .
-   git commit -m "feat(apps): adiciona módulo federado sefaz-tributos"
-   git push -u origin feature/minha-demo
+   git commit -m "feat(apps): add sefaz-tax federated module"
+   git push -u origin feature/my-demo
    ```
-2. **Validação Automática e Deploy em `dev`:**
-   - O GitHub Actions valida a sintaxe de todos os manifestos `novatlantis.app.json` e o build dos portais.
-   - Assim que o PR é aprovado e mesclado em `dev`, o Cloud Build constrói as imagens no Artifact Registry e atualiza os serviços `novatlantis-dev-*` em [`https://dev.gov.novatlantis.cloud`](https://dev.gov.novatlantis.cloud).
-3. **Promoção para Produção (`main`):**
-   - Após testar sua integração em `dev.gov.novatlantis.cloud`, abra um Pull Request da branch `dev` para `main`.
-   - Com o merge em `main`, o Cloud Build atualiza automaticamente o ambiente de produção em [`https://gov.novatlantis.cloud`](https://gov.novatlantis.cloud).
+2. **automatic validation and deploy to `dev`:**
+   - GitHub Actions validates all `novatlantis.app.json` manifests and portal builds.
+   - Once merged into `dev`, Cloud Build builds the affected images and updates `novatlantis-dev-*` at [`https://dev.gov.novatlantis.cloud`](https://dev.gov.novatlantis.cloud).
+3. **promote to `main` (production):**
+   - After verifying your demo in `dev.gov.novatlantis.cloud`, open a Pull Request from `dev` to `main`.
+   - Merging into `main` triggers Cloud Build to deploy to [`https://gov.novatlantis.cloud`](https://gov.novatlantis.cloud).
