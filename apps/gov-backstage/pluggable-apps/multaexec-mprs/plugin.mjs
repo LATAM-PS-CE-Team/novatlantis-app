@@ -3,7 +3,7 @@ const FEDERATED_SUBDOMAIN = 'multaexec';
 
 export async function initDatabase() {}
 
-export async function getCitizenView(_db, { nid, lang = 'pt-BR' }) {
+export async function getCitizenView(_db, { lang = 'pt-BR' }) {
   return {
     appId: 'multaexec-mprs',
     mode: 'citizen',
@@ -11,25 +11,24 @@ export async function getCitizenView(_db, { nid, lang = 'pt-BR' }) {
     externalTargetUrl: EXTERNAL_URL,
     federatedSubdomain: FEDERATED_SUBDOMAIN,
     kpis: [
-      { label: 'Nó Federado Argolis', value: 'mprs-cpsi (@jopoco)', status: 'ONLINE' },
-      { label: 'Região Cloud Run', value: 'southamerica-east1 (SP)', status: 'ACTIVE' },
-      { label: 'Domínio Soberano', value: 'multaexec.gov.novatlantis.cloud', status: 'VERIFIED' },
-      { label: 'Custo de Computação', value: 'Descentralizado (CE Argolis)', status: 'OPTIMIZED' }
+      { label: 'Órgão', value: 'MPRS', status: 'ONLINE' },
+      { label: 'Região', value: 'southamerica-east1', status: 'ACTIVE' },
+      { label: 'Subdomínio', value: 'multaexec.gov.novatlantis.cloud', status: 'VERIFIED' }
     ],
     sections: [
       {
         id: 'federated_launch',
-        title: 'MultaExec.IA — Execução de Pena de Multa (MPRS × Google Cloud)',
-        description: `Demonstração oficial construída por João Thiago Poço (@jopoco) no projeto Argolis mprs-cpsi e federada ao Portal Novatlantis. Acesse diretamente pelo subdomínio oficial https://multaexec.gov.novatlantis.cloud ou pelo Cloud Run de origem.`,
+        title: 'MultaExec.IA — Execução de Pena de Multa (MPRS)',
+        description: 'Sistema de cálculo, consulta patrimonial e automação de peças para execução de pena de multa.',
         type: 'cards',
         items: [
           {
-            id: 'CARD-MULTAEXEC-1',
-            title: 'Abrir Plataforma MultaExec.IA (Dashboard Completo)',
-            subtitle: 'Hospedado em southamerica-east1 (mprs-cpsi) • Faturamento isolado na conta do CE',
-            badge: 'ACESSO DIRETO • CLOUD RUN FEDERADO',
+            id: 'MULTAEXEC-APP',
+            title: 'Acessar MultaExec.IA',
+            subtitle: 'Ministério Público Estadual (MPRS)',
+            badge: 'ONLINE',
             status: 'ONLINE',
-            meta: EXTERNAL_URL,
+            meta: 'https://multaexec.gov.novatlantis.cloud',
             externalUrl: EXTERNAL_URL,
             federatedUrl: 'https://multaexec.gov.novatlantis.cloud'
           }
@@ -40,32 +39,25 @@ export async function getCitizenView(_db, { nid, lang = 'pt-BR' }) {
 }
 
 export async function getBackstageView(db, { lang = 'pt-BR' }) {
-  return getCitizenView(db, { nid: 'BACKSTAGE', lang });
+  return getCitizenView(db, { lang });
 }
 
-export async function handleAgentIntent(_db, { message, nid, citizenName, lang = 'pt-BR' }) {
+export async function handleAgentIntent() {
   const protocol = `MPRS-MULTA-${Date.now().toString().slice(-6)}`;
   return {
     intent: 'MPRS_MULTAEXEC_FEDERATED_LAUNCH',
-    delegated_agent: 'agent-multaexec-mprs-v1 (MultaExec.IA — Ministério Público MPRS)',
+    delegated_agent: 'agent-multaexec-mprs',
     source_document: EXTERNAL_URL,
     executed_action: {
       type: 'FEDERATED_REDIRECT_READY',
       protocol,
-      summary: 'Acesso Federado à plataforma MultaExec.IA (MPRS) liberado',
+      summary: 'Acesso ao MultaExec.IA (MPRS)',
       external_url: EXTERNAL_URL,
-      federated_domain: 'https://multaexec.gov.novatlantis.cloud',
-      details: {
-        owner_ce: '@jopoco (João Thiago Poço)',
-        gcp_project: 'mprs-cpsi (633153854135)',
-        region: 'southamerica-east1',
-        citizen: citizenName || nid || 'Cidadão / Promotor'
-      }
+      federated_domain: 'https://multaexec.gov.novatlantis.cloud'
     },
     response:
-      `Localizei o módulo federado **MultaExec.IA — Execução de Pena de Multa (MPRS × Google Cloud)** (Protocolo \`${protocol}\`), mantido por **@jopoco** no projeto Argolis \`mprs-cpsi\`:\n\n` +
-      `• **Objetivo:** Automação da execução de pena de multa criminal, cálculo atualizado, triagem patrimonial e geração assistida de peças com Vertex AI.\n` +
-      `• **Acesso pelo Domínio Novatlantis:** https://multaexec.gov.novatlantis.cloud\n` +
-      `• **Link Direto Cloud Run (Origem CE):** ${EXTERNAL_URL}`
+      `**MultaExec.IA — Execução de Pena de Multa (MPRS):**\n` +
+      `Plataforma para cálculo de multas criminais, triagem patrimonial e geração de petições.\n\n` +
+      `• **Acesso:** https://multaexec.gov.novatlantis.cloud`
   };
 }

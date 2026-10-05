@@ -2,7 +2,7 @@
   "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
   "appId": "vigia-mprs",
   "version": "1.0.0",
-  "owner": "@jopoco (mprs-cpsi)",
+  "owner": "MPRS",
   "sector": "PUBLIC_PROSECUTION_COLLECTIVE_RIGHTS",
   "deploymentMode": "EXTERNAL_FEDERATED_CE",
   "federatedSubdomain": "vigia",
@@ -10,35 +10,35 @@
   "landingCatalog": {
     "enabled": true,
     "icon": "Shield",
-    "badge": "TUTELA COLETIVA • MPRS (FEDERADO @JOPOCO)",
+    "badge": "Ministério Público",
     "title": {
-      "pt-BR": "Vigia.ia — Inteligência de Tutela Coletiva & Jurimetria (MPRS)",
-      "es-419": "Vigia.ia — Inteligencia de Tutela Colectiva y Jurimetría (MPRS)",
-      "en-US": "Vigia.ia — Collective Rights Intelligence & Jurimetrics (MPRS)"
+      "pt-BR": "Vigia.ia — Tutela Coletiva e Jurimetria",
+      "es-419": "Vigia.ia — Tutela Colectiva y Jurimetría",
+      "en-US": "Vigia.ia — Collective Rights & Jurimetrics"
     },
     "agency": {
-      "pt-BR": "Ministério Público Estadual (Desafio 41 CPSI 01/2026 • MPRS)",
-      "es-419": "Ministerio Público Estatal (Desafío 41 CPSI 01/2026 • MPRS)",
-      "en-US": "State Public Prosecutor's Office (CPSI Challenge 41 • MPRS)"
+      "pt-BR": "Ministério Público Estadual (MPRS)",
+      "es-419": "Ministerio Público Estatal (MPRS)",
+      "en-US": "Public Prosecutor's Office (MPRS)"
     },
     "description": {
-      "pt-BR": "Jurimetria extrajudicial, detecção precoce de litígios coletivos, correlação territorial de inquéritos civis e apoio à decisão em tutela coletiva com Google Cloud.",
-      "es-419": "Jurimetría extrajudicial, detección temprana de litigios colectivos y correlación territorial de investigaciones civiles con Google Cloud.",
-      "en-US": "Extrajudicial jurimetrics, early detection of collective litigation, and territorial correlation of civil inquiries on Google Cloud."
+      "pt-BR": "Análise de inquéritos civis, jurimetria extrajudicial e acompanhamento de demandas coletivas.",
+      "es-419": "Análisis de investigaciones civiles, jurimetría extrajudicial y monitoreo de demandas colectivas.",
+      "en-US": "Civil inquiry analysis, extrajudicial jurimetrics, and collective claims monitoring."
     },
     "questionPrompt": {
-      "pt-BR": "Quero conhecer o Vigia.ia de inteligência de tutela coletiva e jurimetria extrajudicial do MPRS",
-      "es-419": "Quiero conocer Vigia.ia de inteligencia de tutela colectiva y jurimetría extrajudicial del MPRS",
-      "en-US": "Show me the Vigia.ia collective rights intelligence and extrajudicial jurimetrics platform"
+      "pt-BR": "Como funciona o painel Vigia.ia de tutela coletiva e jurimetria?",
+      "es-419": "¿Cómo funciona el panel Vigia.ia de tutela colectiva y jurimetría?",
+      "en-US": "How does the Vigia.ia collective rights and jurimetrics dashboard work?"
     },
     "servicePrompt": {
-      "pt-BR": "Abrir o painel Vigia.ia de Inteligência de Tutela Coletiva e Jurimetria (MPRS)",
-      "es-419": "Abrir el panel Vigia.ia de Inteligencia de Tutela Colectiva y Jurimetría (MPRS)",
-      "en-US": "Open the Vigia.ia Collective Rights & Jurimetrics Dashboard (MPRS)"
+      "pt-BR": "Acessar o painel Vigia.ia",
+      "es-419": "Acceder al panel Vigia.ia",
+      "en-US": "Open Vigia.ia"
     }
   },
   "agentIntegration": {
-    "agentId": "agent-vigia-mprs-v1 (Vigia.ia — Inteligência de Tutela Coletiva MPRS)",
+    "agentId": "agent-vigia-mprs",
     "triggerKeywords": [
       "vigia",
       "vigia.ia",
@@ -58,14 +58,14 @@
     "enabled": true,
     "tabId": "vigia_mprs",
     "title": {
-      "pt-BR": "10. Vigia.ia — Tutela Coletiva & Jurimetria (MPRS)",
-      "es-419": "10. Vigia.ia — Tutela Colectiva y Jurimetría (MPRS)",
-      "en-US": "10. Vigia.ia — Collective Rights & Jurimetrics (MPRS)"
+      "pt-BR": "Vigia.ia (MPRS)",
+      "es-419": "Vigia.ia (MPRS)",
+      "en-US": "Vigia.ia (MPRS)"
     },
     "subtitle": {
-      "pt-BR": "Nó Federado Argolis (@jopoco • mprs-cpsi) — Monitoramento de demandas coletivas e TACs",
-      "es-419": "Nodo Federado Argolis (@jopoco • mprs-cpsi) — Monitoreo de demandas colectivas",
-      "en-US": "Federated Argolis Node (@jopoco • mprs-cpsi) — Collective rights monitoring"
+      "pt-BR": "Monitoramento de tutela coletiva e jurimetria",
+      "es-419": "Monitoreo de tutela colectiva y jurimetría",
+      "en-US": "Collective rights monitoring and jurimetrics"
     },
     "uiEntryPath": "/embed/citizen",
     "apiBasePath": "/api/v1/apps/vigia-mprs"
@@ -79,14 +79,14 @@
       "JUSTICE_AND_TREASURY_MANAGER"
     ],
     "title": {
-      "pt-BR": "Observatório de Tutela Coletiva — Vigia.ia (MPRS • @jopoco)",
-      "es-419": "Observatorio de Tutela Colectiva — Vigia.ia (MPRS • @jopoco)",
-      "en-US": "Collective Rights Observatory — Vigia.ia (MPRS • @jopoco)"
+      "pt-BR": "Vigia.ia (MPRS)",
+      "es-419": "Vigia.ia (MPRS)",
+      "en-US": "Vigia.ia (MPRS)"
     },
     "subtitle": {
-      "pt-BR": "Jurimetria extrajudicial do Desafio 41 CPSI 01/2026 hospedada no projeto Argolis mprs-cpsi",
-      "es-419": "Jurimetría extrajudicial del Desafío 41 CPSI 01/2026 alojada en el proyecto Argolis mprs-cpsi",
-      "en-US": "Extrajudicial jurimetrics hosted on Argolis project mprs-cpsi"
+      "pt-BR": "Jurimetria extrajudicial e inquéritos civis",
+      "es-419": "Jurimetría extrajudicial e investigaciones civiles",
+      "en-US": "Extrajudicial jurimetrics and civil inquiries"
     },
     "uiEntryPath": "/embed/backstage"
   }

@@ -2,7 +2,7 @@
   "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
   "appId": "detran-blockchain",
   "version": "1.0.0",
-  "owner": "@ernani (Argolis Blockchain)",
+  "owner": "DETRAN",
   "sector": "TRANSIT_LEGISLATION_BLOCKCHAIN",
   "deploymentMode": "EXTERNAL_FEDERATED_CE",
   "federatedSubdomain": "detran",
@@ -10,35 +10,35 @@
   "landingCatalog": {
     "enabled": true,
     "icon": "VerifiedUser",
-    "badge": "DETRAN • LEGISLAÇÃO BLOCKCHAIN (FEDERADO @ERNANI)",
+    "badge": "Trânsito e Normas",
     "title": {
-      "pt-BR": "Normas.gov & PN44 DETRAN — Legislação Validada em Blockchain",
-      "es-419": "Normas.gov & PN44 DETRAN — Legislación Validada en Blockchain",
-      "en-US": "Normas.gov & PN44 DETRAN — Blockchain-Verified Legislation"
+      "pt-BR": "PN44 DETRAN — Legislação em Blockchain",
+      "es-419": "PN44 DETRAN — Legislación en Blockchain",
+      "en-US": "PN44 DETRAN — Blockchain Legislation"
     },
     "agency": {
-      "pt-BR": "Departamento Nacional de Trânsito (DETRAN) & Imprensa Oficial Blockchain",
-      "es-419": "Departamento Nacional de Tránsito (DETRAN) e Imprenta Oficial Blockchain",
-      "en-US": "National Department of Transit (DETRAN) & Official Blockchain Gazette"
+      "pt-BR": "Departamento de Trânsito (DETRAN)",
+      "es-419": "Departamento de Tránsito (DETRAN)",
+      "en-US": "Department of Transit (DETRAN)"
     },
     "description": {
-      "pt-BR": "Toda a legislação, portarias e resoluções normativas (PN44 DETRAN) auditadas por IA, versionadas e registradas de forma imutável em rede Blockchain soberana.",
-      "es-419": "Toda la legislación, portarías y resoluciones normativas (PN44 DETRAN) auditadas por IA y registradas de forma inmutable en Blockchain.",
-      "en-US": "All transit legislation, decrees, and regulatory resolutions (PN44 DETRAN) audited by AI and immutably notarized on a sovereign Blockchain."
+      "pt-BR": "Consulta de portarias, resoluções e normas de trânsito com registro de integridade em Blockchain.",
+      "es-419": "Consulta de resoluciones y normas de tránsito registradas en Blockchain.",
+      "en-US": "Lookup of transit regulations and decrees verified on Blockchain."
     },
     "questionPrompt": {
-      "pt-BR": "Como consultar a legislação e portarias do DETRAN validadas e registradas em Blockchain?",
-      "es-419": "¿Cómo consultar la legislación y resoluciones del DETRAN validadas y registradas en Blockchain?",
-      "en-US": "How can I verify DETRAN legislation and regulatory decrees notarized on the Blockchain?"
+      "pt-BR": "Como consultar as portarias e normas do DETRAN registradas em Blockchain?",
+      "es-419": "¿Cómo consultar las normas del DETRAN registradas en Blockchain?",
+      "en-US": "How do I check DETRAN regulations verified on Blockchain?"
     },
     "servicePrompt": {
-      "pt-BR": "Acessar o portal Normas.gov / PN44 DETRAN com validação de legislação em Blockchain",
-      "es-419": "Acceder al portal Normas.gov / PN44 DETRAN con validación de legislación en Blockchain",
-      "en-US": "Open the Normas.gov / PN44 DETRAN Blockchain Legislation Portal"
+      "pt-BR": "Acessar o portal PN44 DETRAN",
+      "es-419": "Acceder al portal PN44 DETRAN",
+      "en-US": "Open PN44 DETRAN"
     }
   },
   "agentIntegration": {
-    "agentId": "agent-detran-blockchain-v1 (Normas.gov & PN44 DETRAN Blockchain)",
+    "agentId": "agent-detran-blockchain",
     "triggerKeywords": [
       "detran",
       "pn44",
@@ -59,14 +59,14 @@
     "enabled": true,
     "tabId": "detran_blockchain",
     "title": {
-      "pt-BR": "12. PN44 DETRAN — Legislação Auditada em Blockchain",
-      "es-419": "12. PN44 DETRAN — Legislación Auditada en Blockchain",
-      "en-US": "12. PN44 DETRAN — Blockchain-Audited Legislation"
+      "pt-BR": "PN44 DETRAN",
+      "es-419": "PN44 DETRAN",
+      "en-US": "PN44 DETRAN"
     },
     "subtitle": {
-      "pt-BR": "Nó Federado Argolis (@ernani) — Rastreabilidade criptográfica e imutabilidade de normas públicas",
-      "es-419": "Nodo Federado Argolis (@ernani) — Trazabilidad criptográfica de normas públicas",
-      "en-US": "Federated Argolis Node (@ernani) — Cryptographic traceability of public norms"
+      "pt-BR": "Portarias e normas de trânsito em Blockchain",
+      "es-419": "Normas de tránsito en Blockchain",
+      "en-US": "Blockchain-verified transit norms"
     },
     "uiEntryPath": "/embed/citizen",
     "apiBasePath": "/api/v1/apps/detran-blockchain"
@@ -80,14 +80,14 @@
       "JUSTICE_AND_TREASURY_MANAGER"
     ],
     "title": {
-      "pt-BR": "Imprensa Oficial & Normas DETRAN em Blockchain (@ernani)",
-      "es-419": "Imprenta Oficial y Normas DETRAN en Blockchain (@ernani)",
-      "en-US": "Official Gazette & DETRAN Blockchain Legislation (@ernani)"
+      "pt-BR": "PN44 DETRAN",
+      "es-419": "PN44 DETRAN",
+      "en-US": "PN44 DETRAN"
     },
     "subtitle": {
-      "pt-BR": "Validação e registro imutável de legislação em Blockchain hospedado na conta Argolis do @ernani",
-      "es-419": "Validación y registro inmutable de legislación en Blockchain alojado en la cuenta de @ernani",
-      "en-US": "Immutable blockchain notarization of legislation hosted on @ernani's Argolis account"
+      "pt-BR": "Auditoria e publicação de normas em Blockchain",
+      "es-419": "Auditoría y publicación de normas en Blockchain",
+      "en-US": "Blockchain regulation publishing and audit"
     },
     "uiEntryPath": "/embed/backstage"
   }

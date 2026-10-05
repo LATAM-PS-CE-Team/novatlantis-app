@@ -11,25 +11,24 @@ export async function getCitizenView(_db, { lang = 'pt-BR' }) {
     externalTargetUrl: EXTERNAL_URL,
     federatedSubdomain: FEDERATED_SUBDOMAIN,
     kpis: [
-      { label: 'Nó Federado Argolis', value: 'Conta @vidotto (345748407347)', status: 'ONLINE' },
-      { label: 'Motor Geoespacial', value: 'Earth Engine + Vertex AI', status: 'ACTIVE' },
-      { label: 'Domínio Soberano', value: 'geo.gov.novatlantis.cloud', status: 'VERIFIED' },
-      { label: 'Custo de Computação', value: 'Descentralizado (CE Argolis)', status: 'OPTIMIZED' }
+      { label: 'Área', value: 'Meio Ambiente', status: 'ONLINE' },
+      { label: 'Motor', value: 'Earth Engine', status: 'ACTIVE' },
+      { label: 'Subdomínio', value: 'geo.gov.novatlantis.cloud', status: 'VERIFIED' }
     ],
     sections: [
       {
         id: 'federated_launch',
-        title: 'GeoEngine CAR — Inteligência Geoespacial & Cadastro Ambiental Rural',
-        description: `Demonstração construída por @vidotto e federada ao Portal Novatlantis.`,
+        title: 'GeoEngine CAR — Cadastro Ambiental Rural',
+        description: 'Análise geoespacial de propriedades rurais, reserva legal e cobertura vegetal por satélite.',
         type: 'cards',
         items: [
           {
-            id: 'CARD-GEO-1',
-            title: 'Abrir Plataforma GeoEngine CAR (Análise Satelital)',
-            subtitle: 'Hospedado em us-central1 (345748407347) • Faturamento isolado na conta do CE',
-            badge: 'ACESSO DIRETO • CLOUD RUN FEDERADO',
+            id: 'GEO-APP',
+            title: 'Acessar GeoEngine CAR',
+            subtitle: 'Monitoramento Ambiental por Satélite',
+            badge: 'ONLINE',
             status: 'ONLINE',
-            meta: EXTERNAL_URL,
+            meta: 'https://geo.gov.novatlantis.cloud',
             externalUrl: EXTERNAL_URL,
             federatedUrl: 'https://geo.gov.novatlantis.cloud'
           }
@@ -43,29 +42,22 @@ export async function getBackstageView(db, { lang = 'pt-BR' }) {
   return getCitizenView(db, { lang });
 }
 
-export async function handleAgentIntent(_db, { nid, citizenName }) {
+export async function handleAgentIntent() {
   const protocol = `GEO-CAR-${Date.now().toString().slice(-6)}`;
   return {
     intent: 'GEO_ENGINE_CAR_FEDERATED_LAUNCH',
-    delegated_agent: 'agent-geo-engine-car-v1 (GeoEngine CAR — Inteligência Geoespacial)',
+    delegated_agent: 'agent-geo-engine-car',
     source_document: EXTERNAL_URL,
     executed_action: {
       type: 'FEDERATED_REDIRECT_READY',
       protocol,
-      summary: 'Acesso Federado ao GeoEngine CAR liberado',
+      summary: 'Acesso ao GeoEngine CAR',
       external_url: EXTERNAL_URL,
-      federated_domain: 'https://geo.gov.novatlantis.cloud',
-      details: {
-        owner_ce: '@vidotto',
-        gcp_project_number: '345748407347',
-        region: 'us-central1',
-        citizen: citizenName || nid || 'Analista Ambiental'
-      }
+      federated_domain: 'https://geo.gov.novatlantis.cloud'
     },
     response:
-      `Localizei o módulo federado **GeoEngine CAR — Inteligência Geoespacial & Cadastro Ambiental Rural** (Protocolo \`${protocol}\`), mantido por **@vidotto**:\n\n` +
-      `• **Objetivo:** Validação automatizada de Cadastro Ambiental Rural (CAR) e cobertura vegetal por satélite.\n` +
-      `• **Acesso pelo Domínio Novatlantis:** https://geo.gov.novatlantis.cloud\n` +
-      `• **Link Direto Cloud Run (Origem CE):** ${EXTERNAL_URL}`
+      `**GeoEngine CAR — Cadastro Ambiental Rural:**\n` +
+      `Validação geoespacial de propriedades rurais e cobertura vegetal por imagens de satélite.\n\n` +
+      `• **Acesso:** https://geo.gov.novatlantis.cloud`
   };
 }

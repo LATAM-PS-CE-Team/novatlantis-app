@@ -12,7 +12,6 @@ import {
   Alert,
   Paper,
   Button,
-  Drawer,
   IconButton,
   List,
   ListItemButton,
@@ -27,24 +26,11 @@ import {
   ArrowBack as ArrowBackIcon
 } from '@mui/icons-material';
 import {
-  Shield,
-  Globe,
-  CheckCircle2,
   AlertTriangle,
-  Building2,
-  Stethoscope,
-  GraduationCap,
   Siren,
   Wrench,
-  Lock,
-  Unlock,
   ExternalLink,
-  Award,
-  Scale,
-  Users,
-  Database,
   ArrowLeft,
-  Home,
   UserCheck
 } from 'lucide-react';
 import { novatlantisTheme } from './theme';
@@ -68,92 +54,92 @@ const BACKSTAGE_MENU_ITEMS: { id: BackstageTab; title: Record<Language, string>;
   {
     id: 'pm_cabinet',
     title: {
-      'pt-BR': '1. Gabinete Primeiro-Ministro (JT) & Secretário-Geral',
-      'es-419': '1. Gabinete del Primer Ministro (JT) y Secretario General',
-      'en-US': '1. Prime Minister (JT) & Secretary-General Cabinet'
+      'pt-BR': 'Gabinete Executivo',
+      'es-419': 'Gabinete Ejecutivo',
+      'en-US': 'Executive Cabinet'
     },
     subtitle: {
-      'pt-BR': 'Comando executivo da nação e KPIs soberanos',
-      'es-419': 'Comando ejecutivo de la nación y KPIs soberanos',
-      'en-US': 'National executive command and sovereign KPIs'
+      'pt-BR': 'Indicadores gerais e gestão de Estado',
+      'es-419': 'Indicadores generales y gestión de Estado',
+      'en-US': 'Key indicators and executive management'
     }
   },
   {
     id: 'iam360',
     title: {
-      'pt-BR': '2. Identidade 360 (Gestão RBAC/ABAC)',
-      'es-419': '2. Identidad 360 (Gestión RBAC/ABAC)',
-      'en-US': '2. Identity 360 (RBAC/ABAC Management)'
+      'pt-BR': 'Identidade e Acessos (IAM)',
+      'es-419': 'Identidad y Accesos (IAM)',
+      'en-US': 'Identity & Access (IAM)'
     },
     subtitle: {
-      'pt-BR': 'Concessão e revogação de acesso administrativo',
-      'es-419': 'Concesión y revocación de acceso administrativo',
-      'en-US': 'Granting and revoking administrative access'
+      'pt-BR': 'Concessão e revogação de perfis administrativos',
+      'es-419': 'Concesión y revocación de perfiles administrativos',
+      'en-US': 'Grant and revoke administrative roles'
     }
   },
   {
     id: 'health_mgmt',
     title: {
-      'pt-BR': '3. Gestão da Saúde (Hospitais & Médicos)',
-      'es-419': '3. Gestión de Salud (Hospitales y Médicos)',
-      'en-US': '3. Healthcare Management (Hospitals & Doctors)'
+      'pt-BR': 'Gestão da Saúde',
+      'es-419': 'Gestión de Salud',
+      'en-US': 'Healthcare Management'
     },
     subtitle: {
-      'pt-BR': 'Rede hospitalar HL7 FHIR e fila de telemedicina',
-      'es-419': 'Red hospitalaria HL7 FHIR y cola de telemedicina',
-      'en-US': 'HL7 FHIR hospital network and telemedicine queue'
+      'pt-BR': 'Rede hospitalar e fila de telemedicina',
+      'es-419': 'Red hospitalaria y cola de telemedicina',
+      'en-US': 'Hospital network and telehealth queue'
     }
   },
   {
     id: 'edu_mgmt',
     title: {
-      'pt-BR': '4. Gestão da Educação (Escolas, Provas & Notas)',
-      'es-419': '4. Gestión de Educación (Escuelas, Exámenes y Notas)',
-      'en-US': '4. Education Management (Schools, Exams & Grades)'
+      'pt-BR': 'Gestão da Educação',
+      'es-419': 'Gestión de Educación',
+      'en-US': 'Education Management'
     },
     subtitle: {
-      'pt-BR': 'Lançamento de notas, frequência e avaliações',
-      'es-419': 'Registro de calificaciones, asistencia y evaluaciones',
-      'en-US': 'Grade entry, attendance, and national assessments'
+      'pt-BR': 'Diário de classe, avaliações e frequência',
+      'es-419': 'Registro de calificaciones, evaluaciones y asistencia',
+      'en-US': 'Grade entry, assessments, and attendance'
     }
   },
   {
     id: 'ops_311',
     title: {
-      'pt-BR': '5. Comando de Zeladoria Urbana 311',
-      'es-419': '5. Comando de Mantenimiento Urbano 311',
-      'en-US': '5. 311 Urban Maintenance Command'
+      'pt-BR': 'Zeladoria Urbana 311',
+      'es-419': 'Mantenimiento Urbano 311',
+      'en-US': '311 Urban Maintenance'
     },
     subtitle: {
-      'pt-BR': 'Atendimento e baixa de chamados urbanos 311 dos cidadãos',
-      'es-419': 'Atención y resolución de reportes urbanos 311 de los ciudadanos',
-      'en-US': 'Handling and resolution of citizen 311 urban service tickets'
+      'pt-BR': 'Atendimento e conclusão de chamados urbanos',
+      'es-419': 'Atención y resolución de reportes urbanos',
+      'en-US': 'Handling and resolution of urban service requests'
     }
   },
   {
     id: 'ops_911',
     title: {
-      'pt-BR': '6. Central de Despacho de Emergência 911',
-      'es-419': '6. Central de Despacho de Emergencia 911',
-      'en-US': '6. 911 Emergency Dispatch Command'
+      'pt-BR': 'Central de Emergência 911',
+      'es-419': 'Central de Emergencia 911',
+      'en-US': '911 Emergency Dispatch'
     },
     subtitle: {
-      'pt-BR': 'Despacho tático imediato de UTI móvel, defesa civil e guarda costeira',
-      'es-419': 'Despacho táctico inmediato de UCI móvil, defensa civil y guardia costera',
-      'en-US': 'Immediate tactical dispatch of ICU ambulance, civil defense, and coast guard'
+      'pt-BR': 'Despacho de atendimento médico e defesa civil',
+      'es-419': 'Despacho de atención médica y defensa civil',
+      'en-US': 'Emergency medical and civil defense dispatch'
     }
   },
   {
     id: 'justice_datalake',
     title: {
-      'pt-BR': '7. Justiça, Tesouro, AlloyDB & GDP 100k',
-      'es-419': '7. Justicia, Tesoro, AlloyDB y GDP 100k',
-      'en-US': '7. Justice, Treasury, AlloyDB & GDP 100k'
+      'pt-BR': 'Cadastro Nacional e Tesouro',
+      'es-419': 'Registro Nacional y Tesoro',
+      'en-US': 'National Registry & Treasury'
     },
     subtitle: {
-      'pt-BR': 'Explorador de 100.000 cidadãos e auditoria fiscal',
-      'es-419': 'Explorador de 100.000 ciudadanos y auditoría fiscal',
-      'en-US': '100,000-citizen explorer and fiscal audit'
+      'pt-BR': 'Consulta à base de cidadãos e situação fiscal',
+      'es-419': 'Consulta de ciudadanos y situación fiscal',
+      'en-US': 'Citizen directory and tax status lookup'
     }
   }
 ];
@@ -182,67 +168,67 @@ const BACKSTAGE_I18N: Record<
   }
 > = {
   'pt-BR': {
-    officialBanner: 'Um site oficial do Governo da República Digital de Novatlantis • Backstage Governamental',
-    homeLink: 'Home Page (Concierge IA)',
+    officialBanner: 'Site oficial do Governo de Novatlantis • Backstage Governamental',
+    homeLink: 'Início',
     citizenPortalLink: 'Portal do Cidadão',
-    govTitle: 'Governo da República de Novatlantis',
-    portalBadge: 'Backstage Governamental & Identidade 360',
-    activeEnvLabel: 'Ambiente Ativo (☰)',
-    defaultSubline: 'Chancelaria Digital • Agente Orquestrador de Estado • Módulo de Usuários GDF (100.000 Cidadãos)',
-    drawerTitle: 'Menu do Backstage (☰)',
-    drawerAuthRequired: 'Autenticação Necessária',
-    drawerEnvsHeader: 'AMBIENTES ADMINISTRATIVOS DO ESTADO',
-    drawerBackHome: 'Voltar à Home Page (Concierge IA)',
-    drawerBackHomeSub: 'Portal Principal da Nação',
-    authWallTitle: 'Backstage Governamental • Identidade 360',
+    govTitle: 'Governo de Novatlantis',
+    portalBadge: 'Backstage',
+    activeEnvLabel: 'Módulo',
+    defaultSubline: 'Painel administrativo e operacional para servidores públicos',
+    drawerTitle: 'Menu do Backstage',
+    drawerAuthRequired: 'Autenticação necessária',
+    drawerEnvsHeader: 'MÓDULOS ADMINISTRATIVOS',
+    drawerBackHome: 'Voltar ao Início',
+    drawerBackHomeSub: 'Portal de Serviços',
+    authWallTitle: 'Acesso Administrativo',
     authWallDesc:
-      'Nenhum servidor público está logado no momento. O acesso ao Backstage Governamental exige autenticação com um NID que possua nomeação ativa na aplicação Identidade 360 (Primeiro-Ministro Joao Thiago Poço - JT, Secretário-Geral, Gestor IAM 360, Médico, Professor, Comando 311 ou Comando 911).',
-    loginPublicServantBtn: 'Entrar com NID (Servidor Público)',
-    backHomeBtn: 'Voltar à Home Page',
-    switchEnvBtn: 'Alternar Sidebar (☰)',
-    authenticatedServantChip: 'Servidor Autenticado'
+      'Para acessar o Backstage Governamental, entre com um NID que possua perfil de servidor público ativo (Gabinete Executivo, Gestão de Acessos, Saúde, Educação, Zeladoria 311, Emergência 911 ou Magistratura).',
+    loginPublicServantBtn: 'Entrar com NID',
+    backHomeBtn: 'Voltar ao Início',
+    switchEnvBtn: 'Menu',
+    authenticatedServantChip: 'Servidor'
   },
   'es-419': {
-    officialBanner: 'Un sitio oficial del Gobierno de la República Digital de Novatlantis • Backstage Gubernamental',
-    homeLink: 'Página Principal (Concierge IA)',
+    officialBanner: 'Sitio oficial del Gobierno de Novatlantis • Backstage Gubernamental',
+    homeLink: 'Inicio',
     citizenPortalLink: 'Portal del Ciudadano',
-    govTitle: 'Gobierno de la República de Novatlantis',
-    portalBadge: 'Backstage Gubernamental e Identidad 360',
-    activeEnvLabel: 'Entorno Activo (☰)',
-    defaultSubline: 'Cancillería Digital • Agente Orquestador de Estado • Módulo de Usuarios GDF (100.000 Ciudadanos)',
-    drawerTitle: 'Menú del Backstage (☰)',
-    drawerAuthRequired: 'Autenticación Requerida',
-    drawerEnvsHeader: 'ENTORNOS ADMINISTRATIVOS DEL ESTADO',
-    drawerBackHome: 'Volver a la Página Principal (Concierge IA)',
-    drawerBackHomeSub: 'Portal Principal de la Nación',
-    authWallTitle: 'Backstage Gubernamental • Identidad 360',
+    govTitle: 'Gobierno de Novatlantis',
+    portalBadge: 'Backstage',
+    activeEnvLabel: 'Módulo',
+    defaultSubline: 'Panel administrativo y operativo para servidores públicos',
+    drawerTitle: 'Menú del Backstage',
+    drawerAuthRequired: 'Autenticación requerida',
+    drawerEnvsHeader: 'MÓDULOS ADMINISTRATIVOS',
+    drawerBackHome: 'Volver al Inicio',
+    drawerBackHomeSub: 'Portal de Servicios',
+    authWallTitle: 'Acceso Administrativo',
     authWallDesc:
-      'Ningún servidor público ha iniciado sesión en este momento. El acceso al Backstage Gubernamental requiere autenticación con un NID que posea nombramiento activo en la aplicación Identidad 360 (Primer Ministro Joao Thiago Poço - JT, Secretario General, Gestor IAM 360, Médico, Profesor, Comando 311 o Comando 911).',
-    loginPublicServantBtn: 'Ingresar con NID (Servidor Público)',
-    backHomeBtn: 'Volver a la Página Principal',
-    switchEnvBtn: 'Alternar Barra Lateral (☰)',
-    authenticatedServantChip: 'Servidor Autenticado'
+      'Para acceder al Backstage Gubernamental, inicie sesión con un NID que posea un perfil de servidor público activo (Gabinete Ejecutivo, Gestión de Accesos, Salud, Educación, Mantenimiento 311, Emergencia 911 o Magistratura).',
+    loginPublicServantBtn: 'Ingresar con NID',
+    backHomeBtn: 'Volver al Inicio',
+    switchEnvBtn: 'Menú',
+    authenticatedServantChip: 'Servidor'
   },
   'en-US': {
-    officialBanner: 'An official website of the Government of the Digital Republic of Novatlantis • Government Backstage',
-    homeLink: 'Home Page (AI Concierge)',
+    officialBanner: 'Official website of the Government of Novatlantis • Government Backstage',
+    homeLink: 'Home',
     citizenPortalLink: 'Citizen Portal',
-    govTitle: 'Government of the Republic of Novatlantis',
-    portalBadge: 'Government Backstage & Identity 360',
-    activeEnvLabel: 'Active Environment (☰)',
-    defaultSubline: 'Digital Chancellery • State Orchestrator Agent • GDF User Module (100,000 Citizens)',
-    drawerTitle: 'Backstage Menu (☰)',
-    drawerAuthRequired: 'Authentication Required',
-    drawerEnvsHeader: 'STATE ADMINISTRATIVE ENVIRONMENTS',
-    drawerBackHome: 'Back to Home Page (AI Concierge)',
-    drawerBackHomeSub: 'Main National Portal',
-    authWallTitle: 'Government Backstage • Identity 360',
+    govTitle: 'Government of Novatlantis',
+    portalBadge: 'Backstage',
+    activeEnvLabel: 'Module',
+    defaultSubline: 'Administrative and operational workspace for civil servants',
+    drawerTitle: 'Backstage Menu',
+    drawerAuthRequired: 'Sign-in required',
+    drawerEnvsHeader: 'ADMINISTRATIVE MODULES',
+    drawerBackHome: 'Back to Home',
+    drawerBackHomeSub: 'Service Portal',
+    authWallTitle: 'Administrative Sign-In',
     authWallDesc:
-      'No public servant is currently signed in. Access to the Government Backstage requires authentication with an NID holding an active appointment in Identity 360 (Prime Minister Joao Thiago Poço - JT, Secretary-General, IAM 360 Manager, Doctor, Teacher, 311 Command, or 911 Command).',
-    loginPublicServantBtn: 'Sign In with NID (Public Servant)',
-    backHomeBtn: 'Back to Home Page',
-    switchEnvBtn: 'Toggle Sidebar (☰)',
-    authenticatedServantChip: 'Authenticated Servant'
+      'To access the Government Backstage, sign in with an NID holding an active civil servant role (Executive Cabinet, Access Management, Health, Education, 311 Maintenance, 911 Dispatch, or Judiciary).',
+    loginPublicServantBtn: 'Sign in with NID',
+    backHomeBtn: 'Back to Home',
+    switchEnvBtn: 'Menu',
+    authenticatedServantChip: 'Staff'
   }
 };
 
@@ -259,28 +245,23 @@ export default function App() {
   const [hamburgerOpen, setHamburgerOpen] = useState(true);
   const [loginTriggerCount, setLoginTriggerCount] = useState(0);
   const [ssoToken, setSsoToken] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
-  // Backstage Data States
   const [backstageOverview, setBackstageOverview] = useState<any>(null);
   const [iamState, setIamState] = useState<any>(null);
   const [healthBackstage, setHealthBackstage] = useState<any>(null);
   const [eduBackstage, setEduBackstage] = useState<any>(null);
   const [opsBackstage, setOpsBackstage] = useState<any>(null);
-  const [justiceBackstage, setJusticeBackstage] = useState<any>(null);
   const [datalakeExplorerResults, setDatalakeExplorerResults] = useState<any[]>([]);
   const [datalakeFilter, setDatalakeFilter] = useState('NID-000');
   const [pluggableQueues, setPluggableQueues] = useState<{ id: string; appId: string; title: Record<Language, string>; subtitle: Record<Language, string> }[]>([]);
   const [pluggableQueueView, setPluggableQueueView] = useState<any>(null);
 
-  // Forms
   const [iamTargetNid, setIamTargetNid] = useState('NID-000-0000-0005-1');
   const [iamSelectedRole, setIamSelectedRole] = useState('DOCTOR_TELEMED');
-  const [examSchool, setExamSchool] = useState('Liceu Politécnico de Inteligência Artificial');
-  const [examSubject, setExamSubject] = useState('IA & Robótica');
+  const [examSchool] = useState('Liceu Politécnico');
+  const [examSubject] = useState('IA & Robótica');
   const [examTitle, setExamTitle] = useState('');
   const [gradeStudentNid, setGradeStudentNid] = useState('NID-000-0000-0010-8');
   const [gradeMath, setGradeMath] = useState(95);
@@ -306,13 +287,12 @@ export default function App() {
 
   const loadAllBackstageData = async () => {
     try {
-      const [ovRes, iamRes, hRes, eRes, oRes, jRes, dlRes] = await Promise.all([
+      const [ovRes, iamRes, hRes, eRes, oRes, dlRes] = await Promise.all([
         fetch('/api/backstage/overview'),
         fetch('/api/iam360/roles'),
         fetch('/api/backstage/health'),
         fetch('/api/backstage/education'),
         fetch('/api/backstage/operations'),
-        fetch('/api/backstage/justice-treasury'),
         fetch(`/api/gdf/search?q=${encodeURIComponent(datalakeFilter)}&limit=25`)
       ]);
       setBackstageOverview(await ovRes.json());
@@ -320,7 +300,6 @@ export default function App() {
       setHealthBackstage(await hRes.json());
       setEduBackstage(await eRes.json());
       setOpsBackstage(await oRes.json());
-      setJusticeBackstage(await jRes.json());
       const dlData = await dlRes.json();
       setDatalakeExplorerResults(dlData.results || []);
     } catch (e) {
@@ -329,7 +308,6 @@ export default function App() {
   };
 
   useEffect(() => {
-    // IMPORTANTE: Nenhum usuário inicia logado sem cookie/token válido no TopNavUserWidget
     loadAllBackstageData();
     fetch('/api/v1/registry/apps')
       .then((r) => r.json())
@@ -337,18 +315,18 @@ export default function App() {
         if (Array.isArray(data?.apps)) {
           const dynamicQueues = data.apps
             .filter((app: any) => app.surfaces?.backstageQueue?.enabled)
-            .map((app: any, idx: number) => ({
+            .map((app: any) => ({
               id: app.surfaces.backstageQueue.tabId || app.appId,
               appId: app.appId,
               title: {
-                'pt-BR': `${8 + idx}. ${app.surfaces.backstageQueue.title?.pt || app.title?.pt}`,
-                'es-419': `${8 + idx}. ${app.surfaces.backstageQueue.title?.es || app.title?.es}`,
-                'en-US': `${8 + idx}. ${app.surfaces.backstageQueue.title?.en || app.title?.en}`
+                'pt-BR': app.surfaces.backstageQueue.title?.pt || app.title?.pt || app.appId,
+                'es-419': app.surfaces.backstageQueue.title?.es || app.title?.es || app.appId,
+                'en-US': app.surfaces.backstageQueue.title?.en || app.title?.en || app.appId
               },
               subtitle: {
-                'pt-BR': app.surfaces.backstageQueue.subtitle?.pt || app.summary?.pt,
-                'es-419': app.surfaces.backstageQueue.subtitle?.es || app.summary?.es,
-                'en-US': app.surfaces.backstageQueue.subtitle?.en || app.summary?.en
+                'pt-BR': app.surfaces.backstageQueue.subtitle?.pt || app.summary?.pt || '',
+                'es-419': app.surfaces.backstageQueue.subtitle?.es || app.summary?.es || '',
+                'en-US': app.surfaces.backstageQueue.subtitle?.en || app.summary?.en || ''
               }
             }));
           setPluggableQueues(dynamicQueues);
@@ -356,17 +334,6 @@ export default function App() {
       })
       .catch(() => {});
   }, []);
-
-  const handleCitizenSearch = async (q: string) => {
-    setSearchQuery(q);
-    if (q.trim().length < 2) {
-      setSearchResults([]);
-      return;
-    }
-    const res = await fetch(`/api/gdf/search?q=${encodeURIComponent(q)}&limit=8`);
-    const data = await res.json();
-    setSearchResults(data.results || []);
-  };
 
   const handleGrantRole = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -383,14 +350,14 @@ export default function App() {
     const data = await res.json();
     if (data.updated) {
       setStatusMessage(
-        `IDENTIDADE 360: Permissão [${iamSelectedRole}] concedida a ${data.target_citizen.full_name} (${data.target_citizen.nid}). Acesso administrativo liberado.`
+        `Permissão [${iamSelectedRole}] concedida a ${data.target_citizen.full_name} (${data.target_citizen.nid}).`
       );
       if (currentUser.nid === iamTargetNid) {
         loadUserSession(currentUser.nid);
       }
       loadAllBackstageData();
     } else if (data.error) {
-      setStatusMessage(`ERRO IAM 360: ${data.error}`);
+      setStatusMessage(`Erro: ${data.error}`);
     }
   };
 
@@ -407,14 +374,14 @@ export default function App() {
     const data = await res.json();
     if (data.revoked) {
       setStatusMessage(
-        `IDENTIDADE 360: Permissão administrativa de ${data.target_citizen.full_name} (${targetNid}) REVOGADA. Usuário revertido imediatamente para CITIZEN_COMMON.`
+        `Permissão administrativa de ${data.target_citizen.full_name} (${targetNid}) revogada.`
       );
       if (currentUser.nid === targetNid) {
         loadUserSession(currentUser.nid);
       }
       loadAllBackstageData();
     } else if (data.error) {
-      setStatusMessage(`ERRO IAM 360: ${data.error}`);
+      setStatusMessage(`Erro: ${data.error}`);
     }
   };
 
@@ -430,7 +397,7 @@ export default function App() {
     });
     const data = await res.json();
     if (data.resolved) {
-      setStatusMessage(`Chamado 311 #${ticketId} concluído com sucesso por ${currentUser.full_name}.`);
+      setStatusMessage(`Chamado 311 #${ticketId} concluído por ${currentUser.full_name}.`);
       loadAllBackstageData();
     }
   };
@@ -453,7 +420,7 @@ export default function App() {
     });
     const data = await res.json();
     if (data.updated) {
-      setStatusMessage(`Notas escolares do aluno ${gradeStudentNid} atualizadas no Datalake GDF.`);
+      setStatusMessage(`Notas escolares do aluno ${gradeStudentNid} atualizadas.`);
       loadAllBackstageData();
     }
   };
@@ -468,14 +435,14 @@ export default function App() {
         teacher_nid: currentUser.nid,
         school_name: examSchool,
         subject: examSubject,
-        title: examTitle || `Avaliação Nacional de ${examSubject}`,
+        title: examTitle || `Avaliação de ${examSubject}`,
         grade_level: '6º Ano Fundamental'
       })
     });
     const data = await res.json();
     if (data.created) {
       setExamTitle('');
-      setStatusMessage(`Prova #${data.exam.exam_id} publicada na rede nacional de ensino.`);
+      setStatusMessage(`Avaliação #${data.exam.exam_id} publicada.`);
       loadAllBackstageData();
     }
   };
@@ -523,26 +490,36 @@ export default function App() {
   return (
     <ThemeProvider theme={novatlantisTheme}>
       <CssBaseline />
-      <div className="min-h-screen bg-[#fcfbf9] text-[#111827] flex flex-col">
-        {/* 1. FAIXA OFICIAL SUPERIOR (Estilo america.gov) */}
-        <Box sx={{ bgcolor: '#f1f0ec', borderBottom: '1px solid #e2e0d8', py: 0.65, px: 2 }}>
+      <div className="min-h-screen bg-[#f8f9fa] text-[#202124] flex flex-col">
+        {/* Barra de identidade cromática Google Material 3 */}
+        <Box
+          sx={{
+            height: 4,
+            width: '100%',
+            background:
+              'linear-gradient(90deg, #4285F4 0%, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #34A853 75%, #34A853 100%)'
+          }}
+        />
+
+        {/* Faixa superior institucional */}
+        <Box sx={{ bgcolor: '#f1f3f4', borderBottom: '1px solid #dadce0', py: 0.65, px: 2 }}>
           <Container maxWidth="xl" sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
             <Stack direction="row" spacing={1.5} alignItems="center">
-              <img src="/assets/flag.jpg" alt="Bandeira" className="h-3.5 w-5 object-cover border border-slate-300 rounded-sm" />
-              <Typography variant="caption" sx={{ color: '#1f2937', fontWeight: 600, fontSize: '0.76rem' }}>
+              <img src="/assets/flag.jpg" alt="Bandeira" className="h-3.5 w-5 object-cover border border-[#dadce0] rounded-sm" />
+              <Typography variant="caption" sx={{ color: '#5f6368', fontWeight: 500, fontSize: '0.76rem' }}>
                 {t.officialBanner}
               </Typography>
             </Stack>
             <Stack direction="row" spacing={2.5} alignItems="center">
               <a
                 href={ssoToken ? `${LANDING_PORTAL_URL}?sso_token=${encodeURIComponent(ssoToken)}&lang=${encodeURIComponent(lang)}` : `${LANDING_PORTAL_URL}?lang=${encodeURIComponent(lang)}`}
-                className="text-[#0a2240] hover:underline flex items-center gap-1 text-xs font-semibold"
+                className="text-[#1a73e8] hover:underline flex items-center gap-1 text-xs font-semibold"
               >
                 <ArrowLeft className="w-3.5 h-3.5" /> {t.homeLink}
               </a>
               <a
                 href={ssoToken ? `${CITIZEN_PORTAL_URL}?sso_token=${encodeURIComponent(ssoToken)}&lang=${encodeURIComponent(lang)}` : `${CITIZEN_PORTAL_URL}?lang=${encodeURIComponent(lang)}`}
-                className="text-[#0a2240] hover:underline flex items-center gap-1 text-xs font-semibold"
+                className="text-[#1a73e8] hover:underline flex items-center gap-1 text-xs font-semibold"
               >
                 <UserCheck className="w-3.5 h-3.5" /> {t.citizenPortalLink}
               </a>
@@ -550,35 +527,35 @@ export default function App() {
           </Container>
         </Box>
 
-        {/* 2. CABEÇALHO DO BACKSTAGE GOVERNAMENTAL (Design System america.gov + Botão Hambúrguer ☰ + Seletor de Idiomas) */}
+        {/* Cabeçalho principal */}
         <AppBar
           position="sticky"
           elevation={0}
           sx={{
-            bgcolor: 'rgba(252, 251, 249, 0.95)',
+            bgcolor: 'rgba(255, 255, 255, 0.96)',
             backdropFilter: 'blur(10px)',
-            color: '#0a2240',
-            borderBottom: '1px solid #e5e4dc',
+            color: '#202124',
+            borderBottom: '1px solid #dadce0',
             zIndex: 30
           }}
         >
           <Container maxWidth="xl">
-            <Toolbar disableGutters sx={{ py: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
+            <Toolbar disableGutters sx={{ py: 1.25, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 2 }}>
               <Stack direction="row" spacing={2} alignItems="center">
                 <IconButton
                   onClick={() => setHamburgerOpen((prev) => !prev)}
                   sx={{
-                    border: '1px solid #d1d5db',
+                    border: '1px solid #dadce0',
                     borderRadius: 2,
                     p: 1,
-                    color: hamburgerOpen ? '#ffffff' : '#0a2240',
-                    bgcolor: hamburgerOpen ? '#0a2240' : '#ffffff',
+                    color: hamburgerOpen ? '#1a73e8' : '#5f6368',
+                    bgcolor: hamburgerOpen ? '#e8f0fe' : '#ffffff',
                     '&:hover': {
-                      bgcolor: hamburgerOpen ? '#163a66' : '#f3f4f6',
-                      borderColor: '#0a2240'
+                      bgcolor: '#f1f3f4',
+                      borderColor: '#1a73e8'
                     }
                   }}
-                  aria-label="Alternar Navigation Drawer (Sidebar) do Backstage Governamental"
+                  aria-label="Alternar menu lateral"
                 >
                   <MenuIcon />
                 </IconButton>
@@ -588,22 +565,22 @@ export default function App() {
                   src="/assets/coat_of_arms.jpg"
                   alt="Brasão"
                   sx={{
-                    height: { xs: 44, md: 54 },
-                    width: { xs: 44, md: 54 },
+                    height: { xs: 40, md: 48 },
+                    width: { xs: 40, md: 48 },
                     objectFit: 'cover',
                     borderRadius: 2,
-                    border: '1.5px solid #0a2240'
+                    border: '1px solid #dadce0'
                   }}
                 />
                 <Box>
                   <Stack direction="row" spacing={1.25} alignItems="center" flexWrap="wrap">
                     <Typography
                       sx={{
-                        fontSize: { xs: '1.15rem', sm: '1.45rem', md: '1.75rem' },
-                        fontWeight: 900,
-                        color: '#0a2240',
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.15
+                        fontSize: { xs: '1.1rem', sm: '1.35rem', md: '1.5rem' },
+                        fontWeight: 700,
+                        color: '#202124',
+                        letterSpacing: '-0.015em',
+                        lineHeight: 1.2
                       }}
                     >
                       {t.govTitle}
@@ -612,20 +589,20 @@ export default function App() {
                       label={t.portalBadge}
                       size="small"
                       sx={{
-                        bgcolor: '#0a2240',
-                        color: '#ffffff',
-                        fontWeight: 700,
+                        bgcolor: '#e8f0fe',
+                        color: '#174ea6',
+                        fontWeight: 600,
                         fontSize: '0.75rem',
-                        height: 25
+                        height: 24
                       }}
                     />
                   </Stack>
                   <Typography
                     sx={{
-                      mt: 0.35,
-                      fontSize: { xs: '0.78rem', sm: '0.92rem', md: '1.02rem' },
-                      fontWeight: 600,
-                      color: '#374151'
+                      mt: 0.25,
+                      fontSize: { xs: '0.78rem', sm: '0.88rem' },
+                      fontWeight: 500,
+                      color: '#5f6368'
                     }}
                   >
                     {currentUser?.backstage_allowed
@@ -662,48 +639,48 @@ export default function App() {
           </Container>
         </AppBar>
 
-        {/* LAYOUT GOOGLE MATERIAL DESIGN: PERSISTENT NAVIGATION DRAWER (SIDEBAR AO LADO) + PÁGINA INTEIRA */}
+        {/* Layout com Navigation Drawer Persistente Material Design 3 */}
         <Box sx={{ display: 'flex', flex: 1, minHeight: 0, alignItems: 'stretch' }}>
           <Box
             component="aside"
             sx={{
-              width: hamburgerOpen ? { xs: 295, md: 350 } : 0,
+              width: hamburgerOpen ? { xs: 280, md: 320 } : 0,
               flexShrink: 0,
               overflow: 'hidden',
               transition: 'width 225ms cubic-bezier(0.4, 0, 0.2, 1)',
-              bgcolor: '#fcfbf9',
-              borderRight: hamburgerOpen ? '1px solid #e5e4dc' : 'none',
+              bgcolor: '#ffffff',
+              borderRight: hamburgerOpen ? '1px solid #dadce0' : 'none',
               display: 'flex',
               flexDirection: 'column'
             }}
           >
-            <Box sx={{ width: { xs: 295, md: 350 }, display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <Box sx={{ width: { xs: 280, md: 320 }, display: 'flex', flexDirection: 'column', height: '100%' }}>
               <Box
                 sx={{
-                  p: 2.5,
-                  bgcolor: '#0a2240',
-                  color: '#ffffff',
+                  p: 2,
+                  bgcolor: '#f8f9fa',
+                  borderBottom: '1px solid #dadce0',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}
               >
                 <Box>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#202124' }}>
                     {t.drawerTitle}
                   </Typography>
-                  <Typography variant="caption" sx={{ color: '#cbd5e1', fontFamily: 'monospace' }}>
+                  <Typography variant="caption" sx={{ color: '#5f6368', fontFamily: 'monospace' }}>
                     {currentUser ? `${currentUser.full_name} (${currentUser.effective_role_code})` : t.drawerAuthRequired}
                   </Typography>
                 </Box>
-                <IconButton onClick={() => setHamburgerOpen(false)} sx={{ color: '#ffffff' }} size="small">
-                  <CloseIcon />
+                <IconButton onClick={() => setHamburgerOpen(false)} sx={{ color: '#5f6368' }} size="small">
+                  <CloseIcon fontSize="small" />
                 </IconButton>
               </Box>
 
-              <List sx={{ py: 1.5, px: 1 }}>
+              <List sx={{ py: 1.5, px: 1.25 }}>
                 <Box sx={{ px: 1.5, py: 0.75 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 800, color: '#6b7280', letterSpacing: '0.06em' }}>
+                  <Typography variant="caption" sx={{ fontWeight: 700, color: '#5f6368', letterSpacing: '0.06em' }}>
                     {t.drawerEnvsHeader}
                   </Typography>
                 </Box>
@@ -714,13 +691,13 @@ export default function App() {
                     selected={backstageTab === item.id}
                     onClick={() => setBackstageTab(item.id)}
                     sx={{
-                      py: 1.25,
+                      py: 1.1,
                       mb: 0.5,
                       borderRadius: 2,
                       '&.Mui-selected': {
-                        bgcolor: '#e0e7ff',
-                        color: '#0a2240',
-                        '&:hover': { bgcolor: '#c7d2fe' }
+                        bgcolor: '#e8f0fe',
+                        color: '#174ea6',
+                        '&:hover': { bgcolor: '#d2e3fc' }
                       }
                     }}
                   >
@@ -728,16 +705,16 @@ export default function App() {
                       primary={item.title[lang]}
                       secondary={item.subtitle[lang]}
                       primaryTypographyProps={{
-                        fontWeight: backstageTab === item.id ? 800 : 600,
+                        fontWeight: backstageTab === item.id ? 700 : 500,
                         fontSize: '0.86rem',
-                        color: '#0a2240'
+                        color: backstageTab === item.id ? '#174ea6' : '#202124'
                       }}
-                      secondaryTypographyProps={{ fontSize: '0.73rem' }}
+                      secondaryTypographyProps={{ fontSize: '0.73rem', color: '#5f6368' }}
                     />
                   </ListItemButton>
                 ))}
 
-                <Divider sx={{ my: 1.5 }} />
+                <Divider sx={{ my: 1.5, borderColor: '#e8eaed' }} />
 
                 <ListItemButton
                   component="a"
@@ -745,27 +722,26 @@ export default function App() {
                   sx={{ borderRadius: 2 }}
                 >
                   <ListItemIcon sx={{ minWidth: 36 }}>
-                    <ArrowBackIcon sx={{ color: '#0a2240' }} />
+                    <ArrowBackIcon sx={{ color: '#1a73e8', fontSize: 20 }} />
                   </ListItemIcon>
                   <ListItemText
                     primary={t.drawerBackHome}
                     secondary={t.drawerBackHomeSub}
-                    primaryTypographyProps={{ fontWeight: 700, fontSize: '0.86rem' }}
+                    primaryTypographyProps={{ fontWeight: 600, fontSize: '0.86rem', color: '#1a73e8' }}
                   />
                 </ListItemButton>
 
-                <Divider sx={{ my: 1.5 }} />
+                <Divider sx={{ my: 1.5, borderColor: '#e8eaed' }} />
 
-                {/* Seletor de Idiomas Oficial dentro do Navigation Drawer */}
                 <Box sx={{ px: 1.5, py: 1 }}>
-                  <Typography variant="caption" sx={{ fontWeight: 800, color: '#6b7280', letterSpacing: '0.06em', display: 'block', mb: 1 }}>
-                    IDIOMA / IDIOMA / LANGUAGE
+                  <Typography variant="caption" sx={{ fontWeight: 700, color: '#5f6368', letterSpacing: '0.06em', display: 'block', mb: 1 }}>
+                    IDIOMA
                   </Typography>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Box sx={{ display: 'flex', gap: 0.75 }}>
                     {([
-                      { code: 'pt-BR', label: 'Português' },
-                      { code: 'es-419', label: 'Español' },
-                      { code: 'en-US', label: 'English' }
+                      { code: 'pt-BR', label: 'PT' },
+                      { code: 'es-419', label: 'ES' },
+                      { code: 'en-US', label: 'EN' }
                     ] as { code: Language; label: string }[]).map((opt) => (
                       <Button
                         key={opt.code}
@@ -775,11 +751,11 @@ export default function App() {
                         sx={{
                           flex: 1,
                           textTransform: 'none',
-                          fontWeight: 700,
+                          fontWeight: 600,
                           fontSize: '0.75rem',
-                          bgcolor: lang === opt.code ? '#0a2240' : 'transparent',
-                          borderColor: '#0a2240',
-                          color: lang === opt.code ? '#ffffff' : '#0a2240'
+                          bgcolor: lang === opt.code ? '#1a73e8' : 'transparent',
+                          borderColor: '#dadce0',
+                          color: lang === opt.code ? '#ffffff' : '#202124'
                         }}
                       >
                         {opt.label}
@@ -791,15 +767,14 @@ export default function App() {
             </Box>
           </Box>
 
-          {/* CONTEÚDO PRINCIPAL DO BACKSTAGE (AO LADO DO NAVIGATION DRAWER) */}
+          {/* Conteúdo principal */}
           <main className="flex-1 min-w-0 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
-            {/* BANNER DE STATUS OPERACIONAL */}
             {statusMessage && (
               <div className="mb-4 w-full">
                 <Alert
                   severity="info"
                   onClose={() => setStatusMessage(null)}
-                  sx={{ bgcolor: '#dae2ff', color: '#001848', borderLeft: '4px solid #002046', fontWeight: 600 }}
+                  sx={{ bgcolor: '#e8f0fe', color: '#174ea6', borderLeft: '4px solid #1a73e8', fontWeight: 500 }}
                 >
                   {statusMessage}
                 </Alert>
@@ -810,41 +785,41 @@ export default function App() {
               <Paper
                 elevation={0}
                 sx={{
-                  maxWidth: 650,
+                  maxWidth: 620,
                   mx: 'auto',
                   mt: 4,
                   p: { xs: 3.5, md: 5 },
                   textAlign: 'center',
-                  borderRadius: 4,
+                  borderRadius: 3,
                   bgcolor: '#ffffff',
-                  border: '1px solid #e5e4dc',
-                  boxShadow: '0 16px 40px -12px rgba(10, 34, 64, 0.08)'
+                  border: '1px solid #dadce0',
+                  boxShadow: '0 1px 3px rgba(60, 64, 67, 0.12)'
                 }}
               >
-                <ShieldIcon sx={{ fontSize: 48, color: '#0a2240', mb: 2 }} />
+                <ShieldIcon sx={{ fontSize: 44, color: '#1a73e8', mb: 1.5 }} />
                 <Typography
-                  variant="h4"
-                  sx={{ fontFamily: '"Merriweather", Georgia, serif', fontWeight: 700, color: '#0a2240', mb: 1.5 }}
+                  variant="h5"
+                  sx={{ fontWeight: 700, color: '#202124', mb: 1.5 }}
                 >
                   {t.authWallTitle}
                 </Typography>
-                <Typography variant="body1" sx={{ color: '#4b5563', mb: 3.5, lineHeight: 1.6 }}>
+                <Typography variant="body2" sx={{ color: '#5f6368', mb: 3.5, lineHeight: 1.6 }}>
                   {t.authWallDesc}
                 </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1.5, flexWrap: 'wrap' }}>
                   <Button
                     variant="contained"
                     size="large"
                     startIcon={<ShieldIcon />}
                     onClick={() => setLoginTriggerCount((c) => c + 1)}
                     sx={{
-                      bgcolor: '#0a2240',
-                      fontWeight: 700,
+                      bgcolor: '#1a73e8',
+                      fontWeight: 600,
                       textTransform: 'none',
                       borderRadius: 999,
                       px: 3.5,
-                      py: 1.25,
-                      '&:hover': { bgcolor: '#163a66' }
+                      py: 1.1,
+                      '&:hover': { bgcolor: '#1557b0' }
                     }}
                   >
                     {t.loginPublicServantBtn}
@@ -854,9 +829,9 @@ export default function App() {
                     size="large"
                     href={`${LANDING_PORTAL_URL}?lang=${encodeURIComponent(lang)}`}
                     sx={{
-                      borderColor: '#0a2240',
-                      color: '#0a2240',
-                      fontWeight: 700,
+                      borderColor: '#dadce0',
+                      color: '#202124',
+                      fontWeight: 600,
                       textTransform: 'none',
                       borderRadius: 999,
                       px: 3
@@ -867,46 +842,43 @@ export default function App() {
                 </Box>
               </Paper>
             ) : !currentUser.backstage_allowed ? (
-              <div className="bg-white border-2 border-red-800 rounded p-8 max-w-3xl mx-auto my-8 space-y-5 shadow-sm">
-                <div className="flex items-center gap-3 text-red-900">
-                  <AlertTriangle className="w-8 h-8 text-red-700 shrink-0" />
+              <div className="bg-white border border-[#d93025] rounded-xl p-8 max-w-3xl mx-auto my-8 space-y-4 shadow-sm">
+                <div className="flex items-center gap-3 text-[#c5221f]">
+                  <AlertTriangle className="w-7 h-7 text-[#d93025] shrink-0" />
                   <div>
-                    <div className="font-mono text-xs uppercase font-bold text-red-700">
-                      POLÍTICA ZERO-TRUST • APLICAÇÃO IDENTIDADE 360 (RBAC/ABAC)
+                    <div className="font-mono text-xs uppercase font-semibold text-[#d93025]">
+                      CONTROLE DE ACESSO (RBAC)
                     </div>
-                    <h2 className="font-serif-authority text-2xl font-bold text-[#002046]">
-                      Acesso ao Backstage Governamental Restrito
+                    <h2 className="text-xl font-bold text-[#202124]">
+                      Acesso restrito a servidores públicos
                     </h2>
                   </div>
                 </div>
 
-                <p className="text-sm text-[#43474f] leading-relaxed">
-                  O usuário autenticado <strong>{currentUser.full_name}</strong> (<code className="font-mono">{currentUser.nid}</code> •{' '}
-                  <code className="font-mono">{currentUser.email}</code>) possui atualmente o perfil{' '}
-                  <strong className="font-mono text-red-800">CITIZEN_COMMON (Cidadão Comum)</strong> na aplicação{' '}
-                  <strong>Identidade 360</strong>. Conforme a diretriz soberana da República de Novatlantis, cidadãos comuns ou ex-servidores cuja permissão profissional foi revogada não têm acesso aos ambientes administrativos do Backstage.
+                <p className="text-sm text-[#5f6368] leading-relaxed">
+                  A conta autenticada <strong>{currentUser.full_name}</strong> (<code className="font-mono">{currentUser.nid}</code>) possui perfil de cidadão (<code className="font-mono">CITIZEN_COMMON</code>) e não dispõe de permissões administrativas no Backstage.
                 </p>
 
                 <div className="flex flex-wrap gap-3 pt-2">
                   <a
                     href={ssoToken ? `${CITIZEN_PORTAL_URL}?sso_token=${encodeURIComponent(ssoToken)}&lang=${encodeURIComponent(lang)}` : `${CITIZEN_PORTAL_URL}?lang=${encodeURIComponent(lang)}`}
-                    className="bg-[#002046] text-white px-5 py-2.5 rounded text-xs font-bold hover:bg-[#00356e] transition flex items-center gap-2"
+                    className="bg-[#1a73e8] text-white px-5 py-2.5 rounded-full text-xs font-semibold hover:bg-[#1557b0] transition flex items-center gap-2"
                   >
-                    Ir para o Portal do Cidadão ({currentUser.full_name})
+                    Ir para o Portal do Cidadão
                     <ExternalLink className="w-4 h-4" />
                   </a>
                   <button
                     onClick={() => setLoginTriggerCount((c) => c + 1)}
-                    className="bg-[#dae2ff] text-[#001848] px-4 py-2.5 rounded text-xs font-bold hover:bg-[#b4c5ff] transition"
+                    className="bg-[#e8f0fe] text-[#174ea6] px-4 py-2.5 rounded-full text-xs font-semibold hover:bg-[#d2e3fc] transition"
                   >
-                    Alternar para Conta de Servidor Público (Login NID)
+                    Trocar para conta de servidor
                   </button>
                 </div>
               </div>
             ) : (
               currentUser && (
                 <>
-                  {/* Barra de Ambiente Atual com Atalho para o Navigation Drawer (☰) */}
+                  {/* Barra de módulo ativo */}
                   <Paper
                     elevation={0}
                     sx={{
@@ -914,7 +886,7 @@ export default function App() {
                       mb: 3,
                       borderRadius: 2.5,
                       bgcolor: '#ffffff',
-                      border: '1px solid #e5e4dc',
+                      border: '1px solid #dadce0',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
@@ -930,19 +902,19 @@ export default function App() {
                         onClick={() => setHamburgerOpen((prev) => !prev)}
                         sx={{
                           textTransform: 'none',
-                          fontWeight: 700,
-                          borderColor: '#0a2240',
-                          color: '#0a2240',
+                          fontWeight: 600,
+                          borderColor: '#dadce0',
+                          color: '#202124',
                           borderRadius: 2
                         }}
                       >
                         {t.switchEnvBtn}
                       </Button>
                       <Box>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#0a2240' }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#202124' }}>
                           {activeMenuObj.title[lang]}
                         </Typography>
-                        <Typography variant="caption" color="text.secondary">
+                        <Typography variant="caption" sx={{ color: '#5f6368' }}>
                           {activeMenuObj.subtitle[lang]}
                         </Typography>
                       </Box>
@@ -950,602 +922,602 @@ export default function App() {
                     <Chip
                       label={`${t.authenticatedServantChip}: ${currentUser.full_name} (${currentUser.effective_role_code})`}
                       size="small"
-                      color="success"
-                      variant="outlined"
-                      sx={{ fontFamily: 'monospace', fontWeight: 700 }}
+                      sx={{
+                        bgcolor: '#e6f4ea',
+                        color: '#137333',
+                        fontFamily: 'monospace',
+                        fontWeight: 600
+                      }}
                     />
                   </Paper>
 
-                  {/* AMBIENTE 1: GABINETE DO PRIMEIRO-MINISTRO (JOAO THIAGO POÇO - JT) & SECRETÁRIO-GERAL */}
+                  {/* Gabinete Executivo */}
                   {backstageTab === 'pm_cabinet' && (
                     <div className="space-y-6">
-                      <div className="bg-[#002046] text-white rounded p-6 border-b-4 border-[#b4c5ff] flex flex-wrap items-center justify-between gap-4">
+                      <div className="bg-white border border-[#dadce0] rounded-xl p-6 flex flex-wrap items-center justify-between gap-4 shadow-sm">
                         <div className="space-y-1">
-                          <div className="font-mono text-xs uppercase text-[#b4c5ff]">
-                            CHANCELARIA SUPREMA DE NOVATLANTIS • COMANDO EXECUTIVO DA NAÇÃO
+                          <div className="font-mono text-xs uppercase text-[#1a73e8] font-semibold">
+                            GABINETE EXECUTIVO
                           </div>
-                          <h2 className="font-serif-authority text-2xl font-bold">
-                            Gabinete do Primeiro-Ministro (Joao Thiago Poço - JT) & Secretaria-Geral
+                          <h2 className="text-xl font-bold text-[#202124]">
+                            Painel de Gestão de Estado
                           </h2>
-                          <p className="text-xs text-slate-300">
-                            Visão consolidada do Government Data Fabric (100.000 cidadãos), servidores públicos ativos e execução orçamentária.
+                          <p className="text-xs text-[#5f6368]">
+                            Indicadores populacionais, rede pública de atendimento e servidores ativos.
                           </p>
                         </div>
                         <div className="flex gap-2">
                           <button
                             onClick={() => setBackstageTab('iam360')}
-                            className="bg-[#b4c5ff] text-[#001848] px-4 py-2 rounded text-xs font-bold hover:bg-white transition"
+                            className="bg-[#1a73e8] text-white px-4 py-2 rounded-full text-xs font-semibold hover:bg-[#1557b0] transition"
                           >
-                            Gerenciar Permissões na Identidade 360
+                            Gerenciar Permissões (IAM)
                           </button>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div className="bg-white border border-slate-200 rounded p-4">
-                          <div className="text-xs text-slate-500 font-mono uppercase">População Total GDF</div>
-                          <div className="text-2xl font-mono font-bold text-[#002046] mt-1">
+                        <div className="bg-white border border-[#dadce0] rounded-xl p-4">
+                          <div className="text-xs text-[#5f6368] font-medium">População Registrada</div>
+                          <div className="text-2xl font-mono font-bold text-[#202124] mt-1">
                             {backstageOverview?.kpis?.total_citizens?.toLocaleString('pt-BR') || '100.000'}
                           </div>
-                          <div className="text-[11px] text-emerald-700 font-mono mt-1">100% Identidades Mod-11</div>
+                          <div className="text-[11px] text-[#1e8e3e] font-medium mt-1">Cadastro Nacional NID</div>
                         </div>
-                        <div className="bg-white border border-slate-200 rounded p-4">
-                          <div className="text-xs text-slate-500 font-mono uppercase">Vínculos Familiares</div>
-                          <div className="text-2xl font-mono font-bold text-[#002046] mt-1">
+                        <div className="bg-white border border-[#dadce0] rounded-xl p-4">
+                          <div className="text-xs text-[#5f6368] font-medium">Vínculos Familiares</div>
+                          <div className="text-2xl font-mono font-bold text-[#202124] mt-1">
                             {backstageOverview?.kpis?.total_family_links?.toLocaleString('pt-BR') || '71.425'}
                           </div>
-                          <div className="text-[11px] text-slate-600 font-mono mt-1">Tabela rel_family_graph</div>
+                          <div className="text-[11px] text-[#5f6368] mt-1">Registro Civil</div>
                         </div>
-                        <div className="bg-white border border-slate-200 rounded p-4">
-                          <div className="text-xs text-slate-500 font-mono uppercase">Médicos Credenciados</div>
-                          <div className="text-2xl font-mono font-bold text-[#002046] mt-1">
+                        <div className="bg-white border border-[#dadce0] rounded-xl p-4">
+                          <div className="text-xs text-[#5f6368] font-medium">Médicos Credenciados</div>
+                          <div className="text-2xl font-mono font-bold text-[#202124] mt-1">
                             {backstageOverview?.kpis?.total_doctors?.toLocaleString('pt-BR') || '589'}
                           </div>
-                          <div className="text-[11px] text-slate-600 font-mono mt-1">6 Unidades Hospitalares</div>
+                          <div className="text-[11px] text-[#5f6368] mt-1">6 Unidades Hospitalares</div>
                         </div>
-                        <div className="bg-white border border-slate-200 rounded p-4">
-                          <div className="text-xs text-slate-500 font-mono uppercase">Professores na Rede</div>
-                          <div className="text-2xl font-mono font-bold text-[#002046] mt-1">
+                        <div className="bg-white border border-[#dadce0] rounded-xl p-4">
+                          <div className="text-xs text-[#5f6368] font-medium">Professores na Rede</div>
+                          <div className="text-2xl font-mono font-bold text-[#202124] mt-1">
                             {backstageOverview?.kpis?.total_teachers?.toLocaleString('pt-BR') || '912'}
                           </div>
-                          <div className="text-[11px] text-slate-600 font-mono mt-1">20.440 Alunos Matriculados</div>
+                          <div className="text-[11px] text-[#5f6368] mt-1">20.440 Alunos Matriculados</div>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {/* AMBIENTE 2: IDENTIDADE 360 (GESTÃO DE ACESSOS RBAC/ABAC) */}
+                  {/* Identidade e Acessos (IAM) */}
                   {backstageTab === 'iam360' && (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                      <div className="lg:col-span-5 bg-white border border-slate-200 rounded p-6 space-y-4">
-                        <div className="border-b border-slate-200 pb-3">
-                          <div className="font-mono text-[10px] uppercase text-[#00356e] font-bold">
-                            GOVERNANÇA SOBERANA DE IDENTIDADES • IAM 360
+                      <div className="lg:col-span-5 bg-white border border-[#dadce0] rounded-xl p-6 space-y-4">
+                        <div className="border-b border-[#e8eaed] pb-3">
+                          <div className="font-mono text-[11px] uppercase text-[#1a73e8] font-semibold">
+                            GESTÃO DE ACESSOS (RBAC)
                           </div>
-                          <h3 className="font-serif-authority text-lg font-bold text-[#002046]">
-                            Conceder Permissão Administrativa a um Cidadão
+                          <h3 className="text-base font-bold text-[#202124] mt-0.5">
+                            Conceder Permissão Administrativa
                           </h3>
-                          <p className="text-xs text-[#43474f]">
-                            O Primeiro-Ministro (`Joao Thiago Poço - JT`), o Secretário-Geral e o Gestor de Identidades 360 concedem ou revogam acessos profissionais ao Backstage.
+                          <p className="text-xs text-[#5f6368] mt-0.5">
+                            Atribua ou revogue perfis de acesso ao Backstage para servidores públicos.
                           </p>
                         </div>
 
-                    <form onSubmit={handleGrantRole} className="space-y-3 text-xs">
-                      <div>
-                        <label className="block font-semibold text-[#002046] mb-1">
-                          NID do Cidadão / Servidor (Qualquer dos 100.000 cidadãos)
-                        </label>
-                        <input
-                          type="text"
-                          value={iamTargetNid}
-                          onChange={(e) => setIamTargetNid(e.target.value)}
-                          className="w-full border border-slate-300 rounded px-3 py-2 font-mono"
-                        />
-                      </div>
-                      <div>
-                        <label className="block font-semibold text-[#002046] mb-1">
-                          Papel Governamental na Identidade 360
-                        </label>
-                        <select
-                          value={iamSelectedRole}
-                          onChange={(e) => setIamSelectedRole(e.target.value)}
-                          className="w-full border border-slate-300 rounded px-3 py-2"
-                        >
-                          <option value="IDENTITY_MANAGER_360">IDENTITY_MANAGER_360 (Gestor de Identidades 360)</option>
-                          <option value="SECRETARY_GENERAL">SECRETARY_GENERAL (Secretário-Geral)</option>
-                          <option value="DOCTOR_AND_HEALTH_MANAGER">DOCTOR_AND_HEALTH_MANAGER (Gestor de Saúde & Médico)</option>
-                          <option value="DOCTOR_TELEMED">DOCTOR_TELEMED (Médico de Telemedicina)</option>
-                          <option value="TEACHER_AND_EDU_MANAGER">TEACHER_AND_EDU_MANAGER (Gestor de Educação & Professor)</option>
-                          <option value="TEACHER_EDUCATOR">TEACHER_EDUCATOR (Professor da Rede Pública)</option>
-                          <option value="OPERATIONS_311_911_MANAGER">OPERATIONS_311_911_MANAGER (Comandante 311/911)</option>
-                          <option value="JUSTICE_AND_TREASURY_MANAGER">JUSTICE_AND_TREASURY_MANAGER (Magistrado & Tesouro)</option>
-                        </select>
-                      </div>
-                      <button
-                        type="submit"
-                        className="w-full bg-[#002046] text-white font-bold py-2.5 rounded hover:bg-[#00356e] transition"
-                      >
-                        Conceder Permissão na Identidade 360
-                      </button>
-                    </form>
-                  </div>
-
-                  <div className="lg:col-span-7 bg-white border border-slate-200 rounded p-6 space-y-4">
-                    <div className="border-b border-slate-200 pb-3 flex items-center justify-between">
-                      <div>
-                        <h3 className="font-serif-authority text-lg font-bold text-[#002046]">
-                          Servidores Públicos com Acesso Ativo ao Backstage
-                        </h3>
-                        <p className="text-xs text-[#43474f]">
-                          Ao clicar em <strong>Revogar Permissão</strong>, o servidor volta imediatamente a ser <code className="font-mono">CITIZEN_COMMON</code> e perde o acesso administrativo.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2.5 max-h-96 overflow-y-auto">
-                      {(iamState?.privileged_servants || []).map((srv: any) => (
-                        <div
-                          key={srv.nid}
-                          className="p-3 rounded bg-[#f8f9fb] border border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs"
-                        >
+                        <form onSubmit={handleGrantRole} className="space-y-3 text-xs">
                           <div>
-                            <div className="font-bold text-[#002046]">{srv.full_name}</div>
-                            <div className="font-mono text-[11px] text-[#43474f]">
-                              {srv.nid} • {srv.email} • {srv.profession}
-                            </div>
+                            <label className="block font-semibold text-[#202124] mb-1">
+                              NID do Cidadão / Servidor
+                            </label>
+                            <input
+                              type="text"
+                              value={iamTargetNid}
+                              onChange={(e) => setIamTargetNid(e.target.value)}
+                              className="w-full border border-[#dadce0] rounded-lg px-3 py-2 font-mono"
+                            />
                           </div>
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#dae2ff] text-[#001848] font-bold">
-                              {srv.iam_role}
-                            </span>
-                            {srv.nid !== 'NID-000-0000-0001-9' && (
-                              <button
-                                onClick={() => handleRevokeRole(srv.nid)}
-                                className="px-2.5 py-1 rounded bg-red-800 text-white text-[11px] font-semibold hover:bg-red-900 transition"
-                              >
-                                Revogar Permissão
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* AMBIENTE 3: GESTÃO DA SAÚDE (HOSPITAIS, CLÍNICAS, MÉDICOS E TELEMEDICINA) */}
-              {backstageTab === 'health_mgmt' && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div className="lg:col-span-6 bg-white border border-slate-200 rounded p-5 space-y-3">
-                      <h3 className="font-serif-authority text-lg font-bold text-[#002046]">
-                        Rede Nacional de Hospitais e Clínicas
-                      </h3>
-                      <div className="space-y-2 text-xs">
-                        {(healthBackstage?.facilities || []).map((f: any) => (
-                          <div key={f.facility_id} className="p-3 rounded bg-[#f8f9fb] border border-slate-200 flex justify-between">
-                            <div>
-                              <div className="font-bold text-[#002046]">{f.name}</div>
-                              <div className="text-[11px] text-slate-600">
-                                {f.district} • Diretor: {f.director}
-                              </div>
-                            </div>
-                            <div className="text-right font-mono text-[11px]">
-                              <div className="text-emerald-700 font-bold">Ocupação: {f.occupancy_rate}%</div>
-                              <div>Fila Telemed: {f.telemed_queue}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="lg:col-span-6 bg-white border border-slate-200 rounded p-5 space-y-3">
-                      <h3 className="font-serif-authority text-lg font-bold text-[#002046]">
-                        Corpo Clínico & Atendimento de Telemedicina
-                      </h3>
-                      <div className="space-y-2 text-xs max-h-80 overflow-y-auto">
-                        {(healthBackstage?.telemed_consultations || []).map((c: any) => (
-                          <div key={c.consult_id} className="p-3 rounded bg-[#f8f9fb] border border-slate-200 space-y-1">
-                            <div className="flex justify-between font-mono text-[11px]">
-                              <strong className="text-[#002046]">
-                                {c.consult_id} • Paciente: {c.patient_name} ({c.patient_nid})
-                              </strong>
-                              <span className="text-emerald-700 font-bold">{c.status}</span>
-                            </div>
-                            <div className="text-[11px] text-slate-600">
-                              Médico Responsável: <strong>{c.doctor_name}</strong> • {c.facility}
-                            </div>
-                            <div className="text-[#191c1e]">{c.ai_clinical_summary}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* AMBIENTE 4: GESTÃO DA EDUCAÇÃO (ESCOLAS, PROFESSORES, PROVAS E NOTAS POR MATÉRIA) */}
-              {backstageTab === 'edu_mgmt' && (
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                  <div className="lg:col-span-5 bg-white border border-slate-200 rounded p-5 space-y-4">
-                    <h3 className="font-serif-authority text-lg font-bold text-[#002046]">
-                      Diário de Classe do Professor • Lançamento de Notas por Matéria
-                    </h3>
-                    <form onSubmit={handleUpdateStudentGrades} className="space-y-3 text-xs">
-                      <div>
-                        <label className="block font-semibold text-[#002046] mb-1">NID do Aluno Matriculado</label>
-                        <input
-                          type="text"
-                          value={gradeStudentNid}
-                          onChange={(e) => setGradeStudentNid(e.target.value)}
-                          className="w-full border border-slate-300 rounded px-3 py-2 font-mono"
-                        />
-                      </div>
-                      <div className="grid grid-cols-2 gap-2">
-                        <div>
-                          <label className="block font-semibold text-[#002046] mb-1">Matemática</label>
-                          <input
-                            type="number"
-                            value={gradeMath}
-                            onChange={(e) => setGradeMath(Number(e.target.value))}
-                            className="w-full border border-slate-300 rounded px-3 py-1.5 font-mono"
-                          />
-                        </div>
-                        <div>
-                          <label className="block font-semibold text-[#002046] mb-1">Ciências</label>
-                          <input
-                            type="number"
-                            value={gradeSci}
-                            onChange={(e) => setGradeSci(Number(e.target.value))}
-                            className="w-full border border-slate-300 rounded px-3 py-1.5 font-mono"
-                          />
-                        </div>
-                        <div>
-                          <label className="block font-semibold text-[#002046] mb-1">IA & Robótica</label>
-                          <input
-                            type="number"
-                            value={gradeAi}
-                            onChange={(e) => setGradeAi(Number(e.target.value))}
-                            className="w-full border border-slate-300 rounded px-3 py-1.5 font-mono"
-                          />
-                        </div>
-                        <div>
-                          <label className="block font-semibold text-[#002046] mb-1">Idiomas</label>
-                          <input
-                            type="number"
-                            value={gradeLang}
-                            onChange={(e) => setGradeLang(Number(e.target.value))}
-                            className="w-full border border-slate-300 rounded px-3 py-1.5 font-mono"
-                          />
-                        </div>
-                      </div>
-                      <button
-                        type="submit"
-                        className="w-full bg-[#002046] text-white font-bold py-2 rounded hover:bg-[#00356e] transition"
-                      >
-                        Atualizar Notas Escolares no GDF
-                      </button>
-                    </form>
-
-                    <form onSubmit={handleCreateExam} className="pt-4 border-t border-slate-200 space-y-3 text-xs">
-                      <div className="font-serif-authority font-bold text-sm text-[#002046]">
-                        Aplicar Nova Prova Nacional
-                      </div>
-                      <input
-                        type="text"
-                        value={examTitle}
-                        onChange={(e) => setExamTitle(e.target.value)}
-                        placeholder="Título da Avaliação (ex: Prova Semestral de Robótica)"
-                        className="w-full border border-slate-300 rounded px-3 py-2"
-                      />
-                      <button
-                        type="submit"
-                        className="w-full bg-[#00356e] text-white font-bold py-2 rounded hover:bg-[#002046] transition"
-                      >
-                        Publicar e Aplicar Prova
-                      </button>
-                    </form>
-                  </div>
-
-                  <div className="lg:col-span-7 bg-white border border-slate-200 rounded p-5 space-y-3">
-                    <h3 className="font-serif-authority text-lg font-bold text-[#002046]">
-                      Alunos Matriculados & Desempenho por Matéria (`edu_enrollments`)
-                    </h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs border-collapse">
-                        <thead>
-                          <tr className="border-b border-slate-300 bg-[#f2f4f6] font-mono text-[10px] uppercase text-[#002046]">
-                            <th className="p-2">Aluno / NID</th>
-                            <th className="p-2">Escola / Série</th>
-                            <th className="p-2">Mat</th>
-                            <th className="p-2">Ciên</th>
-                            <th className="p-2">IA & Rob</th>
-                            <th className="p-2">Idiom</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {(eduBackstage?.student_enrollments || []).slice(0, 10).map((st: any) => (
-                            <tr key={st.enrollment_id} className="border-b border-slate-100 hover:bg-[#f8f9fb]">
-                              <td className="p-2">
-                                <div className="font-bold text-[#002046]">{st.student_name}</div>
-                                <div className="font-mono text-[10px] text-slate-500">{st.student_nid}</div>
-                              </td>
-                              <td className="p-2 text-[11px]">
-                                {st.school_id} • {st.grade_level}
-                              </td>
-                              <td className="p-2 font-mono font-bold">{st.score_mathematics}</td>
-                              <td className="p-2 font-mono font-bold">{st.score_sciences}</td>
-                              <td className="p-2 font-mono font-bold text-[#00356e]">{st.score_ai_robotics}</td>
-                              <td className="p-2 font-mono font-bold">{st.score_languages}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* AMBIENTE 5: COMANDO DE ZELADORIA URBANA 311 */}
-              {backstageTab === 'ops_311' && (
-                <div className="bg-white border border-slate-200 rounded p-6 space-y-4">
-                  <div className="border-b border-slate-200 pb-3 flex flex-wrap items-center justify-between gap-2">
-                    <div>
-                      <h3 className="font-serif-authority text-lg font-bold text-[#002046] flex items-center gap-2">
-                        <Wrench className="w-5 h-5 text-[#002046]" />
-                        Comando de Zeladoria Urbana 311 • Fila de Demandas dos Cidadãos (`ops_311_tickets`)
-                      </h3>
-                      <p className="text-xs text-[#43474f]">
-                        Gerenciamento exclusivo de chamados de manutenção urbana, iluminação IoT, limpeza e drenagem pluvial.
-                      </p>
-                    </div>
-                    <span className="font-mono text-xs px-2.5 py-1 rounded bg-[#dae2ff] text-[#001848] font-bold">
-                      {(opsBackstage?.tickets_311 || []).length} Chamados 311
-                    </span>
-                  </div>
-                  <div className="space-y-2.5 text-xs">
-                    {(opsBackstage?.tickets_311 || []).map((tk: any) => (
-                      <div key={tk.ticket_id} className="p-3.5 rounded bg-[#f8f9fb] border border-slate-200 space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <span className="font-mono font-bold text-[#002046]">
-                            #{tk.ticket_id} • {tk.category}
-                          </span>
-                          <span
-                            className={`font-mono text-[10px] px-2 py-0.5 rounded font-bold ${
-                              tk.status === 'CONCLUIDO'
-                                ? 'bg-emerald-100 text-emerald-900'
-                                : 'bg-amber-100 text-amber-900'
-                            }`}
-                          >
-                            {tk.status}
-                          </span>
-                        </div>
-                        <div className="text-[#191c1e]">{tk.description}</div>
-                        <div className="flex items-center justify-between pt-1 text-[11px] text-slate-600">
-                          <span>
-                            Solicitante: <strong>{tk.citizen_name}</strong> ({tk.citizen_nid}) • {tk.district}
-                          </span>
-                          {tk.status !== 'CONCLUIDO' && (
-                            <button
-                              onClick={() => handleResolve311(tk.ticket_id)}
-                              className="bg-[#002046] text-white px-3 py-1 rounded text-xs font-semibold hover:bg-[#00356e]"
+                          <div>
+                            <label className="block font-semibold text-[#202124] mb-1">
+                              Perfil de Acesso
+                            </label>
+                            <select
+                              value={iamSelectedRole}
+                              onChange={(e) => setIamSelectedRole(e.target.value)}
+                              className="w-full border border-[#dadce0] rounded-lg px-3 py-2"
                             >
-                              Concluir Atendimento 311
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* AMBIENTE 6: CENTRAL DE DESPACHO DE EMERGÊNCIA 911 */}
-              {backstageTab === 'ops_911' && (
-                <div className="bg-white border-2 border-red-800 rounded p-6 space-y-4">
-                  <div className="border-b border-red-200 pb-3 flex flex-wrap items-center justify-between gap-2">
-                    <div>
-                      <h3 className="font-serif-authority text-lg font-bold text-red-900 flex items-center gap-2">
-                        <Siren className="w-5 h-5 text-red-700" />
-                        Central de Despacho de Emergência 911 • Socorro Tático & UTI Móvel (`ops_911_dispatches`)
-                      </h3>
-                      <p className="text-xs text-[#43474f]">
-                        Monitoramento dedicado em tempo real dos protocolos de emergência médica, defesa civil e guarda costeira.
-                      </p>
-                    </div>
-                    <span className="font-mono text-xs px-2.5 py-1 rounded bg-red-100 text-red-900 font-bold">
-                      {(opsBackstage?.dispatches_911 || []).length} Despachos 911 Ativos
-                    </span>
-                  </div>
-                  <div className="space-y-2.5 text-xs">
-                    {(opsBackstage?.dispatches_911 || []).map((dp: any) => (
-                      <div key={dp.dispatch_id} className="p-3.5 rounded bg-red-50/60 border border-red-200 space-y-1">
-                        <div className="flex justify-between font-mono text-[11px] font-bold text-red-900">
-                          <span>#{dp.dispatch_id} • {dp.emergency_type}</span>
-                          <span>ETA: {dp.eta_minutes} min</span>
-                        </div>
-                        <div className="text-[#191c1e] font-medium">{dp.ai_protocol}</div>
-                        <div className="text-[11px] text-slate-600">
-                          Cidadão: <strong>{dp.citizen_name}</strong> ({dp.citizen_nid}) • {dp.district}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* AMBIENTE 7: JUSTIÇA, TESOURO & EXPLORADOR DO DATALAKE DE 100.000 CIDADÃOS */}
-              {backstageTab === 'justice_datalake' && (
-                <div className="space-y-6">
-                  <div className="bg-white border border-slate-200 rounded p-5 space-y-4">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
-                      <div>
-                        <h3 className="font-serif-authority text-lg font-bold text-[#002046]">
-                          Explorador AlloyDB & Government Data Platform (100.000 Cidadãos)
-                        </h3>
-                        <p className="text-xs text-[#43474f]">
-                          Cluster AlloyDB: <code className="font-mono font-bold">novatlantis-sovereign-cluster (10.223.28.2:5432)</code> • BigQuery GDP: <code className="font-mono font-bold">novatlantis_gdp_dwh_cur_bq_0</code>
-                        </p>
-                      </div>
-                      <form onSubmit={handleSearchDatalake} className="flex gap-2 text-xs">
-                        <input
-                          type="text"
-                          value={datalakeFilter}
-                          onChange={(e) => setDatalakeFilter(e.target.value)}
-                          placeholder="Filtrar por nome, NID, profissão ou e-mail..."
-                          className="border border-slate-300 rounded px-3 py-1.5 w-64"
-                        />
-                        <button
-                          type="submit"
-                          className="bg-[#002046] text-white px-4 py-1.5 rounded font-bold hover:bg-[#00356e]"
-                        >
-                          Consultar AlloyDB / GDP 100k
-                        </button>
-                      </form>
-                    </div>
-
-                    <div className="overflow-x-auto max-h-96">
-                      <table className="w-full text-left text-xs border-collapse">
-                        <thead>
-                          <tr className="border-b border-slate-300 bg-[#f2f4f6] font-mono text-[10px] uppercase text-[#002046]">
-                            <th className="p-2">NID</th>
-                            <th className="p-2">Nome Civil</th>
-                            <th className="p-2">Idade</th>
-                            <th className="p-2">Profissão & Especialidade</th>
-                            <th className="p-2">Distrito</th>
-                            <th className="p-2">Papel IAM 360</th>
-                            <th className="p-2">Ação</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {datalakeExplorerResults.map((row: any) => (
-                            <tr key={row.nid} className="border-b border-slate-100 hover:bg-[#f8f9fb]">
-                              <td className="p-2 font-mono font-bold text-[#002046]">{row.nid}</td>
-                              <td className="p-2 font-semibold">{row.full_name}</td>
-                              <td className="p-2 font-mono">{row.age}</td>
-                              <td className="p-2">
-                                {row.profession} ({row.specialty})
-                              </td>
-                              <td className="p-2">{row.district}</td>
-                              <td className="p-2 font-mono text-[10px]">{row.iam_role}</td>
-                              <td className="p-2">
-                                <button
-                                  onClick={() => {
-                                    setIamTargetNid(row.nid);
-                                    setBackstageTab('iam360');
-                                  }}
-                                  className="px-2 py-1 rounded bg-[#dae2ff] text-[#001848] font-semibold text-[11px]"
-                                >
-                                  Gerenciar no IAM 360
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* PLUGGABLE BACKSTAGE OPERATIONAL QUEUE (e.g. Cartório & Conciliação IA — TJ or Federated External CE Demos) */}
-              {activePluggableQueue && (
-                <div className="space-y-6">
-                  <div className="bg-white rounded-md p-6 border border-[#002046]/15 shadow-sm">
-                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4 mb-5">
-                      <div>
-                        <span className="inline-block px-2.5 py-0.5 rounded bg-[#002046] text-white text-[10px] font-bold uppercase tracking-wider mb-1.5">
-                          Fila Operacional Plugável • @novatlantis/portal-sdk ({activePluggableQueue.appId})
-                        </span>
-                        <h3 className="text-lg font-extrabold text-[#002046]">
-                          {pluggableQueueView?.headline?.[lang] || activePluggableQueue.title[lang]}
-                        </h3>
-                        <p className="text-xs text-slate-600 mt-0.5">
-                          {pluggableQueueView?.summary?.[lang] || activePluggableQueue.subtitle[lang]}
-                        </p>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {(pluggableQueueView?.actions || []).map((act: any) => (
+                              <option value="IDENTITY_MANAGER_360">IDENTITY_MANAGER_360 (Gestor de Identidades)</option>
+                              <option value="SECRETARY_GENERAL">SECRETARY_GENERAL (Secretário-Geral)</option>
+                              <option value="DOCTOR_AND_HEALTH_MANAGER">DOCTOR_AND_HEALTH_MANAGER (Gestor de Saúde & Médico)</option>
+                              <option value="DOCTOR_TELEMED">DOCTOR_TELEMED (Médico de Telemedicina)</option>
+                              <option value="TEACHER_AND_EDU_MANAGER">TEACHER_AND_EDU_MANAGER (Gestor de Educação & Professor)</option>
+                              <option value="TEACHER_EDUCATOR">TEACHER_EDUCATOR (Professor da Rede Pública)</option>
+                              <option value="OPERATIONS_311_911_MANAGER">OPERATIONS_311_911_MANAGER (Coordenador 311/911)</option>
+                              <option value="JUSTICE_AND_TREASURY_MANAGER">JUSTICE_AND_TREASURY_MANAGER (Magistrado & Tesouro)</option>
+                            </select>
+                          </div>
                           <button
-                            key={act.action_id}
-                            onClick={() => {
-                              if (act.externalUrl) {
-                                window.open(act.externalUrl, '_blank', 'noopener,noreferrer');
-                              }
-                              handlePluggableBackstageAction(activePluggableQueue.appId, act.action_id);
-                            }}
-                            className="bg-[#002046] text-white px-3.5 py-2 rounded text-xs font-bold hover:bg-[#00356e] transition flex items-center gap-1.5"
+                            type="submit"
+                            className="w-full bg-[#1a73e8] text-white font-semibold py-2.5 rounded-lg hover:bg-[#1557b0] transition"
                           >
-                            {act.label?.[lang] || act.label?.pt || act.action_id}
-                            {act.externalUrl && <ExternalLink className="w-3.5 h-3.5" />}
+                            Conceder Permissão
                           </button>
-                        ))}
+                        </form>
                       </div>
-                    </div>
 
-                    {pluggableQueueView?.kpis && (
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                        {pluggableQueueView.kpis.map((kpi: any, idx: number) => (
-                          <div key={idx} className="p-4 rounded bg-[#f4f3ef] border border-[#002046]/10">
-                            <div className="text-[11px] font-bold uppercase text-slate-500">
-                              {kpi.label?.[lang] || kpi.label?.pt}
-                            </div>
-                            <div className="text-xl font-black text-[#002046] mt-1">{kpi.value}</div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="space-y-3">
-                      <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#002046]">
-                        Pauta Operacional & Sistemas Federados Assistidos por IA
-                      </h4>
-                      {(pluggableQueueView?.records || []).map((rec: any, idx: number) => (
-                        <div key={idx} className="p-4 rounded bg-[#fcfbf9] border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                      <div className="lg:col-span-7 bg-white border border-[#dadce0] rounded-xl p-6 space-y-4">
+                        <div className="border-b border-[#e8eaed] pb-3 flex items-center justify-between">
                           <div>
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono text-xs font-bold text-[#002046]">
-                                {rec.case_number || rec.cert_id}
-                              </span>
-                              <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 text-[10px] font-bold">
-                                {rec.status}
-                              </span>
-                            </div>
-                            <div className="text-sm font-bold text-slate-900 mt-1">
-                              {rec.subject || rec.cert_type}
-                            </div>
-                            <div className="text-xs text-slate-600 mt-0.5">
-                              {rec.court_branch || `Hash: ${rec.authenticity_hash}`} • {rec.ai_conciliation_summary || rec.issued_at}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            {rec.claim_amount_nva !== undefined && (
-                              <div className="text-right">
-                                <div className="text-xs text-slate-500">Valor da Causa</div>
-                                <div className="text-sm font-extrabold text-[#002046]">NVA$ {rec.claim_amount_nva}</div>
-                              </div>
-                            )}
-                            {rec.external_url && (
-                              <a
-                                href={rec.external_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-3 py-1.5 rounded bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 flex items-center gap-1"
-                              >
-                                Abrir Demo <ExternalLink className="w-3.5 h-3.5" />
-                              </a>
-                            )}
+                            <h3 className="text-base font-bold text-[#202124]">
+                              Servidores com Acesso Ativo
+                            </h3>
+                            <p className="text-xs text-[#5f6368] mt-0.5">
+                              Ao revogar a permissão, a conta retorna ao perfil padrão (<code className="font-mono">CITIZEN_COMMON</code>).
+                            </p>
                           </div>
                         </div>
-                      ))}
+
+                        <div className="space-y-2.5 max-h-96 overflow-y-auto">
+                          {(iamState?.privileged_servants || []).map((srv: any) => (
+                            <div
+                              key={srv.nid}
+                              className="p-3 rounded-lg bg-[#f8f9fa] border border-[#dadce0] flex flex-wrap items-center justify-between gap-2 text-xs"
+                            >
+                              <div>
+                                <div className="font-bold text-[#202124]">{srv.full_name}</div>
+                                <div className="font-mono text-[11px] text-[#5f6368]">
+                                  {srv.nid} • {srv.email} • {srv.profession}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-mono text-[10px] px-2.5 py-0.5 rounded-full bg-[#e8f0fe] text-[#174ea6] font-semibold">
+                                  {srv.iam_role}
+                                </span>
+                                {srv.nid !== 'NID-000-0000-0001-9' && (
+                                  <button
+                                    onClick={() => handleRevokeRole(srv.nid)}
+                                    className="px-2.5 py-1 rounded-lg bg-[#d93025] text-white text-[11px] font-semibold hover:bg-[#b31412] transition"
+                                  >
+                                    Revogar
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              )}
-            </>
-          )
-        )}
+                  )}
+
+                  {/* Gestão da Saúde */}
+                  {backstageTab === 'health_mgmt' && (
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div className="lg:col-span-6 bg-white border border-[#dadce0] rounded-xl p-5 space-y-3">
+                          <h3 className="text-base font-bold text-[#202124]">
+                            Unidades Hospitalares e Clínicas
+                          </h3>
+                          <div className="space-y-2 text-xs">
+                            {(healthBackstage?.facilities || []).map((f: any) => (
+                              <div key={f.facility_id} className="p-3 rounded-lg bg-[#f8f9fa] border border-[#dadce0] flex justify-between">
+                                <div>
+                                  <div className="font-bold text-[#202124]">{f.name}</div>
+                                  <div className="text-[11px] text-[#5f6368]">
+                                    {f.district} • Direção: {f.director}
+                                  </div>
+                                </div>
+                                <div className="text-right font-mono text-[11px]">
+                                  <div className="text-[#1e8e3e] font-bold">Ocupação: {f.occupancy_rate}%</div>
+                                  <div className="text-[#5f6368]">Fila Teleconsulta: {f.telemed_queue}</div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="lg:col-span-6 bg-white border border-[#dadce0] rounded-xl p-5 space-y-3">
+                          <h3 className="text-base font-bold text-[#202124]">
+                            Atendimentos de Telemedicina
+                          </h3>
+                          <div className="space-y-2 text-xs max-h-80 overflow-y-auto">
+                            {(healthBackstage?.telemed_consultations || []).map((c: any) => (
+                              <div key={c.consult_id} className="p-3 rounded-lg bg-[#f8f9fa] border border-[#dadce0] space-y-1">
+                                <div className="flex justify-between font-mono text-[11px]">
+                                  <strong className="text-[#202124]">
+                                    {c.consult_id} • Paciente: {c.patient_name} ({c.patient_nid})
+                                  </strong>
+                                  <span className="text-[#1e8e3e] font-bold">{c.status}</span>
+                                </div>
+                                <div className="text-[11px] text-[#5f6368]">
+                                  Médico: <strong>{c.doctor_name}</strong> • {c.facility}
+                                </div>
+                                <div className="text-[#202124]">{c.ai_clinical_summary}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Gestão da Educação */}
+                  {backstageTab === 'edu_mgmt' && (
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                      <div className="lg:col-span-5 bg-white border border-[#dadce0] rounded-xl p-5 space-y-4">
+                        <h3 className="text-base font-bold text-[#202124]">
+                          Diário de Classe • Lançamento de Notas
+                        </h3>
+                        <form onSubmit={handleUpdateStudentGrades} className="space-y-3 text-xs">
+                          <div>
+                            <label className="block font-semibold text-[#202124] mb-1">NID do Aluno</label>
+                            <input
+                              type="text"
+                              value={gradeStudentNid}
+                              onChange={(e) => setGradeStudentNid(e.target.value)}
+                              className="w-full border border-[#dadce0] rounded-lg px-3 py-2 font-mono"
+                            />
+                          </div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div>
+                              <label className="block font-semibold text-[#202124] mb-1">Matemática</label>
+                              <input
+                                type="number"
+                                value={gradeMath}
+                                onChange={(e) => setGradeMath(Number(e.target.value))}
+                                className="w-full border border-[#dadce0] rounded-lg px-3 py-1.5 font-mono"
+                              />
+                            </div>
+                            <div>
+                              <label className="block font-semibold text-[#202124] mb-1">Ciências</label>
+                              <input
+                                type="number"
+                                value={gradeSci}
+                                onChange={(e) => setGradeSci(Number(e.target.value))}
+                                className="w-full border border-[#dadce0] rounded-lg px-3 py-1.5 font-mono"
+                              />
+                            </div>
+                            <div>
+                              <label className="block font-semibold text-[#202124] mb-1">Robótica</label>
+                              <input
+                                type="number"
+                                value={gradeAi}
+                                onChange={(e) => setGradeAi(Number(e.target.value))}
+                                className="w-full border border-[#dadce0] rounded-lg px-3 py-1.5 font-mono"
+                              />
+                            </div>
+                            <div>
+                              <label className="block font-semibold text-[#202124] mb-1">Idiomas</label>
+                              <input
+                                type="number"
+                                value={gradeLang}
+                                onChange={(e) => setGradeLang(Number(e.target.value))}
+                                className="w-full border border-[#dadce0] rounded-lg px-3 py-1.5 font-mono"
+                              />
+                            </div>
+                          </div>
+                          <button
+                            type="submit"
+                            className="w-full bg-[#1a73e8] text-white font-semibold py-2 rounded-lg hover:bg-[#1557b0] transition"
+                          >
+                            Salvar Notas
+                          </button>
+                        </form>
+
+                        <form onSubmit={handleCreateExam} className="pt-4 border-t border-[#e8eaed] space-y-3 text-xs">
+                          <div className="font-bold text-sm text-[#202124]">
+                            Publicar Nova Avaliação
+                          </div>
+                          <input
+                            type="text"
+                            value={examTitle}
+                            onChange={(e) => setExamTitle(e.target.value)}
+                            placeholder="Título da avaliação (ex: Avaliação Semestral)"
+                            className="w-full border border-[#dadce0] rounded-lg px-3 py-2"
+                          />
+                          <button
+                            type="submit"
+                            className="w-full bg-[#1e8e3e] text-white font-semibold py-2 rounded-lg hover:bg-[#137333] transition"
+                          >
+                            Publicar Avaliação
+                          </button>
+                        </form>
+                      </div>
+
+                      <div className="lg:col-span-7 bg-white border border-[#dadce0] rounded-xl p-5 space-y-3">
+                        <h3 className="text-base font-bold text-[#202124]">
+                          Alunos Matriculados e Desempenho
+                        </h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border-collapse">
+                            <thead>
+                              <tr className="border-b border-[#dadce0] bg-[#f8f9fa] font-mono text-[10px] uppercase text-[#5f6368]">
+                                <th className="p-2">Aluno / NID</th>
+                                <th className="p-2">Escola / Série</th>
+                                <th className="p-2">Mat</th>
+                                <th className="p-2">Ciên</th>
+                                <th className="p-2">Rob</th>
+                                <th className="p-2">Idiom</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {(eduBackstage?.student_enrollments || []).slice(0, 10).map((st: any) => (
+                                <tr key={st.enrollment_id} className="border-b border-[#e8eaed] hover:bg-[#f8f9fa]">
+                                  <td className="p-2">
+                                    <div className="font-bold text-[#202124]">{st.student_name}</div>
+                                    <div className="font-mono text-[10px] text-[#5f6368]">{st.student_nid}</div>
+                                  </td>
+                                  <td className="p-2 text-[11px] text-[#5f6368]">
+                                    {st.school_id} • {st.grade_level}
+                                  </td>
+                                  <td className="p-2 font-mono font-bold">{st.score_mathematics}</td>
+                                  <td className="p-2 font-mono font-bold">{st.score_sciences}</td>
+                                  <td className="p-2 font-mono font-bold text-[#1a73e8]">{st.score_ai_robotics}</td>
+                                  <td className="p-2 font-mono font-bold">{st.score_languages}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Zeladoria Urbana 311 */}
+                  {backstageTab === 'ops_311' && (
+                    <div className="bg-white border border-[#dadce0] rounded-xl p-6 space-y-4">
+                      <div className="border-b border-[#e8eaed] pb-3 flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <h3 className="text-base font-bold text-[#202124] flex items-center gap-2">
+                            <Wrench className="w-5 h-5 text-[#1a73e8]" />
+                            Zeladoria Urbana 311 • Fila de Solicitações
+                          </h3>
+                          <p className="text-xs text-[#5f6368] mt-0.5">
+                            Gerenciamento de chamados de manutenção urbana, iluminação, limpeza e drenagem.
+                          </p>
+                        </div>
+                        <span className="font-mono text-xs px-3 py-1 rounded-full bg-[#e8f0fe] text-[#174ea6] font-semibold">
+                          {(opsBackstage?.tickets_311 || []).length} Chamados
+                        </span>
+                      </div>
+                      <div className="space-y-2.5 text-xs">
+                        {(opsBackstage?.tickets_311 || []).map((tk: any) => (
+                          <div key={tk.ticket_id} className="p-3.5 rounded-lg bg-[#f8f9fa] border border-[#dadce0] space-y-1.5">
+                            <div className="flex items-center justify-between">
+                              <span className="font-mono font-bold text-[#202124]">
+                                #{tk.ticket_id} • {tk.category}
+                              </span>
+                              <span
+                                className={`font-mono text-[10px] px-2.5 py-0.5 rounded-full font-semibold ${
+                                  tk.status === 'CONCLUIDO'
+                                    ? 'bg-[#e6f4ea] text-[#137333]'
+                                    : 'bg-[#fef7e0] text-[#b06000]'
+                                }`}
+                              >
+                                {tk.status}
+                              </span>
+                            </div>
+                            <div className="text-[#202124]">{tk.description}</div>
+                            <div className="flex items-center justify-between pt-1 text-[11px] text-[#5f6368]">
+                              <span>
+                                Solicitante: <strong>{tk.citizen_name}</strong> ({tk.citizen_nid}) • {tk.district}
+                              </span>
+                              {tk.status !== 'CONCLUIDO' && (
+                                <button
+                                  onClick={() => handleResolve311(tk.ticket_id)}
+                                  className="bg-[#1a73e8] text-white px-3 py-1 rounded-lg text-xs font-semibold hover:bg-[#1557b0]"
+                                >
+                                  Concluir Atendimento
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Central de Emergência 911 */}
+                  {backstageTab === 'ops_911' && (
+                    <div className="bg-white border border-[#d93025] rounded-xl p-6 space-y-4">
+                      <div className="border-b border-[#fce8e6] pb-3 flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <h3 className="text-base font-bold text-[#c5221f] flex items-center gap-2">
+                            <Siren className="w-5 h-5 text-[#d93025]" />
+                            Central de Emergência 911
+                          </h3>
+                          <p className="text-xs text-[#5f6368] mt-0.5">
+                            Acompanhamento de ocorrências médicas de urgência, defesa civil e guarda costeira.
+                          </p>
+                        </div>
+                        <span className="font-mono text-xs px-3 py-1 rounded-full bg-[#fce8e6] text-[#c5221f] font-semibold">
+                          {(opsBackstage?.dispatches_911 || []).length} Ocorrências Ativas
+                        </span>
+                      </div>
+                      <div className="space-y-2.5 text-xs">
+                        {(opsBackstage?.dispatches_911 || []).map((dp: any) => (
+                          <div key={dp.dispatch_id} className="p-3.5 rounded-lg bg-[#fce8e6]/40 border border-[#f5c2c0] space-y-1">
+                            <div className="flex justify-between font-mono text-[11px] font-bold text-[#c5221f]">
+                              <span>#{dp.dispatch_id} • {dp.emergency_type}</span>
+                              <span>Tempo estimado: {dp.eta_minutes} min</span>
+                            </div>
+                            <div className="text-[#202124] font-medium">{dp.ai_protocol}</div>
+                            <div className="text-[11px] text-[#5f6368]">
+                              Cidadão: <strong>{dp.citizen_name}</strong> ({dp.citizen_nid}) • {dp.district}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Cadastro Nacional e Tesouro */}
+                  {backstageTab === 'justice_datalake' && (
+                    <div className="space-y-6">
+                      <div className="bg-white border border-[#dadce0] rounded-xl p-5 space-y-4">
+                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#e8eaed] pb-3">
+                          <div>
+                            <h3 className="text-base font-bold text-[#202124]">
+                              Diretório Nacional de Cidadãos (100.000 Registros)
+                            </h3>
+                            <p className="text-xs text-[#5f6368] mt-0.5">
+                              Consulta cadastral integrada à base operacional e analítica.
+                            </p>
+                          </div>
+                          <form onSubmit={handleSearchDatalake} className="flex gap-2 text-xs">
+                            <input
+                              type="text"
+                              value={datalakeFilter}
+                              onChange={(e) => setDatalakeFilter(e.target.value)}
+                              placeholder="Filtrar por nome, NID, cargo ou e-mail..."
+                              className="border border-[#dadce0] rounded-lg px-3 py-1.5 w-64"
+                            />
+                            <button
+                              type="submit"
+                              className="bg-[#1a73e8] text-white px-4 py-1.5 rounded-lg font-semibold hover:bg-[#1557b0]"
+                            >
+                              Buscar
+                            </button>
+                          </form>
+                        </div>
+
+                        <div className="overflow-x-auto max-h-96">
+                          <table className="w-full text-left text-xs border-collapse">
+                            <thead>
+                              <tr className="border-b border-[#dadce0] bg-[#f8f9fa] font-mono text-[10px] uppercase text-[#5f6368]">
+                                <th className="p-2">NID</th>
+                                <th className="p-2">Nome</th>
+                                <th className="p-2">Idade</th>
+                                <th className="p-2">Cargo / Especialidade</th>
+                                <th className="p-2">Distrito</th>
+                                <th className="p-2">Perfil IAM</th>
+                                <th className="p-2">Ação</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {datalakeExplorerResults.map((row: any) => (
+                                <tr key={row.nid} className="border-b border-[#e8eaed] hover:bg-[#f8f9fa]">
+                                  <td className="p-2 font-mono font-bold text-[#1a73e8]">{row.nid}</td>
+                                  <td className="p-2 font-semibold text-[#202124]">{row.full_name}</td>
+                                  <td className="p-2 font-mono">{row.age}</td>
+                                  <td className="p-2 text-[#5f6368]">
+                                    {row.profession} ({row.specialty})
+                                  </td>
+                                  <td className="p-2">{row.district}</td>
+                                  <td className="p-2 font-mono text-[10px]">{row.iam_role}</td>
+                                  <td className="p-2">
+                                    <button
+                                      onClick={() => {
+                                        setIamTargetNid(row.nid);
+                                        setBackstageTab('iam360');
+                                      }}
+                                      className="px-2.5 py-1 rounded-lg bg-[#e8f0fe] text-[#174ea6] font-semibold text-[11px] hover:bg-[#d2e3fc]"
+                                    >
+                                      Gerenciar acesso
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Módulos Setoriais Integrados */}
+                  {activePluggableQueue && (
+                    <div className="space-y-6">
+                      <div className="bg-white rounded-xl p-6 border border-[#dadce0] shadow-sm">
+                        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#e8eaed] pb-4 mb-5">
+                          <div>
+                            <h3 className="text-lg font-bold text-[#202124]">
+                              {pluggableQueueView?.headline?.[lang] || activePluggableQueue.title[lang]}
+                            </h3>
+                            <p className="text-xs text-[#5f6368] mt-0.5">
+                              {pluggableQueueView?.summary?.[lang] || activePluggableQueue.subtitle[lang]}
+                            </p>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {(pluggableQueueView?.actions || []).map((act: any) => (
+                              <button
+                                key={act.action_id}
+                                onClick={() => {
+                                  if (act.externalUrl) {
+                                    window.open(act.externalUrl, '_blank', 'noopener,noreferrer');
+                                  }
+                                  handlePluggableBackstageAction(activePluggableQueue.appId, act.action_id);
+                                }}
+                                className="bg-[#1a73e8] text-white px-3.5 py-2 rounded-lg text-xs font-semibold hover:bg-[#1557b0] transition flex items-center gap-1.5"
+                              >
+                                {act.label?.[lang] || act.label?.pt || act.action_id}
+                                {act.externalUrl && <ExternalLink className="w-3.5 h-3.5" />}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {pluggableQueueView?.kpis && (
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            {pluggableQueueView.kpis.map((kpi: any, idx: number) => (
+                              <div key={idx} className="p-4 rounded-xl bg-[#f8f9fa] border border-[#dadce0]">
+                                <div className="text-[11px] font-semibold uppercase text-[#5f6368]">
+                                  {kpi.label?.[lang] || kpi.label?.pt}
+                                </div>
+                                <div className="text-xl font-bold text-[#202124] mt-1">{kpi.value}</div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="space-y-3">
+                          <h4 className="text-xs font-bold uppercase tracking-wider text-[#5f6368]">
+                            Registros e Sistemas Integrados
+                          </h4>
+                          {(pluggableQueueView?.records || []).map((rec: any, idx: number) => (
+                            <div key={idx} className="p-4 rounded-xl bg-[#f8f9fa] border border-[#dadce0] flex flex-col md:flex-row md:items-center justify-between gap-3">
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <span className="font-mono text-xs font-bold text-[#1a73e8]">
+                                    {rec.case_number || rec.cert_id}
+                                  </span>
+                                  <span className="px-2 py-0.5 rounded-full bg-[#e6f4ea] text-[#137333] text-[10px] font-semibold">
+                                    {rec.status}
+                                  </span>
+                                </div>
+                                <div className="text-sm font-bold text-[#202124] mt-1">
+                                  {rec.subject || rec.cert_type}
+                                </div>
+                                <div className="text-xs text-[#5f6368] mt-0.5">
+                                  {rec.court_branch || `Hash: ${rec.authenticity_hash}`} • {rec.ai_conciliation_summary || rec.issued_at}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                {rec.claim_amount_nva !== undefined && (
+                                  <div className="text-right">
+                                    <div className="text-xs text-[#5f6368]">Valor da Causa</div>
+                                    <div className="text-sm font-bold text-[#202124]">NVA$ {rec.claim_amount_nva}</div>
+                                  </div>
+                                )}
+                                {rec.external_url && (
+                                  <a
+                                    href={rec.external_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-3.5 py-1.5 rounded-lg bg-[#1e8e3e] text-white text-xs font-semibold hover:bg-[#137333] flex items-center gap-1"
+                                  >
+                                    Acessar <ExternalLink className="w-3.5 h-3.5" />
+                                  </a>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )
+            )}
           </main>
         </Box>
       </div>

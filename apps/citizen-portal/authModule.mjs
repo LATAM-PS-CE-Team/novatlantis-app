@@ -13,7 +13,7 @@ export const ALLOYDB_CLUSTER_METADATA = {
     'projects/novatlantis/locations/us-central1/clusters/novatlantis-sovereign-cluster/instances/novatlantis-primary-01',
   vpcNetwork: 'projects/novatlantis/global/networks/novatlantis-vpc',
   subnet: 'projects/novatlantis/regions/us-central1/subnetworks/novatlantis-us-central1',
-  host: process.env.ALLOYDB_HOST || process.env.PGHOST || '10.223.28.2',
+  host: process.env.ALLOYDB_HOST || process.env.PGHOST || '127.0.0.1',
   port: Number(process.env.ALLOYDB_PORT || process.env.PGPORT || 5432),
   user: process.env.ALLOYDB_USER || process.env.PGUSER || 'postgres',
   database: process.env.ALLOYDB_DB || process.env.PGDATABASE || 'postgres'
@@ -378,7 +378,7 @@ export function ensureAuthTablesExist(db) {
     // ignore if dim_citizens not present
   }
 
-  // Synchronize schema & initial rows to AlloyDB Primary Instance (10.223.28.2:5432)
+  // Synchronize schema & initial rows to AlloyDB Primary Instance (AlloyDB Primary)
   if (alloyPool) {
     (async () => {
       try {
@@ -1188,7 +1188,7 @@ export async function handleCentralAuthAndProfileRoutes(req, res, db, pathname, 
         directVpcConnected: alloyDirectConnected,
         pgVersion,
         alloyPrimarySeededRows: alloyRows,
-        writeThroughCache: 'ACTIVE (Sub-ms Local Replica + AlloyDB Primary 10.223.28.2)',
+        writeThroughCache: 'ACTIVE (Sub-ms Local Replica + AlloyDB Primary)',
         totalCitizens,
         totalCredentials: totalCreds
       },

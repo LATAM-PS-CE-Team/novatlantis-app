@@ -389,7 +389,7 @@ function getFullCitizenProfile(nidOrEmail) {
 }
 
 // ============================================================================
-// MOTOR DO AGENTE ORQUESTRADOR SOBERANO (america.gov AI Concierge)
+// MOTOR DE ATENDIMENTO DIGITAL E ORQUESTRAÇÃO DE SERVIÇOS
 // Suporta visitantes anônimos (profile === null) para perguntas abertas e
 // exige login apenas no momento de solicitar/executar um serviço transacional.
 // ============================================================================
@@ -865,7 +865,7 @@ async function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt
         ? 'De acuerdo con el **Artículo 45** de la Constitución de Novatlantis, los servidores públicos y delegados en misión oficial tienen derecho a viáticos estandarizados (**tope de 250 NVD/día** para hospedaje y alimentación) y pasajes en clase económica/ejecutiva según la duración del vuelo, con rendición de cuentas automatizada en el GDF mediante factura digital firmada, bloqueándose automáticamente gastos personales o de entretenimiento.'
         : 'De acordo com o **Artigo 45** da Constituição de Novatlantis, servidores públicos e delegados em missão oficial têm direito a diárias padronizadas (**teto de 250 NVD/dia** para hospedagem e alimentação) e passagens em classe econômica/executiva conforme duração do voo, com prestação de contas automatizada no GDF mediante nota fiscal digital assinada, sendo bloqueadas automaticamente despesas pessoais ou entretenimento.';
   }
-  // 0.5. Delegação Dinâmica A2A para Módulos Plugáveis de CEs (@novatlantis/portal-sdk)
+  // 0.5. Delegação Dinâmica A2A para Módulos Setoriais (@novatlantis/portal-sdk)
   else if (pluggableAgentMatch) {
     delegatedAgent = pluggableAgentMatch.delegatedAgent;
     citations = pluggableAgentMatch.citations || [];
@@ -2040,8 +2040,8 @@ async function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt
         type: executedAction.type,
         title: executedAction.summary,
         reference_id: executedAction.protocol,
-        status: executedAction.external_url ? 'NÓ FEDERADO CE ATIVO' : 'EXECUTADO NO ALLOYDB',
-        target_portal: executedAction.external_url ? 'external-ce-demo' : 'citizen-portal',
+        status: executedAction.external_url ? 'MÓDULO INTEGRADO ATIVO' : 'EXECUTADO NO ALLOYDB',
+        target_portal: executedAction.external_url ? 'external-module' : 'citizen-portal',
         external_url: executedAction.external_url || null,
         federated_domain: executedAction.federated_domain || null,
         target_url:
@@ -2051,7 +2051,7 @@ async function runSovereignOrchestrator(profile, userMessage, fallbackLang = 'pt
         details: {
           Titular: isAuthenticated && profile ? `${profile.full_name} (${profile.citizen_id})` : 'Acesso Público / Federado',
           Agente: delegatedAgent,
-          Distrito: profile?.residence?.district || executedAction.details?.gcp_project || 'Nó Federado Argolis',
+          Distrito: profile?.residence?.district || executedAction.details?.gcp_project || 'Rede Governamental',
           Protocolo: executedAction.protocol
         }
       }
@@ -2196,8 +2196,7 @@ const server = http.createServer(async (req, res) => {
         },
         lakehouse: {
           alloydb_cluster: 'projects/novatlantis/locations/us-central1/clusters/novatlantis-sovereign-cluster',
-          alloydb_primary_ip: '10.223.28.2',
-          gcs_buckets: [
+                    gcs_buckets: [
             'gs://novatlantis-gdp-drp-cs-0',
             'gs://novatlantis-gdp-load-cs-0',
             'gs://novatlantis-gdp-trf-cs-0',

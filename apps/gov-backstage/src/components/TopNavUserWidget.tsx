@@ -220,114 +220,114 @@ const WIDGET_I18N: Record<
 > = {
   'pt-BR': {
     checking: 'Verificando...',
-    signInWithNid: 'Entrar com NID',
-    authTitle: 'Identidade Digital Soberana (NID)',
-    authSubtitle: 'República de Novatlantis • Autenticação Unificada AlloyDB',
-    nidOrEmailLabel: 'Identificador Nacional (NID) ou E-mail',
-    passwordLabel: 'Senha de Acesso',
-    fillInitialPassword: 'Preencher Senha Inicial do NID',
-    simulateFirstLogin: 'Simular 1º Acesso (OTP)',
-    quickTestTitle: 'CREDENCIAIS RÁPIDAS PARA TESTE (CLIQUE PARA PREENCHER):',
-    signInContinue: 'Entrar e Continuar',
-    authenticating: 'Autenticando no AlloyDB...',
+    signInWithNid: 'Entrar',
+    authTitle: 'Acesso com NID',
+    authSubtitle: 'Governo de Novatlantis',
+    nidOrEmailLabel: 'NID ou e-mail',
+    passwordLabel: 'Senha',
+    fillInitialPassword: 'Usar senha inicial',
+    simulateFirstLogin: 'Redefinir 1º acesso',
+    quickTestTitle: 'Contas de demonstração:',
+    signInContinue: 'Entrar',
+    authenticating: 'Entrando...',
     menuBtn: 'Menu',
-    closeMenuBtn: 'Fechar Menu ✕',
-    profileTitle: 'Perfil Soberano do Cidadão',
-    secPersonal: 'Dados Cadastrais & Foto Oficial',
-    secPassword: 'Segurança & Alteração de Senha',
-    secFamily: 'Núcleo Familiar (Somente Leitura)',
-    secIdentity360: 'Credenciais Identidade 360 & Portais',
-    chooseSavePhoto: 'Escolher e Salvar Nova Foto (WEBP / PNG / JPG)',
-    savingPhoto: 'Salvando Foto no Banco...',
-    restoreDefaultPhoto: 'Restaurar Padrão',
-    socialNameLabel: 'Nome de Exibição / Nome Social',
-    emailLabel: 'E-mail Cadastral Soberano',
-    phoneLabel: 'Telefone Soberano de Contato',
-    districtLabel: 'Distrito Oficial de Residência',
-    nativeLangLabel: 'Idioma Nativo / Preferencial (i18n)',
-    bioLabel: 'Observações Cadastrais / Bio',
-    moreProfileOptions: 'Mais Opções do Perfil (☰)',
-    hideProfileOptions: 'Ocultar Mais Opções do Perfil',
-    saveProfileBtn: 'Salvar Dados e Foto no AlloyDB',
-    savingProfileBtn: 'Gravando no AlloyDB...',
-    openCitizenPortal: 'Abrir Portal do Cidadão',
-    openBackstage: 'Abrir Backstage',
-    logoutBtn: 'Encerrar Sessão (Logout)',
-    switchCitizenBtn: 'Alternar para Outro Cidadão (NID)'
+    closeMenuBtn: 'Fechar',
+    profileTitle: 'Minha Conta',
+    secPersonal: 'Dados pessoais',
+    secPassword: 'Senha e segurança',
+    secFamily: 'Núcleo familiar',
+    secIdentity360: 'Acessos e permissões',
+    chooseSavePhoto: 'Alterar foto',
+    savingPhoto: 'Salvando...',
+    restoreDefaultPhoto: 'Restaurar padrão',
+    socialNameLabel: 'Nome de exibição',
+    emailLabel: 'E-mail',
+    phoneLabel: 'Telefone',
+    districtLabel: 'Distrito',
+    nativeLangLabel: 'Idioma',
+    bioLabel: 'Observações',
+    moreProfileOptions: 'Menu lateral',
+    hideProfileOptions: 'Ocultar menu',
+    saveProfileBtn: 'Salvar alterações',
+    savingProfileBtn: 'Salvando...',
+    openCitizenPortal: 'Portal do Cidadão',
+    openBackstage: 'Backstage',
+    logoutBtn: 'Sair',
+    switchCitizenBtn: 'Trocar de conta'
   },
   'es-419': {
     checking: 'Verificando...',
-    signInWithNid: 'Ingresar con NID',
-    authTitle: 'Identidad Digital Soberana (NID)',
-    authSubtitle: 'República de Novatlantis • Autenticación Unificada AlloyDB',
-    nidOrEmailLabel: 'Identificador Nacional (NID) o Correo',
-    passwordLabel: 'Contraseña de Acceso',
-    fillInitialPassword: 'Completar Contraseña Inicial del NID',
-    simulateFirstLogin: 'Simular 1er Acceso (OTP)',
-    quickTestTitle: 'CREDENCIALES RÁPIDAS DE PRUEBA (CLIC PARA COMPLETAR):',
-    signInContinue: 'Ingresar y Continuar',
-    authenticating: 'Autenticando en AlloyDB...',
+    signInWithNid: 'Ingresar',
+    authTitle: 'Acceso con NID',
+    authSubtitle: 'Gobierno de Novatlantis',
+    nidOrEmailLabel: 'NID o correo',
+    passwordLabel: 'Contraseña',
+    fillInitialPassword: 'Usar contraseña inicial',
+    simulateFirstLogin: 'Restablecer 1er acceso',
+    quickTestTitle: 'Cuentas de demostración:',
+    signInContinue: 'Ingresar',
+    authenticating: 'Ingresando...',
     menuBtn: 'Menú',
-    closeMenuBtn: 'Cerrar Menú ✕',
-    profileTitle: 'Perfil Soberano del Ciudadano',
-    secPersonal: 'Datos Personales y Foto Oficial',
-    secPassword: 'Seguridad y Cambio de Contraseña',
-    secFamily: 'Núcleo Familiar (Solo Lectura)',
-    secIdentity360: 'Credenciales Identidad 360 y Portales',
-    chooseSavePhoto: 'Elegir y Guardar Nueva Foto (WEBP / PNG / JPG)',
-    savingPhoto: 'Guardando Foto en Base de Datos...',
-    restoreDefaultPhoto: 'Restaurar Predeterminada',
-    socialNameLabel: 'Nombre Social / de Visualización',
-    emailLabel: 'Correo Electrónico Soberano',
-    phoneLabel: 'Teléfono Soberano de Contacto',
-    districtLabel: 'Distrito Oficial de Residencia',
-    nativeLangLabel: 'Idioma Nativo / Preferido (i18n)',
-    bioLabel: 'Observaciones Registrales / Bio',
-    moreProfileOptions: 'Más Opciones del Perfil (☰)',
-    hideProfileOptions: 'Ocultar Más Opciones del Perfil',
-    saveProfileBtn: 'Guardar Datos y Foto en AlloyDB',
-    savingProfileBtn: 'Guardando en AlloyDB...',
-    openCitizenPortal: 'Abrir Portal del Ciudadano',
-    openBackstage: 'Abrir Backstage',
-    logoutBtn: 'Cerrar Sesión (Logout)',
-    switchCitizenBtn: 'Cambiar a Otro Ciudadano (NID)'
+    closeMenuBtn: 'Cerrar',
+    profileTitle: 'Mi Cuenta',
+    secPersonal: 'Datos personales',
+    secPassword: 'Contraseña y seguridad',
+    secFamily: 'Núcleo familiar',
+    secIdentity360: 'Accesos y permisos',
+    chooseSavePhoto: 'Cambiar foto',
+    savingPhoto: 'Guardando...',
+    restoreDefaultPhoto: 'Restaurar predeterminada',
+    socialNameLabel: 'Nombre de visualización',
+    emailLabel: 'Correo electrónico',
+    phoneLabel: 'Teléfono',
+    districtLabel: 'Distrito',
+    nativeLangLabel: 'Idioma',
+    bioLabel: 'Observaciones',
+    moreProfileOptions: 'Menú lateral',
+    hideProfileOptions: 'Ocultar menú',
+    saveProfileBtn: 'Guardar cambios',
+    savingProfileBtn: 'Guardando...',
+    openCitizenPortal: 'Portal del Ciudadano',
+    openBackstage: 'Backstage',
+    logoutBtn: 'Salir',
+    switchCitizenBtn: 'Cambiar de cuenta'
   },
   'en-US': {
     checking: 'Checking...',
-    signInWithNid: 'Sign in with NID',
-    authTitle: 'Sovereign Digital Identity (NID)',
-    authSubtitle: 'Republic of Novatlantis • AlloyDB Unified Authentication',
-    nidOrEmailLabel: 'National Identifier (NID) or Email',
-    passwordLabel: 'Access Password',
-    fillInitialPassword: 'Fill Initial NID Password',
-    simulateFirstLogin: 'Simulate 1st Login (OTP)',
-    quickTestTitle: 'QUICK TEST CREDENTIALS (CLICK TO AUTO-FILL):',
-    signInContinue: 'Sign In & Continue',
-    authenticating: 'Authenticating on AlloyDB...',
+    signInWithNid: 'Sign in',
+    authTitle: 'Sign in with NID',
+    authSubtitle: 'Government of Novatlantis',
+    nidOrEmailLabel: 'NID or email',
+    passwordLabel: 'Password',
+    fillInitialPassword: 'Use initial password',
+    simulateFirstLogin: 'Reset 1st login',
+    quickTestTitle: 'Demo accounts:',
+    signInContinue: 'Sign in',
+    authenticating: 'Signing in...',
     menuBtn: 'Menu',
-    closeMenuBtn: 'Close Menu ✕',
-    profileTitle: 'Sovereign Citizen Profile',
-    secPersonal: 'Personal Data & Official Photo',
-    secPassword: 'Security & Password Change',
-    secFamily: 'Family Nucleus (Read-Only)',
-    secIdentity360: 'Identity 360 Credentials & Portals',
-    chooseSavePhoto: 'Choose & Save New Photo (WEBP / PNG / JPG)',
-    savingPhoto: 'Saving Photo to Database...',
-    restoreDefaultPhoto: 'Restore Default',
-    socialNameLabel: 'Display Name / Social Name',
-    emailLabel: 'Sovereign Registered Email',
-    phoneLabel: 'Sovereign Contact Phone',
-    districtLabel: 'Official Residence District',
-    nativeLangLabel: 'Native / Preferred Language (i18n)',
-    bioLabel: 'Registration Notes / Bio',
-    moreProfileOptions: 'More Profile Options (☰)',
-    hideProfileOptions: 'Hide More Profile Options',
-    saveProfileBtn: 'Save Data & Photo to AlloyDB',
-    savingProfileBtn: 'Saving to AlloyDB...',
-    openCitizenPortal: 'Open Citizen Portal',
-    openBackstage: 'Open Backstage',
-    logoutBtn: 'Sign Out (Logout)',
-    switchCitizenBtn: 'Switch to Another Citizen (NID)'
+    closeMenuBtn: 'Close',
+    profileTitle: 'My Account',
+    secPersonal: 'Personal info',
+    secPassword: 'Password & security',
+    secFamily: 'Family members',
+    secIdentity360: 'Access & roles',
+    chooseSavePhoto: 'Change photo',
+    savingPhoto: 'Saving...',
+    restoreDefaultPhoto: 'Restore default',
+    socialNameLabel: 'Display name',
+    emailLabel: 'Email',
+    phoneLabel: 'Phone',
+    districtLabel: 'District',
+    nativeLangLabel: 'Language',
+    bioLabel: 'Notes',
+    moreProfileOptions: 'Side menu',
+    hideProfileOptions: 'Hide menu',
+    saveProfileBtn: 'Save changes',
+    savingProfileBtn: 'Saving...',
+    openCitizenPortal: 'Citizen Portal',
+    openBackstage: 'Backstage',
+    logoutBtn: 'Sign out',
+    switchCitizenBtn: 'Switch account'
   }
 };
 
@@ -601,20 +601,20 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
         setPasswordInput(data.initial_password);
         setEmailInput(data.citizen?.email || '');
         setAuthNotice(
-          `Credencial localizada no AlloyDB para ${data.citizen?.full_name || cleanTarget}: senha inicial preenchida (${data.initial_password})`
+          `Senha inicial preenchida para ${data.citizen?.full_name || cleanTarget} (${data.initial_password}).`
         );
       } else {
-        setAuthError(data.error || 'NID não encontrado no lote de 100.000 cidadãos.');
+        setAuthError(data.error || 'NID não encontrado.');
       }
     } catch {
-      setAuthError('Falha ao consultar o lote postal de senhas iniciais.');
+      setAuthError('Falha ao consultar a senha inicial.');
     }
   };
 
   const resetCitizenToFirstLogin = async (targetNid: string) => {
     const cleanTarget = targetNid.trim();
     if (!cleanTarget) {
-      setAuthError('Informe o NID para simular o fluxo de 1º acesso.');
+      setAuthError('Informe o NID para redefinir o primeiro acesso.');
       return;
     }
     setAuthError(null);
@@ -630,11 +630,11 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
         setPasswordInput(data.initial_password || '');
         setAuthStep('LOGIN');
         setAuthNotice(
-          `Status de ${cleanTarget} redefinido para FIRST_LOGIN_REQUIRED. Senha inicial preenchida (${data.initial_password}).`
+          `Primeiro acesso redefinido para ${cleanTarget}. Senha inicial preenchida (${data.initial_password}).`
         );
       }
     } catch {
-      setAuthError('Erro ao redefinir status de primeiro acesso.');
+      setAuthError('Erro ao redefinir o primeiro acesso.');
     }
   };
 
@@ -834,15 +834,15 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
         setUser(updatedUser);
         handleSelectLanguage(editNativeLang, true);
         syncFormStateFromUser(updatedUser);
-        setProfileStatusMsg('Perfil, idioma e foto oficial gravados com sucesso no banco de dados (AlloyDB + GDF)!');
+        setProfileStatusMsg('Alterações salvas com sucesso.');
         if (onUserAuthenticated) {
           onUserAuthenticated(updatedUser.nid, updatedUser, ssoToken || undefined);
         }
       } else {
-        setProfileErrorMsg(data.error || 'Não foi possível salvar as alterações do perfil.');
+        setProfileErrorMsg(data.error || 'Não foi possível salvar as alterações.');
       }
     } catch {
-      setProfileErrorMsg('Erro de comunicação ao salvar os dados do perfil.');
+      setProfileErrorMsg('Erro de comunicação ao salvar os dados.');
     } finally {
       setSavingProfile(false);
     }
@@ -884,15 +884,15 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
         };
         setUser(updatedUser);
         setPendingAvatarUrl(updatedUser.avatarUrl);
-        setProfileStatusMsg('Foto de perfil salva no banco de dados (AlloyDB) e atualizada com sucesso!');
+        setProfileStatusMsg('Foto de perfil atualizada.');
         if (onUserAuthenticated) {
           onUserAuthenticated(updatedUser.nid, updatedUser, ssoToken || undefined);
         }
       } else {
-        setProfileErrorMsg(data.error || 'Erro ao armazenar a foto de perfil no banco de dados.');
+        setProfileErrorMsg(data.error || 'Erro ao atualizar a foto de perfil.');
       }
     } catch {
-      setProfileErrorMsg('Falha ao processar e armazenar a foto de perfil.');
+      setProfileErrorMsg('Falha ao processar a imagem.');
     } finally {
       setUploadingAvatar(false);
       if (fileInputRef.current) {
@@ -930,7 +930,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
         setCurrentPasswordForChange('');
         setNewPasswordForChange('');
         setConfirmNewPasswordForChange('');
-        setProfileStatusMsg(data.message || 'Senha de acesso atualizada com sucesso no AlloyDB! A senha inicial foi desativada.');
+        setProfileStatusMsg(data.message || 'Senha atualizada com sucesso.');
       } else {
         setProfileErrorMsg(data.error || 'Não foi possível alterar a senha.');
       }
@@ -1000,7 +1000,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
           bgcolor: '#ffffff'
         }}
       >
-        <LanguageIcon sx={{ fontSize: 16, color: '#0a2240', ml: 0.5, mr: 0.25 }} />
+        <LanguageIcon sx={{ fontSize: 16, color: '#1a73e8', ml: 0.5, mr: 0.25 }} />
         <ButtonGroup variant="text" size="small" aria-label="Seletor de Idioma da República de Novatlantis">
           {(
             [
@@ -1022,10 +1022,10 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                     fontWeight: isSelected ? 800 : 600,
                     borderRadius: '999px !important',
                     border: 'none !important',
-                    bgcolor: isSelected ? '#0a2240' : 'transparent',
+                    bgcolor: isSelected ? '#1a73e8' : 'transparent',
                     color: isSelected ? '#ffffff' : '#334155',
                     '&:hover': {
-                      bgcolor: isSelected ? '#163a66' : '#f1f5f9'
+                      bgcolor: isSelected ? '#1557b0' : '#f1f5f9'
                     }
                   }}
                 >
@@ -1039,7 +1039,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
 
       {loadingSession ? (
         <Box sx={{ px: 2, py: 0.75, display: 'flex', alignItems: 'center', gap: 1 }}>
-          <CircularProgress size={15} sx={{ color: '#0a2240' }} />
+          <CircularProgress size={15} sx={{ color: '#1a73e8' }} />
           <Typography variant="caption" sx={{ color: '#475569', fontWeight: 500 }}>
             {t.checking}
           </Typography>
@@ -1062,11 +1062,11 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
             fontSize: '0.88rem',
             borderRadius: 999,
             textTransform: 'none',
-            color: '#0a2240',
+            color: '#1a73e8',
             borderColor: '#cbd5e1',
             bgcolor: '#ffffff',
             '&:hover': {
-              borderColor: '#0a2240',
+              borderColor: '#1a73e8',
               bgcolor: '#f8fafc'
             }
           }}
@@ -1093,7 +1093,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
             bgcolor: '#ffffff',
             transition: 'all 0.15s ease',
             '&:hover': {
-              borderColor: '#0a2240',
+              borderColor: '#1a73e8',
               bgcolor: '#f8fafc'
             }
           }}
@@ -1104,8 +1104,8 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
             sx={{
               width: 34,
               height: 34,
-              border: '1.5px solid #0a2240',
-              bgcolor: '#0a2240',
+              border: '1.5px solid #1a73e8',
+              bgcolor: '#1a73e8',
               fontSize: '0.85rem',
               fontWeight: 700
             }}
@@ -1131,7 +1131,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
               {user.nid}
             </Typography>
           </Box>
-          <MenuIcon sx={{ color: '#0a2240', fontSize: 20, ml: 0.5 }} />
+          <MenuIcon sx={{ color: '#1a73e8', fontSize: 20, ml: 0.5 }} />
         </Paper>
       )}
 
@@ -1153,7 +1153,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
           sx={{
             px: 3,
             py: 2.25,
-            bgcolor: '#0a2240',
+            bgcolor: '#1a73e8',
             color: '#ffffff',
             display: 'flex',
             alignItems: 'center',
@@ -1283,11 +1283,11 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                 fullWidth
                 sx={{
                   py: 1.35,
-                  bgcolor: '#0a2240',
+                  bgcolor: '#1a73e8',
                   fontWeight: 700,
                   textTransform: 'none',
                   borderRadius: 2,
-                  '&:hover': { bgcolor: '#163a66' }
+                  '&:hover': { bgcolor: '#1557b0' }
                 }}
               >
                 {submitting ? t.authenticating : t.signInContinue}
@@ -1346,7 +1346,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                   variant="contained"
                   fullWidth
                   disabled={submitting}
-                  sx={{ bgcolor: '#0a2240', textTransform: 'none', fontWeight: 700 }}
+                  sx={{ bgcolor: '#1a73e8', textTransform: 'none', fontWeight: 700 }}
                 >
                   {submitting ? 'Gerando Código...' : 'Salvar Senha e Enviar Código OTP'}
                 </Button>
@@ -1414,7 +1414,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
         }}
         PaperProps={{
           sx: {
-            bgcolor: '#fcfbf9',
+            bgcolor: '#f8f9fa',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden'
@@ -1428,7 +1428,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
               sx={{
                 px: { xs: 2, md: 3 },
                 py: 1.5,
-                bgcolor: '#0a2240',
+                bgcolor: '#1a73e8',
                 color: '#ffffff',
                 display: 'flex',
                 alignItems: 'center',
@@ -1525,10 +1525,10 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                     <Avatar
                       src={displayedAvatar}
                       alt={user.name}
-                      sx={{ width: 46, height: 46, border: '2px solid #0a2240' }}
+                      sx={{ width: 46, height: 46, border: '2px solid #1a73e8' }}
                     />
                     <Box sx={{ minWidth: 0 }}>
-                      <Typography variant="body2" sx={{ fontWeight: 800, color: '#0a2240' }} noWrap>
+                      <Typography variant="body2" sx={{ fontWeight: 800, color: '#1a73e8' }} noWrap>
                         {user.full_name}
                       </Typography>
                       <Typography variant="caption" sx={{ fontFamily: 'monospace', color: '#475569', display: 'block' }} noWrap>
@@ -1541,7 +1541,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                     variant="caption"
                     sx={{ fontWeight: 800, color: '#64748b', letterSpacing: '0.06em', px: 1, display: 'block', mb: 1 }}
                   >
-                    SEÇÕES DO PERFIL SOBERANO (☰)
+                    MINHA CONTA
                   </Typography>
 
                   <List disablePadding sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
@@ -1552,15 +1552,15 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         borderRadius: 2,
                         py: 1.25,
                         bgcolor: activeProfileSection === 'PERSONAL_DATA' ? '#e2e8f0' : 'transparent',
-                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #0a2240' }
+                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #1a73e8' }
                       }}
                     >
                       <ListItemIcon sx={{ minWidth: 36 }}>
-                        <PersonIcon sx={{ color: '#0a2240' }} />
+                        <PersonIcon sx={{ color: '#1a73e8' }} />
                       </ListItemIcon>
                       <ListItemText
-                        primary={`1. ${t.secPersonal}`}
-                        secondary="Foto oficial, nome social, idioma, e-mail e endereço"
+                        primary={t.secPersonal}
+                        secondary="Foto, nome de exibição, idioma e contato"
                         primaryTypographyProps={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a' }}
                         secondaryTypographyProps={{ fontSize: '0.74rem' }}
                       />
@@ -1573,15 +1573,15 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         borderRadius: 2,
                         py: 1.25,
                         bgcolor: activeProfileSection === 'PASSWORD_SECURITY' ? '#e2e8f0' : 'transparent',
-                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #0a2240' }
+                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #1a73e8' }
                       }}
                     >
                       <ListItemIcon sx={{ minWidth: 36 }}>
-                        <KeyIcon sx={{ color: '#0a2240' }} />
+                        <KeyIcon sx={{ color: '#1a73e8' }} />
                       </ListItemIcon>
                       <ListItemText
-                        primary={`2. ${t.secPassword}`}
-                        secondary="Alterar senha soberana no AlloyDB"
+                        primary={t.secPassword}
+                        secondary="Alteração de senha"
                         primaryTypographyProps={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a' }}
                         secondaryTypographyProps={{ fontSize: '0.74rem' }}
                       />
@@ -1594,15 +1594,15 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         borderRadius: 2,
                         py: 1.25,
                         bgcolor: activeProfileSection === 'FAMILY_READONLY' ? '#e2e8f0' : 'transparent',
-                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #0a2240' }
+                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #1a73e8' }
                       }}
                     >
                       <ListItemIcon sx={{ minWidth: 36 }}>
-                        <GroupIcon sx={{ color: '#0a2240' }} />
+                        <GroupIcon sx={{ color: '#1a73e8' }} />
                       </ListItemIcon>
                       <ListItemText
-                        primary={`3. ${t.secFamily}`}
-                        secondary="Árvore familiar Read-Only no GDF"
+                        primary={t.secFamily}
+                        secondary="Dependentes e vínculos civis"
                         primaryTypographyProps={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a' }}
                         secondaryTypographyProps={{ fontSize: '0.74rem' }}
                       />
@@ -1615,15 +1615,15 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         borderRadius: 2,
                         py: 1.25,
                         bgcolor: activeProfileSection === 'SECURITY_ACCESS' ? '#e2e8f0' : 'transparent',
-                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #0a2240' }
+                        '&.Mui-selected': { bgcolor: '#e2e8f0', borderLeft: '4px solid #1a73e8' }
                       }}
                     >
                       <ListItemIcon sx={{ minWidth: 36 }}>
-                        <ShieldIcon sx={{ color: '#0a2240' }} />
+                        <ShieldIcon sx={{ color: '#1a73e8' }} />
                       </ListItemIcon>
                       <ListItemText
-                        primary={`4. ${t.secIdentity360}`}
-                        secondary="Papel RBAC, SSO e alternar conta"
+                        primary={t.secIdentity360}
+                        secondary="Perfil de acesso e portais"
                         primaryTypographyProps={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a' }}
                         secondaryTypographyProps={{ fontSize: '0.74rem' }}
                       />
@@ -1636,7 +1636,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                     variant="caption"
                     sx={{ fontWeight: 800, color: '#64748b', letterSpacing: '0.06em', px: 1, display: 'block', mb: 1 }}
                   >
-                    ATALHOS DE MÓDULOS (SSO)
+                    ATALHOS
                   </Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Button
@@ -1657,7 +1657,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                       href={buildPortalUrlWithSso(citizenPortalUrl, { tab: 'urban_311' })}
                       sx={{ justifyContent: 'flex-start', textTransform: 'none', fontWeight: 600 }}
                     >
-                      Módulo Zeladoria Urbana 311
+                      Zeladoria Urbana 311
                     </Button>
                     <Button
                       size="small"
@@ -1668,7 +1668,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                       href={buildPortalUrlWithSso(citizenPortalUrl, { tab: 'emergency_911' })}
                       sx={{ justifyContent: 'flex-start', textTransform: 'none', fontWeight: 600 }}
                     >
-                      Módulo Emergência 911 (SOS)
+                      Emergência 911
                     </Button>
                     {user.role !== 'CITIZEN_COMMON' && (
                       <Button
@@ -1701,7 +1701,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
               </Box>
 
               {/* Área Principal da Página Inteira do Perfil */}
-              <Box sx={{ flex: 1, overflowY: 'auto', p: { xs: 2.5, md: 5 }, bgcolor: '#fcfbf9' }}>
+              <Box sx={{ flex: 1, overflowY: 'auto', p: { xs: 2.5, md: 5 }, bgcolor: '#f8f9fa' }}>
                 <Box sx={{ maxWidth: 980, mx: 'auto' }}>
               {profileStatusMsg && (
                 <Alert
@@ -1746,7 +1746,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         sx={{
                           width: 84,
                           height: 84,
-                          border: '2.5px solid #0a2240',
+                          border: '2.5px solid #1a73e8',
                           boxShadow: '0 4px 14px rgba(10,34,64,0.15)'
                         }}
                       />
@@ -1791,10 +1791,10 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                           startIcon={<PhotoCameraIcon />}
                           onClick={() => fileInputRef.current?.click()}
                           sx={{
-                            bgcolor: '#0a2240',
+                            bgcolor: '#1a73e8',
                             textTransform: 'none',
                             fontWeight: 700,
-                            '&:hover': { bgcolor: '#163a66' }
+                            '&:hover': { bgcolor: '#1557b0' }
                           }}
                         >
                           {uploadingAvatar ? t.savingPhoto : t.chooseSavePhoto}
@@ -1822,7 +1822,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                               const data = await res.json();
                               if (res.ok && data.user) {
                                 setUser(data.user);
-                                setProfileStatusMsg('Foto restaurada para o retrato oficial padrão.');
+                                setProfileStatusMsg('Foto restaurada para o padrão.');
                                 if (onUserAuthenticated) {
                                   onUserAuthenticated(data.user.nid, data.user, ssoToken || undefined);
                                 }
@@ -1922,8 +1922,8 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         sx={{
                           textTransform: 'none',
                           fontWeight: 700,
-                          borderColor: '#0a2240',
-                          color: '#0a2240'
+                          borderColor: '#1a73e8',
+                          color: '#1a73e8'
                         }}
                       >
                         {profileHamburgerOpen ? t.hideProfileOptions : t.moreProfileOptions}
@@ -1935,11 +1935,11 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         disabled={savingProfile}
                         startIcon={<SaveIcon />}
                         sx={{
-                          bgcolor: '#0a2240',
+                          bgcolor: '#1a73e8',
                           textTransform: 'none',
                           fontWeight: 700,
                           px: 3,
-                          '&:hover': { bgcolor: '#163a66' }
+                          '&:hover': { bgcolor: '#1557b0' }
                         }}
                       >
                         {savingProfile ? t.savingProfileBtn : t.saveProfileBtn}
@@ -1953,8 +1953,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
               {activeProfileSection === 'PASSWORD_SECURITY' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                   <Alert severity="info" icon={<KeyIcon />} sx={{ borderRadius: 2 }}>
-                    <strong>Segurança Criptográfica Soberana:</strong> Altere sua senha de acesso ao ecossistema
-                    Novatlantis. A nova credencial é sincronizada com hash seguro no banco de dados AlloyDB.
+                    A nova senha deve conter no mínimo 8 caracteres, incluindo letras e números.
                   </Alert>
 
                   <Paper
@@ -1963,12 +1962,12 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                     variant="outlined"
                     sx={{ p: 3, borderRadius: 2.5, bgcolor: '#ffffff', display: 'flex', flexDirection: 'column', gap: 2 }}
                   >
-                    <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#0a2240' }}>
-                      Alterar Senha de Acesso ({user.nid})
+                    <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#1a73e8' }}>
+                      Alterar senha ({user.nid})
                     </Typography>
 
                     <TextField
-                      label="Senha Atual (Opcional se já autenticado na sessão)"
+                      label="Senha atual (opcional se autenticado)"
                       type="password"
                       value={currentPasswordForChange}
                       onChange={(e) => setCurrentPasswordForChange(e.target.value)}
@@ -1978,7 +1977,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
 
                     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' }, gap: 2 }}>
                       <TextField
-                        label="Nova Senha (mínimo 8 caracteres, letras e números)"
+                        label="Nova senha"
                         type="password"
                         value={newPasswordForChange}
                         onChange={(e) => setNewPasswordForChange(e.target.value)}
@@ -1987,7 +1986,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         size="medium"
                       />
                       <TextField
-                        label="Confirmar Nova Senha"
+                        label="Confirmar nova senha"
                         type="password"
                         value={confirmNewPasswordForChange}
                         onChange={(e) => setConfirmNewPasswordForChange(e.target.value)}
@@ -2005,7 +2004,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         onClick={() => selectProfileSection('PERSONAL_DATA')}
                         sx={{ textTransform: 'none' }}
                       >
-                        Voltar para Dados Cadastrais
+                        Voltar
                       </Button>
 
                       <Button
@@ -2013,9 +2012,9 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         variant="contained"
                         disabled={changingPassword}
                         startIcon={<SaveIcon />}
-                        sx={{ bgcolor: '#0a2240', textTransform: 'none', fontWeight: 700 }}
+                        sx={{ bgcolor: '#1a73e8', textTransform: 'none', fontWeight: 700 }}
                       >
-                        {changingPassword ? 'Atualizando Senha...' : 'Confirmar Nova Senha no AlloyDB'}
+                        {changingPassword ? 'Salvando...' : 'Atualizar senha'}
                       </Button>
                     </Box>
                   </Paper>
@@ -2026,8 +2025,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
               {activeProfileSection === 'FAMILY_READONLY' && (
                 <Box>
                   <Alert severity="info" icon={<VisibilityIcon />} sx={{ mb: 2.5, borderRadius: 2 }}>
-                    <strong>Registro Civil Soberano (Somente Leitura):</strong> Os vínculos familiares são mantidos pelo
-                    AlloyDB Central e protegidos contra edição direta pelo usuário (HTTP 403 em mutações).
+                    Os vínculos familiares constam no Registro Civil e são exibidos apenas para consulta.
                   </Alert>
 
                   {loadingFamily ? (
@@ -2036,24 +2034,24 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                     </Box>
                   ) : familyMembers.length === 0 ? (
                     <Typography variant="body2" color="text.secondary" sx={{ py: 4, textAlign: 'center' }}>
-                      Nenhum vínculo familiar direto registrado para este NID.
+                      Nenhum vínculo familiar registrado para este NID.
                     </Typography>
                   ) : (
                     <TableContainer component={Paper} variant="outlined" sx={{ borderRadius: 2, mb: 2.5 }}>
                       <Table size="small">
                         <TableHead sx={{ bgcolor: '#f8fafc' }}>
                           <TableRow>
-                            <TableCell sx={{ fontWeight: 700 }}>NID Familiar</TableCell>
-                            <TableCell sx={{ fontWeight: 700 }}>Nome Completo</TableCell>
+                            <TableCell sx={{ fontWeight: 700 }}>NID</TableCell>
+                            <TableCell sx={{ fontWeight: 700 }}>Nome</TableCell>
                             <TableCell sx={{ fontWeight: 700 }}>Parentesco</TableCell>
                             <TableCell sx={{ fontWeight: 700 }}>Idade</TableCell>
-                            <TableCell sx={{ fontWeight: 700 }}>Governança</TableCell>
+                            <TableCell sx={{ fontWeight: 700 }}>Acesso</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
                           {familyMembers.map((fm) => (
                             <TableRow key={fm.relation_id} hover>
-                              <TableCell sx={{ fontFamily: 'monospace', fontWeight: 700, color: '#0a2240' }}>
+                              <TableCell sx={{ fontFamily: 'monospace', fontWeight: 700, color: '#1a73e8' }}>
                                 {fm.relative_nid}
                               </TableCell>
                               <TableCell sx={{ fontWeight: 600 }}>{fm.relative_name}</TableCell>
@@ -2064,7 +2062,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                               <TableCell>
                                 <Chip
                                   icon={<LockIcon sx={{ fontSize: '12px !important' }} />}
-                                  label="Somente Leitura"
+                                  label="Somente leitura"
                                   size="small"
                                   sx={{ fontSize: '0.7rem' }}
                                 />
@@ -2083,7 +2081,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                       onClick={() => selectProfileSection('PERSONAL_DATA')}
                       sx={{ textTransform: 'none' }}
                     >
-                      Voltar para Dados Cadastrais
+                      Voltar
                     </Button>
                     <Button
                       variant="outlined"
@@ -2101,27 +2099,27 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
               {activeProfileSection === 'SECURITY_ACCESS' && (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                   <Paper variant="outlined" sx={{ p: 2.5, borderRadius: 2, bgcolor: '#ffffff' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#0a2240', mb: 1.5 }}>
-                      CREDENCIAL SOBERANA & PAPEL ATIVO NA IDENTIDADE 360
+                    <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1a73e8', mb: 1.5 }}>
+                      PERFIL DE ACESSO
                     </Typography>
                     <Typography variant="body2" sx={{ mb: 0.75 }}>
-                      • <strong>NID Soberano:</strong> <code>{user.nid}</code>
+                      • <strong>NID:</strong> <code>{user.nid}</code>
                     </Typography>
                     <Typography variant="body2" sx={{ mb: 0.75 }}>
-                      • <strong>Papel RBAC Governamental:</strong> <code>{user.role}</code>
+                      • <strong>Perfil (RBAC):</strong> <code>{user.role}</code>
                     </Typography>
                     <Typography variant="body2" sx={{ mb: 0.75 }}>
-                      • <strong>Profissão / Especialidade:</strong> {user.profession}
+                      • <strong>Cargo / Especialidade:</strong> {user.profession}
                     </Typography>
                     <Typography variant="body2" sx={{ mb: 1.5 }}>
-                      • <strong>Status da Conta no AlloyDB:</strong>{' '}
+                      • <strong>Situação cadastral:</strong>{' '}
                       <Chip size="small" color="success" label={user.status} icon={<CheckCircleIcon />} />
                     </Typography>
 
                     <Divider sx={{ my: 1.5 }} />
 
                     <Typography variant="caption" sx={{ fontWeight: 700, color: '#475569', display: 'block', mb: 1 }}>
-                      ACESSO RÁPIDO AOS AMBIENTES COM SINGLE SIGN-ON (SSO):
+                      AMBIENTES DISPONÍVEIS:
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1.25, flexWrap: 'wrap' }}>
                       <Button
@@ -2130,7 +2128,7 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                         startIcon={<LaunchIcon />}
                         component="a"
                         href={buildPortalUrlWithSso(citizenPortalUrl)}
-                        sx={{ bgcolor: '#0a2240', textTransform: 'none', fontWeight: 700 }}
+                        sx={{ bgcolor: '#1a73e8', textTransform: 'none', fontWeight: 700 }}
                       >
                         {t.openCitizenPortal}
                       </Button>
@@ -2141,9 +2139,9 @@ export const TopNavUserWidget: React.FC<TopNavUserWidgetProps> = ({
                           startIcon={<AdminIcon />}
                           component="a"
                           href={buildPortalUrlWithSso(govBackstageUrl)}
-                          sx={{ textTransform: 'none', fontWeight: 700, borderColor: '#0a2240', color: '#0a2240' }}
+                          sx={{ textTransform: 'none', fontWeight: 700, borderColor: '#1a73e8', color: '#1a73e8' }}
                         >
-                          {t.openBackstage} ({user.role})
+                          {t.openBackstage}
                         </Button>
                       )}
                     </Box>

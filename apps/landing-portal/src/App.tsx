@@ -125,41 +125,47 @@ interface ChatMessage {
   } | null;
 }
 
-const americaGovTheme = createTheme({
+const googleMaterialTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0a2240',
-      dark: '#051428',
-      light: '#1e3a5f'
+      main: '#1a73e8',
+      dark: '#1557b0',
+      light: '#4285f4'
     },
     secondary: {
-      main: '#b91c1c'
+      main: '#1e8e3e'
+    },
+    error: {
+      main: '#d93025'
+    },
+    warning: {
+      main: '#f9ab00'
     },
     background: {
-      default: '#fcfbf9',
+      default: '#f8f9fa',
       paper: '#ffffff'
     },
     text: {
-      primary: '#111827',
-      secondary: '#4b5563'
+      primary: '#202124',
+      secondary: '#5f6368'
     }
   },
   typography: {
-    fontFamily: '"Public Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    fontFamily: '"Google Sans", "Plus Jakarta Sans", "Inter", "Roboto", -apple-system, BlinkMacSystemFont, sans-serif',
     h1: {
-      fontFamily: '"Merriweather", "Georgia", serif',
-      fontWeight: 700,
-      letterSpacing: '-0.025em'
-    },
-    h2: {
-      fontFamily: '"Merriweather", "Georgia", serif',
+      fontFamily: '"Google Sans", "Plus Jakarta Sans", "Inter", sans-serif',
       fontWeight: 700,
       letterSpacing: '-0.02em'
     },
-    h3: {
+    h2: {
+      fontFamily: '"Google Sans", "Plus Jakarta Sans", "Inter", sans-serif',
       fontWeight: 700,
       letterSpacing: '-0.015em'
+    },
+    h3: {
+      fontWeight: 600,
+      letterSpacing: '-0.01em'
     }
   },
   shape: {
@@ -178,7 +184,7 @@ interface ServiceEntry {
   icon: React.ReactNode;
   externalTargetUrl?: string;
   federatedSubdomain?: string;
-  ownerCe?: string;
+  owner?: string;
   badge?: string;
 }
 
@@ -186,212 +192,212 @@ const POPULAR_SERVICES: ServiceEntry[] = [
   {
     id: 'passport',
     title: {
-      'pt-BR': 'Passaporte Digital ICAO & Vistos',
-      'es-419': 'Pasaporte Digital OACI y Visas',
-      'en-US': 'ICAO Digital Passport & Visas'
+      'pt-BR': 'Passaporte e Vistos',
+      'es-419': 'Pasaporte y Visas',
+      'en-US': 'Passport & Visas'
     },
     agency: {
-      'pt-BR': 'Chancelaria Soberana & Suprema Corte',
-      'es-419': 'Cancillería Soberana y Corte Suprema',
-      'en-US': 'Sovereign Chancellery & Supreme Court'
+      'pt-BR': 'Chancelaria',
+      'es-419': 'Cancillería',
+      'en-US': 'Chancellery'
     },
     description: {
-      'pt-BR': 'Emissão e renovação instantânea com assinatura Ed25519 e liberação automática de e-Gate em 174 países.',
-      'es-419': 'Emisión y renovación instantánea con firma Ed25519 y liberación automática de e-Gate en 174 países.',
-      'en-US': 'Instant issuance and renewal with Ed25519 signature and automatic e-Gate clearance in 174 countries.'
+      'pt-BR': 'Emissão, renovação e consulta de situação do passaporte.',
+      'es-419': 'Emisión, renovación y consulta de estado del pasaporte.',
+      'en-US': 'Issuance, renewal, and passport status lookup.'
     },
     questionPrompt: {
-      'pt-BR': 'Como emitir ou renovar meu Passaporte Digital ICAO?',
-      'es-419': '¿Cómo emitir o renovar mi Pasaporte Digital OACI?',
-      'en-US': 'How do I issue or renew my ICAO Digital Passport?'
+      'pt-BR': 'Como emitir ou renovar meu passaporte?',
+      'es-419': '¿Cómo emitir o renovar mi pasaporte?',
+      'en-US': 'How do I issue or renew my passport?'
     },
     servicePrompt: {
-      'pt-BR': 'Emitir e validar meu Passaporte Digital ICAO agora',
-      'es-419': 'Emitir y validar mi Pasaporte Digital OACI ahora',
-      'en-US': 'Issue and validate my ICAO Digital Passport now'
+      'pt-BR': 'Emitir ou renovar meu passaporte',
+      'es-419': 'Emitir o renovar mi pasaporte',
+      'en-US': 'Issue or renew my passport'
     },
     tab: 'treasury',
-    icon: <PublicIcon sx={{ color: '#0a2240' }} />
+    icon: <PublicIcon sx={{ color: '#1a73e8' }} />
   },
   {
     id: 'company',
     title: {
-      'pt-BR': 'Abrir Empresa em 45s & Dividendo UBI',
-      'es-419': 'Abrir Empresa en 45s y Dividendo RBU',
-      'en-US': 'Open a Company in 45s & UBI Dividend'
+      'pt-BR': 'Abertura de Empresas e Benefícios',
+      'es-419': 'Apertura de Empresas y Beneficios',
+      'en-US': 'Business Registration & Benefits'
     },
     agency: {
-      'pt-BR': 'Ministério do Tesouro & Economia Soberana',
-      'es-419': 'Ministerio del Tesoro y Economía Soberana',
-      'en-US': 'Ministry of the Treasury & Sovereign Economy'
+      'pt-BR': 'Ministério do Tesouro',
+      'es-419': 'Ministerio del Tesoro',
+      'en-US': 'Ministry of the Treasury'
     },
     description: {
-      'pt-BR': 'Constituição imediata de empresa autônoma no Simples Agêntico (3%) com 250 TFLOPs de crédito computacional.',
-      'es-419': 'Constitución inmediata de empresa autónoma en el Régimen Agéntico (3%) con 250 TFLOPs de crédito computacional.',
-      'en-US': 'Instant incorporation of an autonomous enterprise under the Agentic Tax Regime (3%) with 250 TFLOPs compute grant.'
+      'pt-BR': 'Registro de pessoa jurídica, consulta fiscal e renda básica (UBI).',
+      'es-419': 'Registro de persona jurídica, consulta fiscal y renta básica (RBU).',
+      'en-US': 'Business registration, tax status, and basic income (UBI).'
     },
     questionPrompt: {
-      'pt-BR': 'Como abrir uma empresa autônoma em 45 segundos e como funciona o UBI?',
-      'es-419': '¿Cómo abrir una empresa autónoma en 45 segundos y cómo funciona la RBU?',
-      'en-US': 'How do I open an autonomous company in 45 seconds and how does UBI work?'
+      'pt-BR': 'Como abrir uma empresa e consultar benefícios fiscais?',
+      'es-419': '¿Cómo abrir una empresa y consultar beneficios fiscales?',
+      'en-US': 'How do I register a business and check tax benefits?'
     },
     servicePrompt: {
-      'pt-BR': 'Abrir empresa autônoma agora no Ministério do Tesouro',
-      'es-419': 'Abrir empresa autónoma ahora en el Ministerio del Tesoro',
-      'en-US': 'Open an autonomous company now at the Ministry of the Treasury'
+      'pt-BR': 'Registrar nova empresa no Ministério do Tesouro',
+      'es-419': 'Registrar nueva empresa en el Ministerio del Tesoro',
+      'en-US': 'Register a new business at the Ministry of the Treasury'
     },
     tab: 'treasury',
-    icon: <BusinessIcon sx={{ color: '#0a2240' }} />
+    icon: <BusinessIcon sx={{ color: '#1a73e8' }} />
   },
   {
     id: 'health',
     title: {
-      'pt-BR': 'Telemedicina 24/7 & Prontuário HL7',
-      'es-419': 'Telemedicina 24/7 e Historia Clínica HL7',
-      'en-US': '24/7 Telemedicine & HL7 Health Record'
+      'pt-BR': 'Consultas e Prontuário de Saúde',
+      'es-419': 'Consultas e Historia Clínica',
+      'en-US': 'Appointments & Health Records'
     },
     agency: {
-      'pt-BR': 'Ministério da Saúde & Rede Hospitalar',
-      'es-419': 'Ministerio de Salud y Red Hospitalaria',
-      'en-US': 'Ministry of Health & Hospital Network'
+      'pt-BR': 'Ministério da Saúde',
+      'es-419': 'Ministerio de Salud',
+      'en-US': 'Ministry of Health'
     },
     description: {
-      'pt-BR': 'Consultas médicas por vídeo com triagem IA, histórico vacinal, tipo sanguíneo e prescrição digital.',
-      'es-419': 'Consultas médicas por video con triaje IA, historial de vacunación, grupo sanguíneo y receta digital.',
-      'en-US': 'Video medical consultations with AI triage, vaccination history, blood type, and digital prescription.'
+      'pt-BR': 'Agendamento de teleconsulta, carteira de vacinação e histórico clínico.',
+      'es-419': 'Citas por teleconsulta, carnet de vacunación e historial clínico.',
+      'en-US': 'Telehealth appointments, vaccination records, and medical history.'
     },
     questionPrompt: {
-      'pt-BR': 'Como funciona o atendimento de Telemedicina 24/7 e o prontuário HL7 FHIR?',
-      'es-419': '¿Cómo funciona la atención de Telemedicina 24/7 y la historia clínica HL7 FHIR?',
-      'en-US': 'How do 24/7 Telemedicine and the HL7 FHIR health record work?'
+      'pt-BR': 'Como agendar uma consulta médica e acessar meu prontuário?',
+      'es-419': '¿Cómo programar una consulta médica y acceder a mi historia clínica?',
+      'en-US': 'How do I schedule a medical appointment and view my health record?'
     },
     servicePrompt: {
-      'pt-BR': 'Agendar teleconsulta médica agora com resumo clínico HL7',
-      'es-419': 'Programar teleconsulta médica ahora con resumen clínico HL7',
-      'en-US': 'Schedule a medical teleconsultation now with HL7 clinical summary'
+      'pt-BR': 'Agendar consulta médica',
+      'es-419': 'Programar consulta médica',
+      'en-US': 'Schedule a medical appointment'
     },
     tab: 'health',
-    icon: <HealthIcon sx={{ color: '#0a2240' }} />
+    icon: <HealthIcon sx={{ color: '#1a73e8' }} />
   },
   {
     id: 'education',
     title: {
-      'pt-BR': 'Boletim Escolar & Tutoria Adaptativa IA',
-      'es-419': 'Boletín Escolar y Tutoría Adaptativa IA',
-      'en-US': 'School Report Card & Adaptive AI Tutoring'
+      'pt-BR': 'Boletim e Frequência Escolar',
+      'es-419': 'Boletín y Asistencia Escolar',
+      'en-US': 'Report Cards & Attendance'
     },
     agency: {
-      'pt-BR': 'Ministério da Educação & Escolas Soberanas',
-      'es-419': 'Ministerio de Educación y Escuelas Soberanas',
-      'en-US': 'Ministry of Education & Sovereign Schools'
+      'pt-BR': 'Ministério da Educação',
+      'es-419': 'Ministerio de Educación',
+      'en-US': 'Ministry of Education'
     },
     description: {
-      'pt-BR': 'Acompanhamento de notas em Matemática, Ciências e IA & Robótica, frequência escolar e tutoria personalizada.',
-      'es-419': 'Seguimiento de calificaciones en Matemáticas, Ciencias e IA y Robótica, asistencia escolar y tutoría personalizada.',
-      'en-US': 'Grade tracking in Mathematics, Sciences, and AI & Robotics, school attendance, and personalized tutoring.'
+      'pt-BR': 'Consulta de matrículas, notas por disciplina e frequência escolar.',
+      'es-419': 'Consulta de matrículas, calificaciones por materia y asistencia escolar.',
+      'en-US': 'Enrollment lookup, subject grades, and school attendance.'
     },
     questionPrompt: {
-      'pt-BR': 'Como consultar o boletim escolar e frequência dos meus filhos?',
-      'es-419': '¿Cómo consultar el boletín escolar y la asistencia de mis hijos?',
-      'en-US': 'How can I check my children’s school report card and attendance?'
+      'pt-BR': 'Como consultar o boletim e a frequência escolar?',
+      'es-419': '¿Cómo consultar el boletín y la asistencia escolar?',
+      'en-US': 'How can I check school report cards and attendance?'
     },
     servicePrompt: {
-      'pt-BR': 'Consultar boletim escolar e frequência no Ministério da Educação',
-      'es-419': 'Consultar boletín escolar y asistencia en el Ministerio de Educación',
-      'en-US': 'Check school report card and attendance at the Ministry of Education'
+      'pt-BR': 'Consultar boletim e frequência escolar',
+      'es-419': 'Consultar boletín y asistencia escolar',
+      'en-US': 'Check school report card and attendance'
     },
     tab: 'education',
-    icon: <SchoolIcon sx={{ color: '#0a2240' }} />
+    icon: <SchoolIcon sx={{ color: '#1a73e8' }} />
   },
   {
     id: 'urban_311',
     title: {
       'pt-BR': 'Zeladoria Urbana 311',
       'es-419': 'Mantenimiento Urbano 311',
-      'en-US': '311 Urban Maintenance'
+      'en-US': '311 Urban Services'
     },
     agency: {
-      'pt-BR': 'Secretaria de Zeladoria & Infraestrutura Urbana',
-      'es-419': 'Secretaría de Mantenimiento e Infraestructura Urbana',
-      'en-US': 'Department of Urban Maintenance & Infrastructure'
+      'pt-BR': 'Secretaria de Infraestrutura Urbana',
+      'es-419': 'Secretaría de Infraestructura Urbana',
+      'en-US': 'Department of Urban Infrastructure'
     },
     description: {
-      'pt-BR': 'Solicitação de reparos de iluminação pública, vias, pavimentação e saneamento com triagem IA (SLA 6h).',
-      'es-419': 'Solicitud de reparaciones de alumbrado público, vías, pavimentación y saneamiento con triaje IA (SLA 6h).',
-      'en-US': 'Request street lighting, road, paving, and sanitation repairs with AI triage (6h SLA).'
+      'pt-BR': 'Solicitações de iluminação pública, pavimentação, limpeza e reparos.',
+      'es-419': 'Solicitudes de alumbrado público, pavimentación, limpieza y reparaciones.',
+      'en-US': 'Street lighting, paving, sanitation, and maintenance requests.'
     },
     questionPrompt: {
-      'pt-BR': 'Como abrir um chamado urbano 311 no meu distrito?',
-      'es-419': '¿Cómo abrir un reporte urbano 311 en mi distrito?',
-      'en-US': 'How do I open a 311 urban service ticket in my district?'
+      'pt-BR': 'Como abrir um chamado de manutenção urbana 311?',
+      'es-419': '¿Cómo abrir un reporte de mantenimiento urbano 311?',
+      'en-US': 'How do I open a 311 urban maintenance ticket?'
     },
     servicePrompt: {
-      'pt-BR': 'Abrir chamado 311 para reparo de iluminação e zeladoria no meu distrito',
-      'es-419': 'Abrir reporte 311 para reparación de alumbrado y mantenimiento en mi distrito',
-      'en-US': 'Open a 311 ticket for lighting repair and urban maintenance in my district'
+      'pt-BR': 'Abrir chamado 311 de manutenção urbana',
+      'es-419': 'Abrir reporte 311 de mantenimiento urbano',
+      'en-US': 'Open a 311 urban maintenance ticket'
     },
     tab: 'urban_311',
-    icon: <UrbanIcon sx={{ color: '#0a2240' }} />
+    icon: <UrbanIcon sx={{ color: '#1a73e8' }} />
   },
   {
     id: 'emergency_911',
     title: {
-      'pt-BR': 'Emergência 911 (SOS Tático & Médico)',
-      'es-419': 'Emergencia 911 (SOS Táctico y Médico)',
-      'en-US': '911 Emergency (Tactical & Medical SOS)'
+      'pt-BR': 'Emergência 911',
+      'es-419': 'Emergencia 911',
+      'en-US': '911 Emergency'
     },
     agency: {
-      'pt-BR': 'Central Nacional de Despacho de Emergências 911',
-      'es-419': 'Central Nacional de Despacho de Emergencias 911',
-      'en-US': 'National 911 Emergency Dispatch Center'
+      'pt-BR': 'Central de Operações e Emergências',
+      'es-419': 'Central de Operaciones y Emergencias',
+      'en-US': 'Emergency Dispatch Center'
     },
     description: {
-      'pt-BR': 'Acionamento imediato de viaturas e ambulâncias com cruzamento automático de Prontuário HL7 e contato familiar.',
-      'es-419': 'Despacho inmediato de patrullas y ambulancias con cruce automático de Historia Clínica HL7 y contacto familiar.',
-      'en-US': 'Immediate dispatch of patrol units and ambulances with automatic HL7 health record and family contact lookup.'
+      'pt-BR': 'Acionamento de atendimento médico de urgência, defesa civil e segurança.',
+      'es-419': 'Activación de atención médica de urgencia, defensa civil y seguridad.',
+      'en-US': 'Emergency medical response, civil defense, and public safety dispatch.'
     },
     questionPrompt: {
-      'pt-BR': 'Como funciona o despacho de Emergência 911 com prontuário HL7?',
-      'es-419': '¿Cómo funciona el despacho de Emergencia 911 con historia clínica HL7?',
-      'en-US': 'How does 911 Emergency dispatch with HL7 health records work?'
+      'pt-BR': 'Como funciona o acionamento de emergência 911?',
+      'es-419': '¿Cómo funciona la activación de emergencia 911?',
+      'en-US': 'How does 911 emergency dispatch work?'
     },
     servicePrompt: {
-      'pt-BR': 'Acionar protocolo de Emergência 911 com suporte médico HL7',
-      'es-419': 'Activar protocolo de Emergencia 911 con soporte médico HL7',
-      'en-US': 'Trigger 911 Emergency protocol with HL7 medical support'
+      'pt-BR': 'Acionar atendimento de emergência 911',
+      'es-419': 'Activar atención de emergencia 911',
+      'en-US': 'Trigger 911 emergency response'
     },
     tab: 'emergency_911',
-    icon: <ShieldIcon sx={{ color: '#b91c1c' }} />
+    icon: <ShieldIcon sx={{ color: '#d93025' }} />
   },
   {
     id: 'identity',
     title: {
-      'pt-BR': 'Carteira Digital NID & Árvore Familiar',
-      'es-419': 'Credencial Digital NID y Árbol Familiar',
-      'en-US': 'NID Digital Wallet & Family Tree'
+      'pt-BR': 'Identidade Digital (NID)',
+      'es-419': 'Identidad Digital (NID)',
+      'en-US': 'Digital Identity (NID)'
     },
     agency: {
-      'pt-BR': 'Autoridade Nacional de Identidade 360',
-      'es-419': 'Autoridad Nacional de Identidad 360',
-      'en-US': 'National Identity 360 Authority'
+      'pt-BR': 'Registro Civil',
+      'es-419': 'Registro Civil',
+      'en-US': 'Civil Registry'
     },
     description: {
-      'pt-BR': 'Credencial soberana com biometria NIST, vínculo familiar somente leitura e permissões RBAC de Estado.',
-      'es-419': 'Credencial soberana con biometría NIST, vínculo familiar de solo lectura y permisos RBAC de Estado.',
-      'en-US': 'Sovereign credential with NIST biometrics, read-only family graph, and state RBAC permissions.'
+      'pt-BR': 'Consulta cadastral, vínculos familiares e credenciais de acesso.',
+      'es-419': 'Consulta registral, vínculos familiares y credenciales de acceso.',
+      'en-US': 'Civil record lookup, family links, and access credentials.'
     },
     questionPrompt: {
-      'pt-BR': 'Como funciona a Identidade Soberana NID e o acesso ao Backstage?',
-      'es-419': '¿Cómo funciona la Identidad Soberana NID y el acceso al Backstage?',
-      'en-US': 'How do the NID Sovereign Identity and Backstage access work?'
+      'pt-BR': 'Como consultar meus dados cadastrais e vínculos familiares?',
+      'es-419': '¿Cómo consultar mis datos personales y vínculos familiares?',
+      'en-US': 'How do I check my civil registration and family links?'
     },
     servicePrompt: {
-      'pt-BR': 'Consultar minha Carteira Digital NID e vínculos familiares',
-      'es-419': 'Consultar mi Credencial Digital NID y vínculos familiares',
-      'en-US': 'Check my NID Digital Wallet and family relationships'
+      'pt-BR': 'Consultar minha carteira digital NID',
+      'es-419': 'Consultar mi credencial digital NID',
+      'en-US': 'Check my NID digital ID'
     },
     tab: 'identity',
-    icon: <BadgeIcon sx={{ color: '#0a2240' }} />
+    icon: <BadgeIcon sx={{ color: '#1a73e8' }} />
   }
 ];
 
@@ -445,163 +451,163 @@ const LANDING_I18N: Record<
   }
 > = {
   'pt-BR': {
-    officialBanner: 'Um site oficial do Governo da República Digital de Novatlantis',
-    howToVerify: 'Saiba como verificar',
-    verifyTitle1: 'Portais oficiais utilizam infraestrutura soberana no Google Cloud (Project: novatlantis)',
-    verifyDesc1: 'Conectado diretamente ao cluster AlloyDB novatlantis-sovereign-cluster e ao Data Lakehouse governamental.',
-    verifyTitle2: 'Perguntas públicas abertas e autenticação exigida apenas na solicitação de serviços',
-    verifyDesc2: 'Qualquer cidadão ou visitante pode consultar informações no Concierge IA sem login. A assinatura NID é solicitada somente ao executar um serviço oficial.',
-    govTitle: 'Governo da República de Novatlantis',
-    portalBadge: 'Portal Principal da Nação',
-    govSubtitle: 'Chancelaria Digital • Agente Orquestrador de Estado • Módulo de Usuários GDF (100.000 Cidadãos)',
-    drawerSubtitle: 'Diretório Nacional de Serviços',
-    drawerOfficialEnvs: 'AMBIENTES OFICIAIS DO ESTADO',
+    officialBanner: 'Site oficial do Governo de Novatlantis',
+    howToVerify: 'Como verificar',
+    verifyTitle1: 'Domínio oficial .gov.novatlantis.cloud',
+    verifyDesc1: 'Todos os sistemas oficiais do Governo de Novatlantis utilizam este endereço.',
+    verifyTitle2: 'Conexão segura (HTTPS) e acesso com NID',
+    verifyDesc2: 'Consultas gerais são abertas. A identificação com NID é solicitada apenas ao iniciar um serviço.',
+    govTitle: 'Governo de Novatlantis',
+    portalBadge: 'Portal de Serviços',
+    govSubtitle: 'Atendimento e serviços digitais',
+    drawerSubtitle: 'Diretório de Serviços',
+    drawerOfficialEnvs: 'PORTAIS',
     citizenPortalLabel: 'Portal do Cidadão',
-    citizenPortalSubAuth: 'Autenticado',
-    citizenPortalSubAnon: 'Requer login NID ao acessar',
-    backstageLabel: 'Backstage Governamental',
-    backstageSub: 'Servidores Públicos, Médicos, Professores e PM',
-    drawerAskConcierge: 'PERGUNTAR AO CONCIERGE (SEM LOGIN)',
-    drawerLanguageTitle: 'IDIOMA OFICIAL DA REPÚBLICA (I18N)',
-    heroChipAuth: 'SESSÃO AUTENTICADA',
-    heroChipAnon: 'PORTA DE ENTRADA DIGITAL DA NAÇÃO • PERGUNTE SEM PRECISAR DE LOGIN',
+    citizenPortalSubAuth: 'Conectado',
+    citizenPortalSubAnon: 'Acesso com NID',
+    backstageLabel: 'Backstage',
+    backstageSub: 'Painel administrativo e operacional',
+    drawerAskConcierge: 'SERVIÇOS RÁPIDOS',
+    drawerLanguageTitle: 'IDIOMA',
+    heroChipAuth: 'Sessão ativa',
+    heroChipAnon: '',
     heroGreetingPrefix: 'Olá',
-    heroGreetingAnon: 'Olá, Novatlantis.',
-    heroSubheading: 'Tudo o que você precisa do governo, comece por aqui.',
-    promptPlaceholder: 'Pergunte qualquer coisa sobre serviços públicos, passaporte, saúde, educação, impostos ou abertura de empresas...',
-    simplifyFormBtn: 'Simplificar Formulário / Regra Oficial',
-    simplifyFormPrompt: 'Explique em linguagem simples os requisitos e documentos para emitir o Passaporte Digital ICAO e abrir uma empresa em 45 segundos.',
-    chatStatusAuth: 'Logado',
-    chatStatusAnon: 'Chat Público Livre (Login só ao solicitar serviço)',
-    askBtn: 'Perguntar',
+    heroGreetingAnon: 'Como podemos ajudar?',
+    heroSubheading: 'Encontre informações e acesse serviços públicos em um só lugar.',
+    promptPlaceholder: 'Busque por passaporte, consultas médicas, boletim escolar, abertura de empresa, processos ou 311...',
+    simplifyFormBtn: 'Requisitos de passaporte e empresa',
+    simplifyFormPrompt: 'Quais são os requisitos para emitir o passaporte e para abrir uma empresa?',
+    chatStatusAuth: 'Conectado',
+    chatStatusAnon: 'Consulta aberta',
+    askBtn: 'Buscar',
     askingBtn: 'Consultando...',
     pills: [
-      'Como emitir meu Passaporte Digital ICAO?',
-      'Como abrir uma empresa em 45 segundos?',
-      'Como agendar teleconsulta médica 24/7?',
-      'Como consultar o boletim escolar dos meus filhos?',
-      'Como abrir um chamado urbano 311?',
-      'Como funciona o acesso ao Backstage Governamental?'
+      'Emitir passaporte',
+      'Abrir empresa',
+      'Agendar consulta',
+      'Boletim escolar',
+      'Zeladoria 311',
+      'Tribunal de Justiça'
     ],
-    conciergeHeader: 'CONCIERGE OFICIAL DA REPÚBLICA DE NOVATLANTIS',
-    clearChat: 'Limpar conversa',
-    officialCitations: 'FONTES OFICIAIS & LEGISLAÇÃO CITADA:',
-    trackInCitizenPortal: 'Acompanhar no Portal do Cidadão',
-    executeServiceNow: 'Executar Serviço Agora',
-    requestServiceLogin: 'Solicitar Serviço (Fazer Login NID)',
-    directoryOverline: 'SERVIÇOS PÚBLICOS DIGITAIS • REPÚBLICA DE NOVATLANTIS',
-    directoryHeading: 'Serviços mais procurados pelos cidadãos',
-    askQuestionBtn: 'Tirar Dúvida',
-    requestServiceBtn: 'Solicitar Serviço',
-    footerSubtitle: 'Um portal desenhado para servir ao cidadão • AlloyDB + Government Data Platform',
-    footerRight1: 'Projeto GCP: novatlantis • Base Soberana: 100.000 Cidadãos',
-    footerRight2: 'Autenticação Zero-Trust • Perguntas Públicas sem Login • Transações Assinadas com NID'
+    conciergeHeader: 'Atendimento Digital',
+    clearChat: 'Limpar',
+    officialCitations: 'Referências:',
+    trackInCitizenPortal: 'Abrir no Portal do Cidadão',
+    executeServiceNow: 'Solicitar agora',
+    requestServiceLogin: 'Entrar para solicitar',
+    directoryOverline: 'CATÁLOGO DE SERVIÇOS',
+    directoryHeading: 'Serviços e sistemas',
+    askQuestionBtn: 'Dúvidas',
+    requestServiceBtn: 'Solicitar',
+    footerSubtitle: 'Portal Oficial de Serviços Públicos',
+    footerRight1: 'gov.novatlantis.cloud',
+    footerRight2: 'Portal do Cidadão • Backstage • Sistemas Integrados'
   },
   'es-419': {
-    officialBanner: 'Un sitio oficial del Gobierno de la República Digital de Novatlantis',
-    howToVerify: 'Así es como puede verificarlo',
-    verifyTitle1: 'Los portales oficiales utilizan infraestructura soberana en Google Cloud (Project: novatlantis)',
-    verifyDesc1: 'Conectado directamente al clúster AlloyDB novatlantis-sovereign-cluster y al Data Lakehouse gubernamental.',
-    verifyTitle2: 'Preguntas públicas abiertas y autenticación requerida solo al solicitar servicios',
-    verifyDesc2: 'Cualquier ciudadano o visitante puede consultar información en el Concierge IA sin iniciar sesión. La firma NID se solicita únicamente al ejecutar un servicio oficial.',
-    govTitle: 'Gobierno de la República de Novatlantis',
-    portalBadge: 'Portal Principal de la Nación',
-    govSubtitle: 'Cancillería Digital • Agente Orquestador de Estado • Módulo de Usuarios GDF (100.000 Ciudadanos)',
-    drawerSubtitle: 'Directorio Nacional de Servicios',
-    drawerOfficialEnvs: 'AMBIENTES OFICIALES DEL ESTADO',
+    officialBanner: 'Sitio oficial del Gobierno de Novatlantis',
+    howToVerify: 'Cómo verificarlo',
+    verifyTitle1: 'Dominio oficial .gov.novatlantis.cloud',
+    verifyDesc1: 'Todos los sistemas oficiales del Gobierno de Novatlantis utilizan esta dirección.',
+    verifyTitle2: 'Conexión segura (HTTPS) y acceso con NID',
+    verifyDesc2: 'Las consultas generales son abiertas. La identificación con NID solo se solicita al iniciar un trámite.',
+    govTitle: 'Gobierno de Novatlantis',
+    portalBadge: 'Portal de Servicios',
+    govSubtitle: 'Atención y servicios digitales',
+    drawerSubtitle: 'Directorio de Servicios',
+    drawerOfficialEnvs: 'PORTALES',
     citizenPortalLabel: 'Portal del Ciudadano',
-    citizenPortalSubAuth: 'Autenticado',
-    citizenPortalSubAnon: 'Requiere ingreso con NID al acceder',
-    backstageLabel: 'Backstage Gubernamental',
-    backstageSub: 'Servidores Públicos, Médicos, Profesores y PM',
-    drawerAskConcierge: 'PREGUNTAR AL CONCIERGE (SIN LOGIN)',
-    drawerLanguageTitle: 'IDIOMA OFICIAL DE LA REPÚBLICA (I18N)',
-    heroChipAuth: 'SESIÓN AUTENTICADA',
-    heroChipAnon: 'PUERTA DE ENTRADA DIGITAL DE LA NACIÓN • PREGUNTE SIN NECESIDAD DE LOGIN',
+    citizenPortalSubAuth: 'Conectado',
+    citizenPortalSubAnon: 'Acceso con NID',
+    backstageLabel: 'Backstage',
+    backstageSub: 'Panel administrativo y operativo',
+    drawerAskConcierge: 'SERVICIOS RÁPIDOS',
+    drawerLanguageTitle: 'IDIOMA',
+    heroChipAuth: 'Sesión activa',
+    heroChipAnon: '',
     heroGreetingPrefix: 'Hola',
-    heroGreetingAnon: 'Hola, Novatlantis.',
-    heroSubheading: 'Todo lo que necesitas del gobierno, empieza por aquí.',
-    promptPlaceholder: 'Pregunte cualquier cosa sobre servicios públicos, pasaporte, salud, educación, impuestos o apertura de empresas...',
-    simplifyFormBtn: 'Simplificar Formulario / Norma Oficial',
-    simplifyFormPrompt: 'Explique en lenguaje sencillo los requisitos y documentos para emitir el Pasaporte Digital OACI y abrir una empresa en 45 segundos.',
-    chatStatusAuth: 'Autenticado',
-    chatStatusAnon: 'Chat Público Libre (Login solo al solicitar servicio)',
-    askBtn: 'Preguntar',
+    heroGreetingAnon: '¿Cómo podemos ayudar?',
+    heroSubheading: 'Encuentre información y acceda a los servicios públicos en un solo lugar.',
+    promptPlaceholder: 'Busque pasaporte, citas médicas, boletín escolar, apertura de empresa, expedientes o 311...',
+    simplifyFormBtn: 'Requisitos de pasaporte y empresa',
+    simplifyFormPrompt: '¿Cuáles son los requisitos para emitir el pasaporte y abrir una empresa?',
+    chatStatusAuth: 'Conectado',
+    chatStatusAnon: 'Consulta abierta',
+    askBtn: 'Buscar',
     askingBtn: 'Consultando...',
     pills: [
-      '¿Cómo emitir mi Pasaporte Digital OACI?',
-      '¿Cómo abrir una empresa en 45 segundos?',
-      '¿Cómo programar teleconsulta médica 24/7?',
-      '¿Cómo consultar el boletín escolar de mis hijos?',
-      '¿Cómo abrir un reporte urbano 311?',
-      '¿Cómo funciona el acceso al Backstage Gubernamental?'
+      'Emitir pasaporte',
+      'Abrir empresa',
+      'Agendar consulta',
+      'Boletín escolar',
+      'Mantenimiento 311',
+      'Tribunal de Justicia'
     ],
-    conciergeHeader: 'CONCIERGE OFICIAL DE LA REPÚBLICA DE NOVATLANTIS',
-    clearChat: 'Limpiar conversación',
-    officialCitations: 'FUENTES OFICIALES Y LEGISLACIÓN CITADA:',
-    trackInCitizenPortal: 'Seguir en el Portal del Ciudadano',
-    executeServiceNow: 'Ejecutar Servicio Ahora',
-    requestServiceLogin: 'Solicitar Servicio (Ingresar con NID)',
-    directoryOverline: 'SERVICIOS PÚBLICOS DIGITALES • REPÚBLICA DE NOVATLANTIS',
-    directoryHeading: 'Servicios más solicitados por los ciudadanos',
-    askQuestionBtn: 'Consultar Duda',
-    requestServiceBtn: 'Solicitar Servicio',
-    footerSubtitle: 'Un portal diseñado para servir al ciudadano • AlloyDB + Government Data Platform',
-    footerRight1: 'Proyecto GCP: novatlantis • Base Soberana: 100.000 Ciudadanos',
-    footerRight2: 'Autenticación Zero-Trust • Consultas Públicas sin Login • Transacciones Firmadas con NID'
+    conciergeHeader: 'Atención Digital',
+    clearChat: 'Limpiar',
+    officialCitations: 'Referencias:',
+    trackInCitizenPortal: 'Abrir en el Portal del Ciudadano',
+    executeServiceNow: 'Solicitar ahora',
+    requestServiceLogin: 'Ingresar para solicitar',
+    directoryOverline: 'CATÁLOGO DE SERVICIOS',
+    directoryHeading: 'Servicios y sistemas',
+    askQuestionBtn: 'Dudas',
+    requestServiceBtn: 'Solicitar',
+    footerSubtitle: 'Portal Oficial de Servicios Públicos',
+    footerRight1: 'gov.novatlantis.cloud',
+    footerRight2: 'Portal del Ciudadano • Backstage • Sistemas Integrados'
   },
   'en-US': {
-    officialBanner: 'An official website of the Government of the Digital Republic of Novatlantis',
-    howToVerify: 'Here’s how you know',
-    verifyTitle1: 'Official portals use sovereign infrastructure on Google Cloud (Project: novatlantis)',
-    verifyDesc1: 'Directly connected to the AlloyDB cluster novatlantis-sovereign-cluster and the Government Data Lakehouse.',
-    verifyTitle2: 'Open public questions and authentication required only when requesting services',
-    verifyDesc2: 'Any citizen or visitor can ask questions in the AI Concierge without signing in. NID authentication is requested only when executing an official service.',
-    govTitle: 'Government of the Republic of Novatlantis',
-    portalBadge: 'Main National Portal',
-    govSubtitle: 'Digital Chancellery • State Orchestrator Agent • GDF User Module (100,000 Citizens)',
-    drawerSubtitle: 'National Directory of Services',
-    drawerOfficialEnvs: 'OFFICIAL STATE ENVIRONMENTS',
+    officialBanner: 'Official website of the Government of Novatlantis',
+    howToVerify: 'How to verify',
+    verifyTitle1: 'Official .gov.novatlantis.cloud domain',
+    verifyDesc1: 'All official Government of Novatlantis systems use this domain.',
+    verifyTitle2: 'Secure connection (HTTPS) and NID sign-in',
+    verifyDesc2: 'General inquiries are open to everyone. NID sign-in is only required when submitting a service request.',
+    govTitle: 'Government of Novatlantis',
+    portalBadge: 'Service Portal',
+    govSubtitle: 'Digital services and support',
+    drawerSubtitle: 'Service Directory',
+    drawerOfficialEnvs: 'PORTALS',
     citizenPortalLabel: 'Citizen Portal',
-    citizenPortalSubAuth: 'Authenticated',
-    citizenPortalSubAnon: 'Requires NID sign-in upon access',
-    backstageLabel: 'Government Backstage',
-    backstageSub: 'Civil Servants, Physicians, Teachers & PM',
-    drawerAskConcierge: 'ASK THE CONCIERGE (NO LOGIN REQUIRED)',
-    drawerLanguageTitle: 'OFFICIAL REPUBLIC LANGUAGE (I18N)',
-    heroChipAuth: 'AUTHENTICATED SESSION',
-    heroChipAnon: 'DIGITAL FRONT DOOR OF THE NATION • ASK WITHOUT SIGNING IN',
+    citizenPortalSubAuth: 'Signed in',
+    citizenPortalSubAnon: 'Sign in with NID',
+    backstageLabel: 'Backstage',
+    backstageSub: 'Administrative and operations panel',
+    drawerAskConcierge: 'QUICK SERVICES',
+    drawerLanguageTitle: 'LANGUAGE',
+    heroChipAuth: 'Active session',
+    heroChipAnon: '',
     heroGreetingPrefix: 'Hello',
-    heroGreetingAnon: 'Hello, Novatlantis.',
-    heroSubheading: 'Whatever you need from government, start here.',
-    promptPlaceholder: 'Ask anything about public services, passports, healthcare, education, taxes, or starting a business...',
-    simplifyFormBtn: 'Simplify Official Form / Rule',
-    simplifyFormPrompt: 'Explain in plain language the requirements and documents to issue the ICAO Digital Passport and open a business in 45 seconds.',
+    heroGreetingAnon: 'How can we help?',
+    heroSubheading: 'Find information and access public services in one place.',
+    promptPlaceholder: 'Search for passports, medical appointments, report cards, business registration, court cases, or 311...',
+    simplifyFormBtn: 'Passport & business requirements',
+    simplifyFormPrompt: 'What are the requirements to issue a passport and register a business?',
     chatStatusAuth: 'Signed in',
-    chatStatusAnon: 'Free Public Chat (Sign-in only when requesting a service)',
-    askBtn: 'Ask',
-    askingBtn: 'Asking...',
+    chatStatusAnon: 'Public inquiry',
+    askBtn: 'Search',
+    askingBtn: 'Searching...',
     pills: [
-      'How do I issue my ICAO Digital Passport?',
-      'How do I open a business in 45 seconds?',
-      'How do I schedule a 24/7 medical teleconsultation?',
-      'How can I check my children’s school report card?',
-      'How do I open a 311 urban service ticket?',
-      'How does Government Backstage access work?'
+      'Issue passport',
+      'Register business',
+      'Book appointment',
+      'Report card',
+      '311 maintenance',
+      'Court of Justice'
     ],
-    conciergeHeader: 'OFFICIAL CONCIERGE OF THE REPUBLIC OF NOVATLANTIS',
-    clearChat: 'Clear conversation',
-    officialCitations: 'OFFICIAL SOURCES & CITED LEGISLATION:',
-    trackInCitizenPortal: 'Track in Citizen Portal',
-    executeServiceNow: 'Execute Service Now',
-    requestServiceLogin: 'Request Service (Sign in with NID)',
-    directoryOverline: 'DIGITAL PUBLIC SERVICES • REPUBLIC OF NOVATLANTIS',
-    directoryHeading: 'Most requested citizen services',
-    askQuestionBtn: 'Ask Question',
-    requestServiceBtn: 'Request Service',
-    footerSubtitle: 'A portal designed to serve the citizen • AlloyDB + Government Data Platform',
-    footerRight1: 'GCP Project: novatlantis • Sovereign Base: 100,000 Citizens',
-    footerRight2: 'Zero-Trust Auth • Public Questions without Sign-in • NID-Signed Transactions'
+    conciergeHeader: 'Digital Support',
+    clearChat: 'Clear',
+    officialCitations: 'References:',
+    trackInCitizenPortal: 'Open in Citizen Portal',
+    executeServiceNow: 'Submit request',
+    requestServiceLogin: 'Sign in to request',
+    directoryOverline: 'SERVICE CATALOG',
+    directoryHeading: 'Services and systems',
+    askQuestionBtn: 'Questions',
+    requestServiceBtn: 'Request',
+    footerSubtitle: 'Official Public Services Portal',
+    footerRight1: 'gov.novatlantis.cloud',
+    footerRight2: 'Citizen Portal • Backstage • Integrated Systems'
   }
 };
 
@@ -647,9 +653,9 @@ export function App() {
             tab: a.citizenPortalTab?.tabId || a.appId,
             externalTargetUrl: a.externalTargetUrl,
             federatedSubdomain: a.federatedSubdomain,
-            ownerCe: a.owner,
+            owner: a.owner,
             badge: a.landingCatalog.badge,
-            icon: <AccountBalanceIcon sx={{ color: '#0a2240' }} />
+            icon: <AccountBalanceIcon sx={{ color: '#1a73e8' }} />
           }));
         setPluggableServices(dynamicEntries);
       })
@@ -793,11 +799,19 @@ export function App() {
   };
 
   return (
-    <ThemeProvider theme={americaGovTheme}>
+    <ThemeProvider theme={googleMaterialTheme}>
       <CssBaseline />
+      <Box
+        sx={{
+          height: 4,
+          width: '100%',
+          background:
+            'linear-gradient(90deg, #4285F4 0%, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #34A853 75%, #34A853 100%)'
+        }}
+      />
 
-      {/* 1. FAIXA OFICIAL SUPERIOR (Estilo USWDS / america.gov) */}
-      <Box sx={{ bgcolor: '#f1f0ec', borderBottom: '1px solid #e2e0d8', py: 0.65, px: 2 }}>
+      {/* Seção de interface Material Design 3 */}
+      <Box sx={{ bgcolor: '#f1f3f4', borderBottom: '1px solid #dadce0', py: 0.65, px: 2 }}>
         <Container maxWidth="lg">
           <Box
             sx={{
@@ -815,7 +829,7 @@ export function App() {
                 alt="Bandeira Oficial de Novatlantis"
                 sx={{ width: 20, height: 13, objectFit: 'cover', borderRadius: 0.5, border: '1px solid #cbd5e1' }}
               />
-              <Typography variant="caption" sx={{ color: '#1f2937', fontWeight: 600, fontSize: '0.76rem' }}>
+              <Typography variant="caption" sx={{ color: '#202124', fontWeight: 600, fontSize: '0.76rem' }}>
                 {t.officialBanner}
               </Typography>
               <Button
@@ -828,7 +842,7 @@ export function App() {
                   px: 0.75,
                   minHeight: 20,
                   textTransform: 'none',
-                  color: '#0a2240',
+                  color: '#1a73e8',
                   fontWeight: 700,
                   textDecoration: 'underline'
                 }}
@@ -839,19 +853,19 @@ export function App() {
 
             <Typography
               variant="caption"
-              sx={{ fontFamily: 'monospace', color: '#4b5563', fontSize: '0.72rem', display: { xs: 'none', md: 'block' } }}
+              sx={{ fontFamily: 'monospace', color: '#5f6368', fontSize: '0.72rem', display: { xs: 'none', md: 'block' } }}
             >
-              National Design Studio • AlloyDB PostgreSQL 15 • i18n ({lang})
+              gov.novatlantis.cloud
             </Typography>
           </Box>
 
           <Collapse in={govBannerOpen}>
-            <Grid container spacing={2} sx={{ pt: 1.5, pb: 1, mt: 0.5, borderTop: '1px solid #e2e0d8' }}>
+            <Grid container spacing={2} sx={{ pt: 1.5, pb: 1, mt: 0.5, borderTop: '1px solid #dadce0' }}>
               <Grid item xs={12} md={6}>
                 <Box sx={{ display: 'flex', gap: 1.5 }}>
                   <AccountBalanceIcon color="primary" fontSize="small" sx={{ mt: 0.25 }} />
                   <Box>
-                    <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', color: '#111827' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', color: '#202124' }}>
                       {t.verifyTitle1}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
@@ -864,7 +878,7 @@ export function App() {
                 <Box sx={{ display: 'flex', gap: 1.5 }}>
                   <HttpsIcon color="success" fontSize="small" sx={{ mt: 0.25 }} />
                   <Box>
-                    <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', color: '#111827' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, display: 'block', color: '#202124' }}>
                       {t.verifyTitle2}
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
@@ -878,15 +892,15 @@ export function App() {
         </Container>
       </Box>
 
-      {/* 2. CABEÇALHO INSTITUCIONAL (Estilo america.gov com Menu Hambúrguer ☰ + Título Ampliado + Seletor de Idiomas PT/ES/EN + Status do Usuário) */}
+      {/* Seção de interface Material Design 3 */}
       <AppBar
         position="sticky"
         color="default"
         elevation={0}
         sx={{
-          bgcolor: 'rgba(252, 251, 249, 0.94)',
+          bgcolor: 'rgba(255, 255, 255, 0.96)',
           backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid #e5e4dc'
+          borderBottom: '1px solid #dadce0'
         }}
       >
         <Container maxWidth="lg">
@@ -899,9 +913,9 @@ export function App() {
                   border: '1px solid #d1d5db',
                   borderRadius: 2,
                   p: 1,
-                  color: '#0a2240',
+                  color: '#1a73e8',
                   bgcolor: navDrawerOpen ? '#e2e8f0' : '#ffffff',
-                  '&:hover': { bgcolor: '#f3f4f6', borderColor: '#0a2240' }
+                  '&:hover': { bgcolor: '#f3f4f6', borderColor: '#1a73e8' }
                 }}
                 aria-label="Alternar Navigation Drawer da Nação"
               >
@@ -917,7 +931,7 @@ export function App() {
                   height: { xs: 44, md: 56 },
                   borderRadius: 2,
                   objectFit: 'cover',
-                  border: '1.5px solid #0a2240'
+                  border: '1.5px solid #1a73e8'
                 }}
               />
 
@@ -926,7 +940,7 @@ export function App() {
                   <Typography
                     sx={{
                       fontWeight: 900,
-                      color: '#0a2240',
+                      color: '#1a73e8',
                       fontSize: { xs: '1.15rem', sm: '1.45rem', md: '1.75rem' },
                       lineHeight: 1.15,
                       letterSpacing: '-0.02em'
@@ -938,7 +952,7 @@ export function App() {
                     label={t.portalBadge}
                     size="small"
                     sx={{
-                      bgcolor: '#0a2240',
+                      bgcolor: '#1a73e8',
                       color: '#ffffff',
                       fontWeight: 700,
                       fontSize: { xs: '0.7rem', md: '0.8rem' },
@@ -948,7 +962,7 @@ export function App() {
                 </Box>
                 <Typography
                   sx={{
-                    color: '#374151',
+                    color: '#5f6368',
                     fontWeight: 600,
                     fontSize: { xs: '0.78rem', sm: '0.92rem', md: '1.04rem' },
                     mt: 0.35,
@@ -998,15 +1012,15 @@ export function App() {
           sx={{
             width: navDrawerOpen ? { xs: 290, sm: 340 } : 0,
             flexShrink: 0,
-            bgcolor: '#fcfbf9',
-            borderRight: navDrawerOpen ? '1px solid #e5e4dc' : 'none',
+            bgcolor: '#f8f9fa',
+            borderRight: navDrawerOpen ? '1px solid #dadce0' : 'none',
             transition: 'width 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
             overflowX: 'hidden',
             overflowY: navDrawerOpen ? 'auto' : 'hidden'
           }}
         >
           <Box sx={{ minWidth: 290 }}>
-            <Box sx={{ p: 2.5, bgcolor: '#0a2240', color: '#ffffff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box sx={{ p: 2.5, bgcolor: '#1a73e8', color: '#ffffff', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <Box>
                 <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
                   {t.govTitle}
@@ -1021,10 +1035,10 @@ export function App() {
             </Box>
 
             {/* Seletor de Idiomas também dentro do Navigation Drawer */}
-            <Box sx={{ px: 2.5, py: 1.5, bgcolor: '#f1f0ec', borderBottom: '1px solid #e5e4dc' }}>
+            <Box sx={{ px: 2.5, py: 1.5, bgcolor: '#f1f3f4', borderBottom: '1px solid #dadce0' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                <LanguageIcon sx={{ fontSize: 16, color: '#0a2240' }} />
-                <Typography variant="caption" sx={{ fontWeight: 800, color: '#0a2240', letterSpacing: '0.05em' }}>
+                <LanguageIcon sx={{ fontSize: 16, color: '#1a73e8' }} />
+                <Typography variant="caption" sx={{ fontWeight: 800, color: '#1a73e8', letterSpacing: '0.05em' }}>
                   {t.drawerLanguageTitle}
                 </Typography>
               </Box>
@@ -1046,8 +1060,8 @@ export function App() {
                       textTransform: 'none',
                       fontWeight: 700,
                       fontSize: '0.78rem',
-                      bgcolor: lang === l.code ? '#0a2240' : '#ffffff',
-                      color: lang === l.code ? '#ffffff' : '#0a2240',
+                      bgcolor: lang === l.code ? '#1a73e8' : '#ffffff',
+                      color: lang === l.code ? '#ffffff' : '#1a73e8',
                       borderColor: '#cbd5e1'
                     }}
                   >
@@ -1070,7 +1084,7 @@ export function App() {
                 }}
               >
                 <ListItemIcon>
-                  <BadgeIcon sx={{ color: '#0a2240' }} />
+                  <BadgeIcon sx={{ color: '#1a73e8' }} />
                 </ListItemIcon>
                 <ListItemText
                   primary={t.citizenPortalLabel}
@@ -1085,11 +1099,11 @@ export function App() {
                 }}
               >
                 <ListItemIcon>
-                  <UrbanIcon sx={{ color: '#0a2240' }} />
+                  <UrbanIcon sx={{ color: '#1a73e8' }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Módulo Zeladoria Urbana 311"
-                  secondary="Reparos urbanos, vias e iluminação"
+                  primary="Zeladoria Urbana 311"
+                  secondary="Manutenção urbana, vias e iluminação"
                   primaryTypographyProps={{ fontWeight: 700, fontSize: '0.88rem' }}
                 />
               </ListItemButton>
@@ -1100,12 +1114,12 @@ export function App() {
                 }}
               >
                 <ListItemIcon>
-                  <ShieldIcon sx={{ color: '#b91c1c' }} />
+                  <ShieldIcon sx={{ color: '#d93025' }} />
                 </ListItemIcon>
                 <ListItemText
-                  primary="Módulo Emergência 911 (SOS)"
-                  secondary="Despacho imediato com prontuário HL7"
-                  primaryTypographyProps={{ fontWeight: 700, fontSize: '0.88rem', color: '#991b1b' }}
+                  primary="Emergência 911"
+                  secondary="Atendimento de urgência e defesa civil"
+                  primaryTypographyProps={{ fontWeight: 700, fontSize: '0.88rem', color: '#c5221f' }}
                 />
               </ListItemButton>
 
@@ -1115,7 +1129,7 @@ export function App() {
                 }}
               >
                 <ListItemIcon>
-                  <AdminIcon sx={{ color: '#0f766e' }} />
+                  <AdminIcon sx={{ color: '#1e8e3e' }} />
                 </ListItemIcon>
                 <ListItemText
                   primary={t.backstageLabel}
@@ -1161,7 +1175,7 @@ export function App() {
             flexShrink: 0,
             bgcolor: '#ffffff',
             borderRight: chatSidebarOpen ? '1.5px solid #d1d5db' : 'none',
-            boxShadow: chatSidebarOpen ? '8px 0 28px rgba(10, 34, 64, 0.07)' : 'none',
+            boxShadow: chatSidebarOpen ? '8px 0 28px rgba(60, 64, 67, 0.10)' : 'none',
             transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
             overflowX: 'hidden',
             display: 'flex',
@@ -1180,13 +1194,13 @@ export function App() {
                 sx={{
                   px: 2.25,
                   py: 1.75,
-                  bgcolor: '#0a2240',
+                  bgcolor: '#1a73e8',
                   color: '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   gap: 1,
-                  borderBottom: '3px solid #b91c1c'
+                  borderBottom: '1px solid #dadce0'
                 }}
               >
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -1197,10 +1211,10 @@ export function App() {
                     </Typography>
                     <Typography variant="caption" sx={{ color: '#cbd5e1', fontSize: '0.7rem', display: 'block' }}>
                       {lang === 'en-US'
-                        ? 'Persistent Left Sidebar • Auto-detects PT / ES / EN'
+                        ? 'Government of Novatlantis'
                         : lang === 'es-419'
-                        ? 'Barra Lateral Persistente • Detecta PT / ES / EN'
-                        : 'Barra Lateral Persistente • Detecta PT / ES / EN'}
+                        ? 'Gobierno de Novatlantis'
+                        : 'Governo de Novatlantis'}
                     </Typography>
                   </Box>
                 </Box>
@@ -1238,7 +1252,7 @@ export function App() {
                   flex: 1,
                   overflowY: 'auto',
                   p: 2.25,
-                  bgcolor: '#fcfbf9',
+                  bgcolor: '#f8f9fa',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 2.25
@@ -1253,7 +1267,7 @@ export function App() {
                           sx={{
                             px: 2,
                             py: 1.25,
-                            bgcolor: '#0a2240',
+                            bgcolor: '#1a73e8',
                             color: '#ffffff',
                             borderRadius: '16px 16px 4px 16px',
                             maxWidth: '88%'
@@ -1270,15 +1284,15 @@ export function App() {
                           p: 2,
                           borderRadius: 2.5,
                           bgcolor: '#ffffff',
-                          border: '1px solid #e5e4dc',
-                          boxShadow: '0 4px 14px rgba(10, 34, 64, 0.04)'
+                          border: '1px solid #dadce0',
+                          boxShadow: '0 4px 14px rgba(60, 64, 67, 0.06)'
                         }}
                       >
                         <Typography
                           variant="body2"
                           sx={{
                             whiteSpace: 'pre-line',
-                            color: '#111827',
+                            color: '#202124',
                             lineHeight: 1.62,
                             fontSize: '0.91rem'
                           }}
@@ -1288,12 +1302,12 @@ export function App() {
 
                         {/* Citações Oficiais de Agências do Governo */}
                         {msg.citations && msg.citations.length > 0 && (
-                          <Box sx={{ mt: 2, pt: 1.5, borderTop: '1px solid #e5e4dc' }}>
+                          <Box sx={{ mt: 2, pt: 1.5, borderTop: '1px solid #dadce0' }}>
                             <Typography
                               variant="caption"
                               sx={{
                                 fontWeight: 800,
-                                color: '#4b5563',
+                                color: '#5f6368',
                                 display: 'block',
                                 mb: 0.75,
                                 letterSpacing: '0.04em',
@@ -1310,7 +1324,7 @@ export function App() {
                                   size="small"
                                   sx={{
                                     bgcolor: '#f3f4f6',
-                                    color: '#1f2937',
+                                    color: '#202124',
                                     fontWeight: 600,
                                     fontSize: '0.7rem',
                                     height: 'auto',
@@ -1337,7 +1351,7 @@ export function App() {
                               variant="caption"
                               sx={{ fontFamily: 'monospace', display: 'block', color: '#166534', mt: 0.5, mb: 1 }}
                             >
-                              Protocolo AlloyDB: {msg.action_card.reference_id} • Status: {msg.action_card.status}
+                              Protocolo: {msg.action_card.reference_id} • {msg.action_card.status}
                             </Typography>
                             <Button
                               size="small"
@@ -1345,7 +1359,10 @@ export function App() {
                               color="success"
                               endIcon={<LaunchIcon fontSize="small" />}
                               onClick={() => {
-                                if (msg.action_card?.target_portal === 'external-ce-demo' && msg.action_card.target_url) {
+                                if (
+                                  (msg.action_card?.target_portal === 'external-module') &&
+                                  msg.action_card.target_url
+                                ) {
                                   window.open(msg.action_card.target_url, '_blank', 'noopener,noreferrer');
                                 } else {
                                   handleNavigateToPortal('citizen', msg.service_request_action?.target_tab);
@@ -1353,8 +1370,8 @@ export function App() {
                               }}
                               sx={{ textTransform: 'none', fontWeight: 700, fontSize: '0.78rem' }}
                             >
-                              {msg.action_card.target_portal === 'external-ce-demo'
-                                ? 'Abrir Plataforma Federada (Cloud Run CE) ↗'
+                              {msg.action_card.target_portal === 'external-module'
+                                ? 'Acessar sistema ↗'
                                 : t.trackInCitizenPortal}
                             </Button>
                           </Alert>
@@ -1382,7 +1399,7 @@ export function App() {
                                 ) : (
                                   <LockIcon sx={{ color: '#b45309', fontSize: 16 }} />
                                 )}
-                                <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#0a2240', fontSize: '0.83rem' }}>
+                                <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1a73e8', fontSize: '0.83rem' }}>
                                   {msg.service_request_action.service_title}
                                 </Typography>
                               </Box>
@@ -1403,13 +1420,13 @@ export function App() {
                                 )
                               }
                               sx={{
-                                bgcolor: '#0a2240',
+                                bgcolor: '#1a73e8',
                                 fontWeight: 700,
                                 textTransform: 'none',
                                 borderRadius: 1.75,
                                 py: 0.85,
                                 fontSize: '0.8rem',
-                                '&:hover': { bgcolor: '#163a66' }
+                                '&:hover': { bgcolor: '#1557b0' }
                               }}
                             >
                               {currentUser ? t.executeServiceNow : t.requestServiceLogin}
@@ -1423,7 +1440,7 @@ export function App() {
 
                 {chatLoading && (
                   <Box sx={{ p: 1.5, borderRadius: 2, bgcolor: '#f1f5f9', border: '1px dashed #cbd5e1' }}>
-                    <Typography variant="caption" sx={{ fontWeight: 700, color: '#0a2240' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, color: '#1a73e8' }}>
                       {t.askingBtn}
                     </Typography>
                   </Box>
@@ -1442,7 +1459,7 @@ export function App() {
                 sx={{
                   p: 1.75,
                   bgcolor: '#ffffff',
-                  borderTop: '1px solid #e5e4dc',
+                  borderTop: '1px solid #dadce0',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: 1
@@ -1487,11 +1504,11 @@ export function App() {
                     sx={{
                       borderRadius: 999,
                       px: 2,
-                      bgcolor: '#0a2240',
+                      bgcolor: '#1a73e8',
                       fontWeight: 700,
                       textTransform: 'none',
                       fontSize: '0.8rem',
-                      '&:hover': { bgcolor: '#163a66' }
+                      '&:hover': { bgcolor: '#1557b0' }
                     }}
                   >
                     {chatLoading ? t.askingBtn : t.askBtn}
@@ -1503,43 +1520,40 @@ export function App() {
         </Box>
 
         <Box component="main" sx={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-          {/* 3. HERO PRINCIPAL INSPIRADO EM HTTPS://AMERICA.GOV/ ("Whatever you need from government, start here") */}
+          {/* Seção de interface Material Design 3 */}
       <Box
         sx={{
           position: 'relative',
           pt: { xs: 6, md: 9 },
           pb: { xs: 6, md: 8 },
           background:
-            'radial-gradient(circle at 50% 0%, rgba(10, 34, 64, 0.06) 0%, rgba(252, 251, 249, 0) 70%)'
+            'radial-gradient(circle at 50% 0%, rgba(26, 115, 232, 0.06) 0%, rgba(248, 249, 250, 0) 70%)'
         }}
       >
         <Container maxWidth="md">
-          {/* Saudação Editorial Centralizada estilo america.gov */}
+          {/* Seção de interface Material Design 3 */}
           <Box sx={{ textAlign: 'center', mb: 4.5 }}>
-            <Chip
-              icon={<SparkleIcon sx={{ fontSize: '15px !important', color: '#0a2240 !important' }} />}
-              label={
-                currentUser
-                  ? `${t.heroChipAuth} • ${currentUser.full_name.toUpperCase()} (${currentUser.nid})`
-                  : t.heroChipAnon
-              }
-              sx={{
-                mb: 2.5,
-                px: 1,
-                bgcolor: '#eef2f6',
-                color: '#0a2240',
-                fontWeight: 700,
-                fontSize: '0.75rem',
-                letterSpacing: '0.04em',
-                border: '1px solid #cbd5e1'
-              }}
-            />
+            {currentUser && (
+              <Chip
+                icon={<SparkleIcon sx={{ fontSize: '15px !important', color: '#1a73e8 !important' }} />}
+                label={`${t.heroChipAuth} • ${currentUser.full_name} (${currentUser.nid})`}
+                sx={{
+                  mb: 2.5,
+                  px: 1,
+                  bgcolor: '#eef2f6',
+                  color: '#1a73e8',
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  border: '1px solid #cbd5e1'
+                }}
+              />
+            )}
 
             <Typography
               variant="h1"
               sx={{
-                fontSize: { xs: '2.25rem', sm: '3rem', md: '3.6rem' },
-                color: '#0a2240',
+                fontSize: { xs: '2.25rem', sm: '3rem', md: '3.5rem' },
+                color: '#202124',
                 mb: 1.5,
                 lineHeight: 1.12
               }}
@@ -1551,7 +1565,7 @@ export function App() {
               variant="h5"
               sx={{
                 fontWeight: 400,
-                color: '#374151',
+                color: '#5f6368',
                 fontSize: { xs: '1.15rem', md: '1.45rem' },
                 maxWidth: 680,
                 mx: 'auto',
@@ -1562,7 +1576,7 @@ export function App() {
             </Typography>
           </Box>
 
-          {/* CAIXA DE DIÁLOGO CENTRAL DO CONCIERGE IA (america.gov Prompt Box) */}
+          {/* Seção de interface Material Design 3 */}
           <Paper
             elevation={0}
             sx={{
@@ -1570,11 +1584,11 @@ export function App() {
               borderRadius: 4,
               bgcolor: '#ffffff',
               border: '1.5px solid #d1d5db',
-              boxShadow: '0 16px 40px -12px rgba(10, 34, 64, 0.10)',
+              boxShadow: '0 16px 40px -12px rgba(60, 64, 67, 0.12)',
               transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
               '&:focus-within': {
-                borderColor: '#0a2240',
-                boxShadow: '0 20px 48px -12px rgba(10, 34, 64, 0.16)'
+                borderColor: '#1a73e8',
+                boxShadow: '0 20px 48px -12px rgba(26, 115, 232, 0.18)'
               }
             }}
           >
@@ -1604,7 +1618,7 @@ export function App() {
                   disableUnderline: true,
                   sx: {
                     fontSize: { xs: '1.02rem', md: '1.14rem' },
-                    color: '#111827',
+                    color: '#202124',
                     lineHeight: 1.5,
                     px: 1,
                     py: 0.5
@@ -1623,7 +1637,7 @@ export function App() {
                   gap: 1
                 }}
               >
-                {/* Botões utilitários estilo america.gov */}
+                {/* Seção de interface Material Design 3 */}
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                   <Button
                     size="small"
@@ -1634,11 +1648,11 @@ export function App() {
                       borderRadius: 999,
                       textTransform: 'none',
                       borderColor: '#e5e7eb',
-                      color: '#374151',
+                      color: '#5f6368',
                       fontWeight: 600,
                       fontSize: '0.8rem',
                       px: 1.5,
-                      '&:hover': { borderColor: '#0a2240', bgcolor: '#f9fafb' }
+                      '&:hover': { borderColor: '#1a73e8', bgcolor: '#f9fafb' }
                     }}
                   >
                     {t.simplifyFormBtn}
@@ -1672,8 +1686,8 @@ export function App() {
                     onClick={() => sendToConcierge(POPULAR_SERVICES[2].questionPrompt[lang])}
                     sx={{
                       border: '1px solid #e5e7eb',
-                      color: '#4b5563',
-                      '&:hover': { bgcolor: '#f3f4f6', color: '#0a2240' }
+                      color: '#5f6368',
+                      '&:hover': { bgcolor: '#f3f4f6', color: '#1a73e8' }
                     }}
                   >
                     <MicIcon fontSize="small" />
@@ -1688,11 +1702,11 @@ export function App() {
                       borderRadius: 999,
                       px: 2.75,
                       py: 0.9,
-                      bgcolor: '#0a2240',
+                      bgcolor: '#1a73e8',
                       fontWeight: 700,
                       textTransform: 'none',
                       fontSize: '0.9rem',
-                      '&:hover': { bgcolor: '#163a66' }
+                      '&:hover': { bgcolor: '#1557b0' }
                     }}
                   >
                     {chatLoading ? t.askingBtn : t.askBtn}
@@ -1702,7 +1716,7 @@ export function App() {
             </Box>
           </Paper>
 
-          {/* PÍLULAS DE SUGESTÃO RÁPIDA (Estilo america.gov abaixo da busca) */}
+          {/* Seção de interface Material Design 3 */}
           <Box
             sx={{
               display: 'flex',
@@ -1719,17 +1733,17 @@ export function App() {
                 onClick={() => sendToConcierge(pill)}
                 sx={{
                   bgcolor: '#ffffff',
-                  border: '1px solid #e5e4dc',
-                  color: '#1f2937',
+                  border: '1px solid #dadce0',
+                  color: '#202124',
                   fontWeight: 500,
                   fontSize: '0.82rem',
                   py: 0.5,
                   cursor: 'pointer',
                   transition: 'all 0.15s ease',
                   '&:hover': {
-                    bgcolor: '#0a2240',
+                    bgcolor: '#1a73e8',
                     color: '#ffffff',
-                    borderColor: '#0a2240'
+                    borderColor: '#1a73e8'
                   }
                 }}
               />
@@ -1748,32 +1762,32 @@ export function App() {
                   borderRadius: 999,
                   textTransform: 'none',
                   fontWeight: 700,
-                  borderColor: '#0a2240',
-                  color: '#0a2240',
+                  borderColor: '#1a73e8',
+                  color: '#1a73e8',
                   bgcolor: '#ffffff',
                   px: 2.5
                 }}
               >
                 {chatSidebarOpen
                   ? lang === 'en-US'
-                    ? `Agent Sidebar Active on Left (${chatMessages.length} messages) — Hide Sidebar`
+                    ? 'Hide support panel'
                     : lang === 'es-419'
-                    ? `Barra Lateral del Agente Activa a la Izquierda (${chatMessages.length} mensajes) — Ocultar`
-                    : `Conversa Persistente Ativa na Barra Lateral à Esquerda (${chatMessages.length} msgs) — Ocultar`
+                    ? 'Ocultar panel de atención'
+                    : 'Ocultar painel de atendimento'
                   : lang === 'en-US'
-                  ? `Reopen Agent Conversation in Left Sidebar (${chatMessages.length} messages)`
+                  ? `Open support panel (${chatMessages.length})`
                   : lang === 'es-419'
-                  ? `Reabrir Conversación en la Barra Lateral Izquierda (${chatMessages.length} mensajes)`
-                  : `Reabrir Conversa na Barra Lateral à Esquerda (${chatMessages.length} msgs)`}
+                  ? `Abrir panel de atención (${chatMessages.length})`
+                  : `Abrir painel de atendimento (${chatMessages.length})`}
               </Button>
             )}
           </Box>
         </Container>
       </Box>
 
-      {/* 5. DIRETÓRIO DE SERVIÇOS ESSENCIAIS DO ESTADO (Layout Minimalista america.gov) */}
+      {/* Seção de interface Material Design 3 */}
       <Container maxWidth="lg" sx={{ pb: 9 }}>
-        <Divider sx={{ mb: 6, borderColor: '#e5e4dc' }} />
+        <Divider sx={{ mb: 6, borderColor: '#dadce0' }} />
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', mb: 4, flexWrap: 'wrap', gap: 2 }}>
           <Box>
@@ -1783,7 +1797,7 @@ export function App() {
             >
               {t.directoryOverline}
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 800, color: '#0a2240', fontFamily: '"Merriweather", serif' }}>
+            <Typography variant="h4" sx={{ fontWeight: 800, color: '#1a73e8', fontFamily: '"Plus Jakarta Sans", "Inter", sans-serif' }}>
               {t.directoryHeading}
             </Typography>
           </Box>
@@ -1796,8 +1810,8 @@ export function App() {
               sx={{
                 textTransform: 'none',
                 fontWeight: 700,
-                borderColor: '#0a2240',
-                color: '#0a2240',
+                borderColor: '#1a73e8',
+                color: '#1a73e8',
                 borderRadius: 999,
                 px: 2.5
               }}
@@ -1812,7 +1826,7 @@ export function App() {
                 textTransform: 'none',
                 fontWeight: 700,
                 borderColor: '#cbd5e1',
-                color: '#374151',
+                color: '#5f6368',
                 borderRadius: 999,
                 px: 2.5
               }}
@@ -1835,11 +1849,11 @@ export function App() {
                   justifyContent: 'space-between',
                   borderRadius: 3,
                   bgcolor: '#ffffff',
-                  border: '1px solid #e5e4dc',
+                  border: '1px solid #dadce0',
                   transition: 'all 0.2s ease',
                   '&:hover': {
-                    borderColor: '#0a2240',
-                    boxShadow: '0 12px 28px -8px rgba(10, 34, 64, 0.08)'
+                    borderColor: '#1a73e8',
+                    boxShadow: '0 12px 28px -8px rgba(60, 64, 67, 0.12)'
                   }
                 }}
               >
@@ -1855,48 +1869,34 @@ export function App() {
                     >
                       {srv.icon}
                     </Box>
-                    <Typography variant="caption" sx={{ fontWeight: 700, color: '#4b5563' }}>
+                    <Typography variant="caption" sx={{ fontWeight: 700, color: '#5f6368' }}>
                       {srv.agency[lang]}
                     </Typography>
                   </Box>
 
-                  <Typography variant="h6" sx={{ fontWeight: 800, color: '#0a2240', mb: 1, fontSize: '1.08rem' }}>
+                  <Typography variant="h6" sx={{ fontWeight: 800, color: '#1a73e8', mb: 1, fontSize: '1.08rem' }}>
                     {srv.title[lang]}
                   </Typography>
 
-                  {srv.externalTargetUrl && (
-                    <Box sx={{ mb: 1.25, display: 'flex', flexWrap: 'wrap', gap: 0.75 }}>
+                  {srv.federatedSubdomain && (
+                    <Box sx={{ mb: 1.25 }}>
                       <Chip
                         size="small"
-                        label={srv.badge || `NÓ FEDERADO CE • ${srv.ownerCe || 'ARGOLIS'}`}
+                        label={`${srv.federatedSubdomain}.gov.novatlantis.cloud`}
                         sx={{
-                          bgcolor: '#eff6ff',
-                          color: '#1e3a8a',
-                          border: '1px solid #bfdbfe',
-                          fontWeight: 800,
-                          fontSize: '0.66rem',
+                          bgcolor: '#f8fafc',
+                          color: '#334155',
+                          border: '1px solid #cbd5e1',
+                          fontFamily: 'monospace',
+                          fontWeight: 600,
+                          fontSize: '0.68rem',
                           height: 22
                         }}
                       />
-                      {srv.federatedSubdomain && (
-                        <Chip
-                          size="small"
-                          label={`${srv.federatedSubdomain}.gov.novatlantis.cloud`}
-                          sx={{
-                            bgcolor: '#f8fafc',
-                            color: '#334155',
-                            border: '1px solid #cbd5e1',
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            fontSize: '0.66rem',
-                            height: 22
-                          }}
-                        />
-                      )}
                     </Box>
                   )}
 
-                  <Typography variant="body2" sx={{ color: '#4b5563', lineHeight: 1.55, mb: 2.5 }}>
+                  <Typography variant="body2" sx={{ color: '#5f6368', lineHeight: 1.55, mb: 2.5 }}>
                     {srv.description[lang]}
                   </Typography>
                 </Box>
@@ -1906,7 +1906,7 @@ export function App() {
                     size="small"
                     variant="text"
                     onClick={() => sendToConcierge(srv.questionPrompt[lang])}
-                    sx={{ textTransform: 'none', fontWeight: 700, color: '#0a2240' }}
+                    sx={{ textTransform: 'none', fontWeight: 700, color: '#1a73e8' }}
                   >
                     {t.askQuestionBtn}
                   </Button>
@@ -1920,14 +1920,14 @@ export function App() {
                       rel="noopener noreferrer"
                       sx={{
                         ml: 'auto',
-                        bgcolor: '#0f766e',
+                        bgcolor: '#1e8e3e',
                         textTransform: 'none',
                         fontWeight: 700,
                         borderRadius: 2,
-                        '&:hover': { bgcolor: '#115e59' }
+                        '&:hover': { bgcolor: '#137333' }
                       }}
                     >
-                      {lang === 'en-US' ? 'Open Federated Demo ↗' : lang === 'es-419' ? 'Abrir Demo Federada ↗' : 'Abrir Demo Federada ↗'}
+                      {lang === 'en-US' ? 'Open ↗' : lang === 'es-419' ? 'Acceder ↗' : 'Acessar ↗'}
                     </Button>
                   ) : (
                     <Button
@@ -1937,11 +1937,11 @@ export function App() {
                       onClick={() => handleRequestService(srv.servicePrompt[lang], srv.title[lang])}
                       sx={{
                         ml: 'auto',
-                        bgcolor: '#0a2240',
+                        bgcolor: '#1a73e8',
                         textTransform: 'none',
                         fontWeight: 700,
                         borderRadius: 2,
-                        '&:hover': { bgcolor: '#163a66' }
+                        '&:hover': { bgcolor: '#1557b0' }
                       }}
                     >
                       {t.requestServiceBtn}
@@ -1954,8 +1954,8 @@ export function App() {
         </Grid>
       </Container>
 
-      {/* 6. RODAPÉ OFICIAL AUSTERO (america.gov Footer) */}
-      <Box sx={{ bgcolor: '#0a2240', color: '#ffffff', py: 5, borderTop: '4px solid #b91c1c' }}>
+      {/* Seção de interface Material Design 3 */}
+      <Box sx={{ bgcolor: '#1a73e8', color: '#ffffff', py: 5, borderTop: '1px solid #dadce0' }}>
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
             <Grid item xs={12} md={7}>

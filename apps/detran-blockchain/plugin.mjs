@@ -11,25 +11,24 @@ export async function getCitizenView(_db, { lang = 'pt-BR' }) {
     externalTargetUrl: EXTERNAL_URL,
     federatedSubdomain: FEDERATED_SUBDOMAIN,
     kpis: [
-      { label: 'Nó Federado Argolis', value: 'Conta @ernani (136.81.200.203)', status: 'ONLINE' },
-      { label: 'Auditoria Normativa', value: 'Blockchain + IA', status: 'IMMUTABLE' },
-      { label: 'Domínio Soberano', value: 'detran.gov.novatlantis.cloud', status: 'VERIFIED' },
-      { label: 'Custo de Computação', value: 'Descentralizado (CE Argolis)', status: 'OPTIMIZED' }
+      { label: 'Órgão', value: 'DETRAN', status: 'ONLINE' },
+      { label: 'Validação', value: 'Blockchain', status: 'IMMUTABLE' },
+      { label: 'Subdomínio', value: 'detran.gov.novatlantis.cloud', status: 'VERIFIED' }
     ],
     sections: [
       {
         id: 'federated_launch',
-        title: 'Normas.gov & PN44 DETRAN — Legislação Validada e Registrada em Blockchain',
-        description: `Demonstração construída por @ernani onde toda a legislação e portarias do DETRAN são validadas e registradas em Blockchain.`,
+        title: 'PN44 DETRAN — Legislação em Blockchain',
+        description: 'Consulta pública de portarias e normas de trânsito com validação criptográfica em Blockchain.',
         type: 'cards',
         items: [
           {
-            id: 'CARD-DETRAN-1',
-            title: 'Abrir Plataforma PN44 DETRAN (Legislação em Blockchain)',
-            subtitle: 'Hospedado em 136.81.200.203 • Faturamento isolado na conta do CE',
-            badge: 'ACESSO DIRETO • BLOCKCHAIN FEDERADO',
+            id: 'DETRAN-APP',
+            title: 'Acessar PN44 DETRAN',
+            subtitle: 'Base Normativa Verificada',
+            badge: 'ONLINE',
             status: 'ONLINE',
-            meta: EXTERNAL_URL,
+            meta: 'https://detran.gov.novatlantis.cloud',
             externalUrl: EXTERNAL_URL,
             federatedUrl: 'https://detran.gov.novatlantis.cloud'
           }
@@ -43,28 +42,22 @@ export async function getBackstageView(db, { lang = 'pt-BR' }) {
   return getCitizenView(db, { lang });
 }
 
-export async function handleAgentIntent(_db, { nid, citizenName }) {
+export async function handleAgentIntent() {
   const protocol = `DETRAN-CHAIN-${Date.now().toString().slice(-6)}`;
   return {
     intent: 'DETRAN_BLOCKCHAIN_FEDERATED_LAUNCH',
-    delegated_agent: 'agent-detran-blockchain-v1 (Normas.gov & PN44 DETRAN Blockchain)',
+    delegated_agent: 'agent-detran-blockchain',
     source_document: EXTERNAL_URL,
     executed_action: {
       type: 'FEDERATED_REDIRECT_READY',
       protocol,
-      summary: 'Acesso Federado ao portal PN44 DETRAN Blockchain liberado',
+      summary: 'Acesso ao PN44 DETRAN',
       external_url: EXTERNAL_URL,
-      federated_domain: 'https://detran.gov.novatlantis.cloud',
-      details: {
-        owner_ce: '@ernani',
-        endpoint: EXTERNAL_URL,
-        citizen: citizenName || nid || 'Cidadão / Auditor'
-      }
+      federated_domain: 'https://detran.gov.novatlantis.cloud'
     },
     response:
-      `Localizei o módulo federado **Normas.gov & PN44 DETRAN — Legislação Validada em Blockchain** (Protocolo \`${protocol}\`), mantido por **@ernani**:\n\n` +
-      `• **Objetivo:** Consolidação normativa onde toda a legislação é validada e registrada de forma imutável em Blockchain.\n` +
-      `• **Acesso pelo Domínio Novatlantis:** https://detran.gov.novatlantis.cloud\n` +
-      `• **Link Direto (Origem CE):** ${EXTERNAL_URL}`
+      `**PN44 DETRAN — Legislação em Blockchain:**\n` +
+      `Consulta de portarias e resoluções de trânsito com registro imutável em Blockchain.\n\n` +
+      `• **Acesso:** https://detran.gov.novatlantis.cloud`
   };
 }
