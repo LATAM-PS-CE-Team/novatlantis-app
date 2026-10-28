@@ -6,7 +6,7 @@
   "sector": "NATIONAL_AI_GOVERNANCE_HARNESS",
   "serviceUrlEnvVar": "GOV_AGENT_HARNESS_URL",
   "defaultPort": 8094,
-  "externalTargetUrl": "https://github.com/billebr/ai-agent-harness-for-government",
+  "externalTargetUrl": "/api/v1/apps/gov-agent-harness/ui",
   "landingCatalog": {
     "enabled": true,
     "icon": "Shield",
