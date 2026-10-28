@@ -537,7 +537,7 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
     return true;
   }
 
-  const match = pathname.match(/^\/api\/v1\/apps\/([a-z0-9-]+)\/(manifest|view|action|agent)$/);
+  const match = pathname.match(/^\/api\/v1\/apps\/([a-z0-9-]+)\/(manifest|view|action|agent|ui)$/);
   if (!match) return false;
 
   const [, appId, subroute] = match;
@@ -549,6 +549,25 @@ export async function handleRegistryAndAppGatewayRoutes(arg1, ...restArgs) {
       error: `Módulo '${appId}' não encontrado no Service Registry do Portal Novatlantis.`
     });
     return true;
+  }
+
+  if (subroute === 'ui' && req.method === 'GET') {
+    if (targetApp.plugin && typeof targetApp.plugin.renderAppUi === 'function') {
+      await targetApp.plugin.initDatabase?.(db);
+      const lang = url.searchParams.get('lang') || 'pt-BR';
+      const html = await targetApp.plugin.renderAppUi({ lang, url, db, manifest: targetApp });
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
+      });
+      res.end(html);
+      return true;
+    }
+    if (targetApp.externalTargetUrl && !targetApp.externalTargetUrl.startsWith('/api/v1/apps/')) {
+      res.writeHead(302, { Location: targetApp.externalTargetUrl });
+      res.end();
+      return true;
+    }
   }
 
   if (subroute === 'manifest' && req.method === 'GET') {
