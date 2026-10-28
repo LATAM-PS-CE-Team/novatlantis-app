@@ -1,0 +1,106 @@
+{
+  "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
+  "appId": "gov-agent-harness",
+  "version": "1.0.0",
+  "owner": "CNIG",
+  "sector": "NATIONAL_AI_GOVERNANCE_HARNESS",
+  "serviceUrlEnvVar": "GOV_AGENT_HARNESS_URL",
+  "defaultPort": 8094,
+  "externalTargetUrl": "https://github.com/billebr/ai-agent-harness-for-government",
+  "landingCatalog": {
+    "enabled": true,
+    "icon": "Shield",
+    "badge": "AI Agent Harness",
+    "title": {
+      "pt-BR": "AI Agent Harness — Orquestração Multiagente Governamental",
+      "es-419": "AI Agent Harness — Orquestación Multiagente Gubernamental",
+      "en-US": "AI Agent Harness — Government Multi-Agent Orchestration"
+    },
+    "agency": {
+      "pt-BR": "Centro Nacional de Inteligência e Governança de IA",
+      "es-419": "Centro Nacional de Inteligencia y Gobernanza de IA",
+      "en-US": "National AI Governance & Intelligence Center"
+    },
+    "description": {
+      "pt-BR": "Orquestrador central e 8 subagentes setoriais (Civitas, AegisGov, LexVeritas, CustosLegis, VitalisGov, SophiaEdu, GaiaGuard e AgroNexo) com guardrails determinísticos e trilha de auditoria SHA-256.",
+      "es-419": "Orquestador central y 8 subagentes sectoriales con guardrails determinísticos, GraphRAG institucional y auditoría inmutable SHA-256.",
+      "en-US": "Central orchestrator and 8 sectoral subagents with deterministic legal guardrails, institutional GraphRAG, and SHA-256 immutable audit trails."
+    },
+    "questionPrompt": {
+      "pt-BR": "Como funciona o AI Agent Harness e quais são os 8 subagentes governamentais?",
+      "es-419": "¿Cómo funciona el AI Agent Harness y cuáles son los 8 subagentes gubernamentales?",
+      "en-US": "How does the AI Agent Harness work and what are the 8 government subagents?"
+    },
+    "servicePrompt": {
+      "pt-BR": "Executar auditoria e roteamento no AI Agent Harness",
+      "es-419": "Ejecutar auditoría y enrutamiento en AI Agent Harness",
+      "en-US": "Run multi-agent routing and audit in AI Agent Harness"
+    }
+  },
+  "agentIntegration": {
+    "agentId": "agent-gov-harness-core",
+    "triggerKeywords": [
+      "harness",
+      "ai agent harness",
+      "civitas",
+      "aegisgov",
+      "lexveritas",
+      "custoslegis",
+      "vitalisgov",
+      "sophiaedu",
+      "gaiaguard",
+      "agronexo",
+      "multiagente",
+      "multi-agent",
+      "subagentes",
+      "subagents",
+      "guardrail",
+      "guardrails",
+      "graphrag",
+      "merkle",
+      "cadeia de custódia",
+      "cadeia de custodia"
+    ],
+    "executeEndpoint": "/api/v1/agent/execute",
+    "requiresAuthForTransaction": false
+  },
+  "citizenPortalTab": {
+    "enabled": true,
+    "tabId": "gov_agent_harness",
+    "title": {
+      "pt-BR": "AI Agent Harness",
+      "es-419": "AI Agent Harness",
+      "en-US": "AI Agent Harness"
+    },
+    "subtitle": {
+      "pt-BR": "Transparência algorítmica, guardrails determinísticos e 8 subagentes setoriais",
+      "es-419": "Transparencia algorítmica, guardrails determinísticos y 8 subagentes sectoriales",
+      "en-US": "Algorithmic transparency, deterministic guardrails, and 8 sectoral subagents"
+    },
+    "uiEntryPath": "/embed/citizen",
+    "apiBasePath": "/api/v1/apps/gov-agent-harness"
+  },
+  "backstageModule": {
+    "enabled": true,
+    "moduleId": "gov_agent_harness_backstage",
+    "allowedRoles": [
+      "PRIME_MINISTER_ROOT",
+      "SECRETARY_GENERAL",
+      "JUSTICE_AND_TREASURY_MANAGER",
+      "PUBLIC_DEFENDER_AND_PROSECUTOR",
+      "HEALTH_AND_EDUCATION_DIRECTOR",
+      "OPERATIONS_311_911_DISPATCHER"
+    ],
+    "title": {
+      "pt-BR": "AI Agent Harness (Core + 8 Subagentes)",
+      "es-419": "AI Agent Harness (Core + 8 Subagentes)",
+      "en-US": "AI Agent Harness (Core + 8 Subagents)"
+    },
+    "subtitle": {
+      "pt-BR": "Orquestração Vertex AI Agent Engine, GraphRAG, MCP/A2A e Auditoria SHA-256",
+      "es-419": "Orquestación Vertex AI Agent Engine, GraphRAG, MCP/A2A y Auditoría SHA-256",
+      "en-US": "Vertex AI Agent Engine orchestration, GraphRAG, MCP/A2A, and SHA-256 audit"
+    },
+    "uiEntryPath": "/embed/backstage"
+  }
+}
