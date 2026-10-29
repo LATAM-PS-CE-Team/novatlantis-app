@@ -10,7 +10,7 @@ const SUBAGENTS_CATALOG = [
     key: 'core_harness',
     name: 'AI-Agent-Harness-for-Government',
     domain: 'Orquestrador Central (Core Harness)',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/7436670314643193856',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/6283130884501536768',
     guardrail: 'Roteamento Determinístico + Resolução Lex Specialis + Merkle Audit SHA-256',
     mission: 'Coordena os 8 subagentes setoriais no Gemini Enterprise via protocolos MCP e A2A com memória híbrida GraphRAG.',
     samplePrompt: 'Analisar impacto cruzado de estiagem severa no crédito rural e acionar proteção social para famílias rurais.'
@@ -19,7 +19,7 @@ const SUBAGENTS_CATALOG = [
     key: 'civitas',
     name: 'Civitas',
     domain: 'Cidadania e Benefícios Sociais',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/6092345825873100800',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/6695773200359358464',
     guardrail: 'Proteção LGPD Estrita (Pseudonimização CPF/NIS em Tempo de Execução)',
     mission: 'Triagem socioeconômica proativa e concessão automatizada de benefícios no CadÚnico.',
     samplePrompt: 'Verificar elegibilidade de família vulnerável no CadÚnico com pseudonimização estrita LGPD.'
@@ -28,7 +28,7 @@ const SUBAGENTS_CATALOG = [
     key: 'aegis_gov',
     name: 'AegisGov',
     domain: 'Segurança Pública',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/5409487532373049344',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/5634612538160185344',
     guardrail: 'Cadeia de Custódia Íntegra (Verificação SHA-256 — Art. 158-A CPP)',
     mission: 'Inteligência integrada e fusão multimodal de texto, áudio, vídeo e georreferenciamento.',
     samplePrompt: 'Validar integridade criptográfica SHA-256 de evidência multimodal (Art. 158-A CPP).'
@@ -37,7 +37,7 @@ const SUBAGENTS_CATALOG = [
     key: 'lex_veritas',
     name: 'LexVeritas',
     domain: 'Justiça e Tribunais',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/133520568908513280',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/4002057673238380544',
     guardrail: 'Zero Citação Não Verificada no GraphRAG (Res. CNJ 332/2020)',
     mission: 'Triagem processual, análise de jurisprudência e validação determinística de precedentes.',
     samplePrompt: 'Pesquisar precedentes vinculantes sobre medicamentos de alto custo validados no Spanner GraphRAG.'
@@ -46,7 +46,7 @@ const SUBAGENTS_CATALOG = [
     key: 'custos_legis',
     name: 'CustosLegis',
     domain: 'Ministério Público',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/8060418863034007552',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/1672007816027570176',
     guardrail: 'Supervisão Humana Decisória Obrigatória (Assinatura HITL Membro do MP)',
     mission: 'Defesa do patrimônio público, apoio a inquéritos civis e auditoria de editais (Lei 14.133/2021).',
     samplePrompt: 'Auditar cláusulas restritivas em edital de licitação conforme a Lei 14.133/2021.'
@@ -55,7 +55,7 @@ const SUBAGENTS_CATALOG = [
     key: 'vitalis_gov',
     name: 'VitalisGov',
     domain: 'Saúde Pública (SUS)',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/636797827267166208',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/183568139181621248',
     guardrail: 'Validação Clínica Obrigatória (Protocolo PCDT/MS/OMS + CRM Ativo)',
     mission: 'Regulação inteligente de filas (SISREG), vigilância epidemiológica e gestão de leitos.',
     samplePrompt: 'Priorizar regulação de fila SISREG para oncologia segundo protocolo clínico PCDT/MS.'
@@ -64,7 +64,7 @@ const SUBAGENTS_CATALOG = [
     key: 'sophia_edu',
     name: 'SophiaEdu',
     domain: 'Educação Pública',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/8927361791302828032',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/8992046060364890112',
     guardrail: 'Filtro Etário Pedagógico Rigoroso (Diretrizes BNCC e ECA)',
     mission: 'Gestão pedagógica, Busca Ativa Escolar (prevenção à evasão) e tutoria adaptativa.',
     samplePrompt: 'Gerar plano de Busca Ativa Escolar alinhado às competências da BNCC e proteção do ECA.'
@@ -73,7 +73,7 @@ const SUBAGENTS_CATALOG = [
     key: 'gaia_guard',
     name: 'GaiaGuard',
     domain: 'Meio Ambiente',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/8424647482897596416',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/8289484518495092736',
     guardrail: 'Cruzamento Obrigatório via Satélite (Google Earth Engine / PRODES / DETER)',
     mission: 'Licenciamento ambiental ágil, alertas climáticos e validação geoespacial de CAR.',
     samplePrompt: 'Cruzar polígono CAR com alertas de desmatamento PRODES/DETER via Google Earth Engine.'
@@ -82,7 +82,7 @@ const SUBAGENTS_CATALOG = [
     key: 'agro_nexo',
     name: 'AgroNexo',
     domain: 'Agricultura e Crédito Rural',
-    runtimeId: 'projects/1054221034062/locations/us-central1/reasoningEngines/1516688604464676864',
+    runtimeId: 'projects/862675300045/locations/us-central1/reasoningEngines/6400787424766590976',
     guardrail: 'Sinergia A2A com GaiaGuard + Validação de Janela ZARC/MAPA',
     mission: 'Análise automatizada de crédito rural (Plano Safra) bloqueando sobreposição com áreas embargadas.',
     samplePrompt: 'Avaliar liberação de crédito Plano Safra validando janela climática ZARC e conformidade ambiental A2A.'
