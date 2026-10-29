@@ -1,7 +1,9 @@
 import crypto from 'node:crypto';
 
 const GEMINI_ENTERPRISE_URL =
-  'https://console.cloud.google.com/gen-app-builder/engines/locations/global/engines/gemini-enterprise-17906083_1790608376670/dashboard/overview?project=1484274526';
+  'https://vertexaisearch.cloud.google.com/home/cid/71a1ecfd-3def-4768-b051-946389948384';
+const GEMINI_ENTERPRISE_CONSOLE_URL =
+  'https://console.cloud.google.com/gemini-enterprise/locations/global/engines/gemini-enterprise-17906083_1790608376670/overview/dashboard?project=1484274526';
 
 const SUBAGENTS_CATALOG = [
   {
@@ -389,8 +391,12 @@ export async function handleAgentTurn({
     reply,
     suggestedLinks: [
       {
-        title: 'Abrir no Gemini Enterprise ↗',
+        title: 'Abrir Web App Gemini Enterprise ↗',
         url: GEMINI_ENTERPRISE_URL
+      },
+      {
+        title: 'Console GCP Gemini Enterprise ↗',
+        url: GEMINI_ENTERPRISE_CONSOLE_URL
       },
       {
         title: 'Ver Repositório no GitHub',
