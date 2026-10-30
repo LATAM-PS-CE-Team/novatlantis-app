@@ -1,0 +1,98 @@
+{
+  "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
+  "appId": "civil-defense-alert",
+  "version": "1.0.0",
+  "owner": "DEFESA_CIVIL",
+  "sector": "EMERGENCY_CLIMATE_RESILIENCE",
+  "deploymentMode": "EXTERNAL_FEDERATED_CE",
+  "federatedSubdomain": "defesacivil",
+  "externalTargetUrl": "https://civil-defense-alert-862675300045.us-central1.run.app/",
+  "landingCatalog": {
+    "enabled": true,
+    "icon": "Shield",
+    "badge": "Defesa Civil",
+    "title": {
+      "pt-BR": "Defesa Civil & Alerta Climático Nacional",
+      "es-419": "Defensa Civil y Alerta Climática Nacional",
+      "en-US": "National Civil Defense & Climate Early Warning"
+    },
+    "agency": {
+      "pt-BR": "Secretaria Nacional de Proteção e Defesa Civil",
+      "es-419": "Secretaría Nacional de Protección y Defensa Civil",
+      "en-US": "National Civil Defense Secretariat"
+    },
+    "description": {
+      "pt-BR": "Telemetria hidrológica em tempo real, alertas preventivos via Cell Broadcast 5G, rotas seguras e ocupação de abrigos municipais.",
+      "es-419": "Telemetría hidrológica en tiempo real, alertas preventivas vía Cell Broadcast 5G y ocupación de refugios municipales.",
+      "en-US": "Real-time hydrological telemetry, 5G Cell Broadcast early warnings, safe evacuation routes, and shelter occupancy."
+    },
+    "questionPrompt": {
+      "pt-BR": "Há algum alerta de chuva forte, enchente ou abrigo aberto na minha região?",
+      "es-419": "¿Hay alguna alerta de lluvia intensa, inundación o refugio abierto en mi región?",
+      "en-US": "Are there any heavy rain, flood warnings, or open shelters in my district?"
+    },
+    "servicePrompt": {
+      "pt-BR": "Consultar alertas da Defesa Civil e abrigos próximos",
+      "es-419": "Consultar alertas de Defensa Civil y refugios cercanos",
+      "en-US": "Check Civil Defense alerts and nearby shelters"
+    }
+  },
+  "agentIntegration": {
+    "agentId": "agent-civil-defense-alert",
+    "triggerKeywords": [
+      "defesa civil",
+      "defensa civil",
+      "civil defense",
+      "enchente",
+      "inundação",
+      "inundacion",
+      "flood",
+      "alerta climático",
+      "alerta climatico",
+      "chuva forte",
+      "deslizamento",
+      "abrigo",
+      "refugio",
+      "shelter",
+      "sirene"
+    ],
+    "executeEndpoint": "/api/v1/agent/execute",
+    "requiresAuthForTransaction": false
+  },
+  "citizenPortalTab": {
+    "enabled": true,
+    "tabId": "civil_defense_alert",
+    "title": {
+      "pt-BR": "Defesa Civil & Clima",
+      "es-419": "Defensa Civil y Clima",
+      "en-US": "Civil Defense & Climate"
+    },
+    "subtitle": {
+      "pt-BR": "Alertas hidrológicos, rotas seguras e abrigos municipais",
+      "es-419": "Alertas hidrológicas, rutas seguras y refugios municipales",
+      "en-US": "Hydrological alerts, safe routes, and municipal shelters"
+    },
+    "uiEntryPath": "/embed/citizen",
+    "apiBasePath": "/api/v1/apps/civil-defense-alert"
+  },
+  "backstageModule": {
+    "enabled": true,
+    "moduleId": "civil_defense_alert_backstage",
+    "allowedRoles": [
+      "PRIME_MINISTER_ROOT",
+      "SECRETARY_GENERAL",
+      "OPERATIONS_311_911_DISPATCHER"
+    ],
+    "title": {
+      "pt-BR": "Defesa Civil & Alerta 5G",
+      "es-419": "Defensa Civil y Alerta 5G",
+      "en-US": "Civil Defense & 5G Broadcast"
+    },
+    "subtitle": {
+      "pt-BR": "Sala de situação hidrológica e disparo Cell Broadcast",
+      "es-419": "Sala de situación hidrológica y disparo Cell Broadcast",
+      "en-US": "Hydrological situation room and Cell Broadcast dispatch"
+    },
+    "uiEntryPath": "/embed/backstage"
+  }
+}
