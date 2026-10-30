@@ -182,7 +182,7 @@ export async function handleAgentTurn({ profile, message, citizenPortalUrl }) {
       ? { type: '${tabId.toUpperCase()}_EXECUTED', protocol, summary: \`Atendimento \${protocol} concluído.\` }
       : null,
     reply: isAuthenticated
-      ? \`✅ **${titlePt.replace(/'/g, "\\'")} (\`\${protocol}\`):** Solicitação processada para \${profile.full_name} (\`\${profile.citizen_id}\`).\`
+      ? \`✅ **${titlePt.replace(/'/g, "\\'")} (\${protocol}):** Solicitação processada para \${profile.full_name} (\${profile.citizen_id}).\`
       : \`🏛️ **${titlePt.replace(/'/g, "\\'")}:** Entre com seu NID para solicitar este serviço.\`,
     suggestedLinks: [{ title: 'Abrir no Portal do Cidadão', url: \`\${citizenPortalUrl}?tab=${tabId}\` }]
   };
