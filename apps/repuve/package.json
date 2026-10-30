@@ -1,0 +1,10 @@
+{
+  "name": "@novatlantis/repuve",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'Build repuve OK'",
+    "test": "node -e \"const fs=require('fs'); const m=JSON.parse(fs.readFileSync('novatlantis.app.json','utf8')); if(!m.appId) process.exit(1);\""
+  }
+}

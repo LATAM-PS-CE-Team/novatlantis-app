@@ -1,0 +1,87 @@
+{
+  "$schema": "../../packages/portal-sdk/schema/novatlantis-app.schema.json",
+  "appId": "repuve",
+  "version": "1.0.0",
+  "owner": "REPUVE",
+  "sector": "VEHICLE_ADMINISTRATION",
+  "deploymentMode": "EXTERNAL_FEDERATED_CE",
+  "serviceUrlEnvVar": "REPUVE_URL",
+  "externalTargetUrl": "https://repuve-control-vehicular-317406297606.us-central1.run.app",
+  "defaultPort": 8090,
+  "landingCatalog": {
+    "enabled": true,
+    "icon": "AccountBalance",
+    "badge": "REPUVE",
+    "title": {
+      "pt-BR": "Registro Vehicular",
+      "es-419": "Registro Vehicular",
+      "en-US": "Registro Vehicular"
+    },
+    "agency": {
+      "pt-BR": "REPUVE",
+      "es-419": "REPUVE",
+      "en-US": "REPUVE"
+    },
+    "description": {
+      "pt-BR": "Serviço digital integrado (REPUVE).",
+      "es-419": "Servicio digital integrado (REPUVE).",
+      "en-US": "Integrated digital service (REPUVE)."
+    },
+    "questionPrompt": {
+      "pt-BR": "Como utilizar o serviço Registro Vehicular?",
+      "es-419": "¿Cómo utilizar el servicio Registro Vehicular?",
+      "en-US": "How do I use the Registro Vehicular service?"
+    },
+    "servicePrompt": {
+      "pt-BR": "Solicitar atendimento em Registro Vehicular",
+      "es-419": "Solicitar atención en Registro Vehicular",
+      "en-US": "Request service at Registro Vehicular"
+    }
+  },
+  "agentIntegration": {
+    "agentId": "agent-repuve-v1 (Registro Vehicular)",
+    "triggerKeywords": [
+      "repuve",
+      "registro",
+      "vehiculos",
+      "movilidad"
+    ],
+    "executeEndpoint": "/api/v1/agent/execute",
+    "requiresAuthForTransaction": false
+  },
+  "citizenPortalTab": {
+    "enabled": true,
+    "tabId": "repuve",
+    "title": {
+      "pt-BR": "Registro Vehicular",
+      "es-419": "Registro Vehicular",
+      "en-US": "Registro Vehicular"
+    },
+    "subtitle": {
+      "pt-BR": "REPUVE",
+      "es-419": "REPUVE",
+      "en-US": "REPUVE"
+    },
+    "uiEntryPath": "/embed/citizen",
+    "apiBasePath": "/api/v1/apps/repuve"
+  },
+  "backstageModule": {
+    "enabled": true,
+    "moduleId": "repuve_backstage",
+    "allowedRoles": [
+      "PRIME_MINISTER_ROOT",
+      "SECRETARY_GENERAL"
+    ],
+    "title": {
+      "pt-BR": "Registro Vehicular",
+      "es-419": "Registro Vehicular",
+      "en-US": "Registro Vehicular"
+    },
+    "subtitle": {
+      "pt-BR": "Gestão operacional (REPUVE)",
+      "es-419": "Gestión operativa (REPUVE)",
+      "en-US": "Operational management (REPUVE)"
+    },
+    "uiEntryPath": "/embed/backstage"
+  }
+}
